@@ -101,6 +101,14 @@ Trả lời đầy đủ, dứt khoát cả 22 câu bắt buộc và 24 câu tù
 - **07 Khách hàng thân thiết**: nhận diện qua cả 3 cách; khách tự đổi thưởng khi đủ điểm; cho đối tác/chủ xe tự chọn có áp dụng hay không.
 - **08 Tích hợp**: ưu tiên OTA, Facebook, Zalo; cần đồng bộ 2 chiều; chủ nền tảng (Vbread) quản lý tài khoản/API key.
 
+## Câu trả lời vòng 2 (bộ câu hỏi mới) — Văn Kiều Trang, 17/09 17:53
+
+**Khớp gần như hoàn toàn với Đinh Xuân Vĩnh** ở mọi câu cả hai cùng trả lời (câu 1–12, 15, 18–21) — cùng kết luận: mỗi đối tác tự quyết ca/giá/giảm giá/thiết bị, bắt buộc mua nguyên liệu từ Vbread, có phần tiền nộp về theo giai đoạn, hợp đồng 12/24/36 tháng, Vbread chịu trách nhiệm giấy phép, app dùng cho cả đối tác lẫn Vbread giám sát, dự kiến 20–30 xe (Vĩnh: 30–50 xe) sau 6–12 tháng.
+
+Câu chưa trả lời (để trống, chưa có ý kiến khác Vĩnh): 13 (số liệu dashboard), 14 (ngân sách), 16 (kit chuyển giao), 17 (phí nhượng quyền %), 22 (phạm vi theo dõi kho).
+
+→ **2/2 người trả lời vòng 2 đồng thuận tuyệt đối** trên toàn bộ câu hỏi họ cùng trả lời. Đang chờ xác nhận từ chủ dự án để đưa vào CLAUDE.md/docs/01 — xem phần "Cần anh chốt thêm" ở đầu file.
+
 ## Lưu trữ vòng 1 (bộ câu hỏi cũ, đã có người trả lời — giữ lại làm tư liệu)
 
 ### Thương hiệu và quy mô
