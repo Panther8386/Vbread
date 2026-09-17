@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nghiệp vụ MVP</title>
+<meta name="description" content="Nghiệp vụ MVP: vận hành chuỗi xe bánh mì Vbread — mô hình, menu, luồng ca bán, công thức, dữ liệu và báo cáo.">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .prose li.xn, .prose li.gd{ list-style:none; margin-left:-1.3rem; padding-left:1.3rem; position:relative; }
+  .prose li.xn::before, .prose li.gd::before{
+    content:"XN"; position:absolute; left:0; top:0.15rem; font-family:"IBM Plex Mono",monospace;
+    font-size:0.62rem; font-weight:600; letter-spacing:0.03em; padding:0 0.3rem; border-radius:3px; border:1px solid var(--ok); color:var(--ok);
+  }
+  .prose li.gd::before{ content:"GĐ"; border-color:var(--warn); color:var(--warn); }
+  .prose li.xn, .prose li.gd{ padding-left:2.6rem; }
+  .prose li.xn::before, .prose li.gd::before{ left:0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <a class="crumb" href="index.html">← Lộ trình Vbread App</a>
+
+  <header class="hero">
+    <p class="eyebrow">Tài liệu nghiệp vụ · chỉ đọc</p>
+    <h1>Nghiệp vụ MVP</h1>
+    <p class="lede">Vận hành chuỗi xe bánh mì lưu động. <span class="tag tag--ok">XN</span> đã xác nhận · <span class="tag tag--warn">GĐ</span> giả định, cần chốt trong <a href="khao-sat.html">trang khảo sát</a>.</p>
+  </header>
+
+  <div class="prose">
+
+    <h2>1. Mô hình vận hành</h2>
+    <ul>
+      <li class="xn">Chuỗi gồm nhiều xe bánh mì; mỗi xe bán tại một hoặc nhiều điểm bán.</li>
+      <li class="xn">Ba vai trò: chủ chuỗi, quản lý vận hành, nhân viên bán hàng.</li>
+      <li class="xn">Nhân viên thao tác trên điện thoại tại xe; quản lý xem tổng quan trên máy tính hoặc điện thoại.</li>
+      <li class="xn">Tiền Việt Nam, múi giờ Việt Nam.</li>
+      <li class="gd">Bánh mì nền là bánh cấp đông của Vbread (Global Malls). Xe nhận bánh nền và nguyên liệu (pate, chả, rau, sốt, bao bì) từ kho của chuỗi.</li>
+      <li class="gd">Mỗi ca có 1 xe, 1 điểm bán và 1–2 nhân viên. Mỗi ngày mỗi xe có tối đa 2 ca.</li>
+      <li class="gd">Nhân viên dùng điện thoại riêng có mạng 4G; MVP chưa cần bán khi mất mạng.</li>
+      <li class="gd">Thanh toán: tiền mặt, chuyển khoản/QR ngân hàng. MVP chỉ ghi nhận phương thức, chưa kết nối ngân hàng.</li>
+      <li class="gd">MVP chưa in bill.</li>
+    </ul>
+
+    <h2>2. Menu tham khảo (theo tài liệu Vbread)</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Mã</th><th>Món</th><th>Giá tham khảo</th></tr></thead>
+        <tbody>
+          <tr><td>BM01</td><td>Bánh mì pate</td><td>20.000–25.000 ₫</td></tr>
+          <tr><td>BM02</td><td>Bánh mì chả</td><td>25.000–30.000 ₫</td></tr>
+          <tr><td>BM03</td><td>Bánh mì pate chả</td><td>25.000–30.000 ₫</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul>
+      <li class="gd">Giá bán do chủ chuỗi đặt; có thể khác nhau theo xe hoặc điểm bán; lưu lịch sử giá theo ngày hiệu lực.</li>
+      <li class="gd">MVP theo dõi tồn kho ở mức <strong>món bán + bánh nền + bao bì</strong>. Việc tự trừ pate, chả, rau theo công thức để giai đoạn sau.</li>
+    </ul>
+
+    <h2>3. Luồng một ca bán</h2>
+    <ol>
+      <li><strong>Phân công</strong> (quản lý): chọn ngày, xe, điểm bán, khung giờ, nhân viên.</li>
+      <li><strong>Mở ca</strong> (nhân viên): xác nhận hàng nhận đầu ca (từng mặt hàng, số lượng) và tiền lẻ đầu ca; có thể chụp ảnh.</li>
+      <li><strong>Bán hàng</strong>: chạm món → số lượng → giảm giá (nếu có) → phương thức thanh toán → lưu. Được sửa hoặc hủy đơn khi ghi lý do.</li>
+      <li><strong>Phát sinh trong ca</strong>: nhận thêm hàng, trả hàng, hủy/hao hụt (bắt buộc chọn lý do: hỏng, rơi, quá hạn, khác).</li>
+      <li><strong>Kiểm kê cuối ca</strong>: nhập số lượng thực tế còn lại.</li>
+      <li><strong>Chốt ca</strong>: đếm tiền mặt, xác nhận số tiền chuyển khoản; hệ thống tính chênh lệch; nhân viên ghi lý do nếu có chênh lệch.</li>
+      <li><strong>Duyệt</strong> (quản lý): xem và duyệt ca. Sau khi duyệt, mọi chỉnh sửa phải ghi lý do và lưu nhật ký.</li>
+      <li><strong>Bàn giao</strong> (nếu đổi người giữa ca): chốt số liệu tạm, người nhận xác nhận.</li>
+    </ol>
+
+    <h2>4. Công thức</h2>
+    <ul>
+      <li>Tồn cuối ca (sổ sách) = Tồn đầu ca + Nhận − Bán − Trả − Hủy/Hao hụt</li>
+      <li>Chênh lệch hàng = Tồn thực tế kiểm kê − Tồn cuối ca (sổ sách)</li>
+      <li>Doanh thu = Σ (đơn giá × số lượng) − giảm giá, trừ các đơn đã hủy</li>
+      <li>Tiền mặt phải có = Tiền đầu ca + Doanh thu tiền mặt</li>
+      <li>Chênh lệch tiền mặt = Tiền mặt thực đếm − Tiền mặt phải có</li>
+      <li>Chênh lệch chuyển khoản = Chuyển khoản thực nhận − Doanh thu chuyển khoản</li>
+      <li class="gd">Ngưỡng cảnh báo: chênh lệch tiền khác 0 ₫ bắt buộc ghi lý do; từ 50.000 ₫ trở lên quản lý phải duyệt.</li>
+    </ul>
+
+    <h2>5. Dữ liệu chính (gợi ý)</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Bảng</th><th>Nội dung</th></tr></thead>
+        <tbody>
+          <tr><td><code>profiles</code></td><td>Người dùng, họ tên, số điện thoại, vai trò, trạng thái</td></tr>
+          <tr><td><code>carts</code></td><td>Xe: mã, tên, biển số/ghi chú, trạng thái</td></tr>
+          <tr><td><code>locations</code></td><td>Điểm bán: tên, địa chỉ, tọa độ (tùy chọn)</td></tr>
+          <tr><td><code>manager_scopes</code></td><td>Quản lý nào phụ trách xe nào</td></tr>
+          <tr><td><code>products</code></td><td>Mã, tên, đơn vị, nhóm (món bán, bánh nền, bao bì), trạng thái</td></tr>
+          <tr><td><code>prices</code></td><td>Giá theo sản phẩm, xe/điểm bán (tùy chọn), ngày hiệu lực</td></tr>
+          <tr><td><code>shifts</code></td><td>Ca: ngày kinh doanh, xe, điểm bán, giờ, trạng thái (đã lên lịch, đang bán, chờ duyệt, đã duyệt)</td></tr>
+          <tr><td><code>shift_staff</code></td><td>Nhân viên trong ca</td></tr>
+          <tr><td><code>stock_movements</code></td><td>Phiếu hàng: loại (nhận, trả, hủy, hao hụt, kiểm kê), sản phẩm, số lượng, lý do, ảnh</td></tr>
+          <tr><td><code>sales</code>, <code>sale_items</code></td><td>Đơn bán và các dòng món</td></tr>
+          <tr><td><code>payments</code></td><td>Phương thức và số tiền của từng đơn</td></tr>
+          <tr><td><code>shift_closings</code></td><td>Tiền đầu ca, tiền đếm, chênh lệch, lý do, người duyệt</td></tr>
+          <tr><td><code>audit_logs</code></td><td>Nhật ký chỉnh sửa: bảng, bản ghi, người sửa, thời điểm, giá trị cũ/mới, lý do</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>6. Báo cáo MVP</h2>
+    <ul>
+      <li>Theo ngày / ca / xe / điểm bán: doanh thu, số đơn, sản lượng theo món.</li>
+      <li>Món bán chạy.</li>
+      <li>Tồn cuối ca, hao hụt (số lượng, giá trị ước tính), chênh lệch hàng.</li>
+      <li>Chênh lệch tiền và lý do.</li>
+      <li>Màn hình tổng quan cho chủ chuỗi: hôm nay bán bao nhiêu, xe nào đang mở ca, ca nào chờ duyệt, cảnh báo chênh lệch.</li>
+      <li>Xuất Excel.</li>
+    </ul>
+
+    <h2>7. Để sau MVP</h2>
+    <p>Bán khi mất mạng, in bill, QR thanh toán tự đối soát, đặt hàng online và điều phối đơn, trừ nguyên liệu theo công thức, giá vốn và lợi nhuận, QC/chấm điểm điểm bán, tài sản, KPI, tính lương, khách hàng thân thiết.</p>
+
+    <p class="note">Nội dung này là bản trình diễn của file <code>docs/01-nghiep-vu-mvp.md</code> trong repo. Sửa nội dung ở đó, trang này sẽ được cập nhật theo.</p>
+  </div>
+
+  <footer class="site-footer">
+    <p><a href="index.html">← Quay lại lộ trình xây dựng</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

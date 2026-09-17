@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Khảo sát chốt nghiệp vụ</title>
+<meta name="description" content="Trả lời các câu hỏi nghiệp vụ cần chốt trước khi lập trình Vbread App.">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .progress-wrap{ margin-top:1.25rem; }
+  .progress-bar{ height:8px; border-radius:999px; background:var(--line); overflow:hidden; }
+  .progress-fill{ height:100%; background:var(--crust); border-radius:999px; transition:width 0.2s ease; width:0%; }
+  .progress-label{ font-family:"IBM Plex Mono",monospace; font-size:0.78rem; color:var(--ink-soft); margin-top:0.4rem; }
+
+  .name-field{ margin-top:1.25rem; display:flex; flex-direction:column; gap:0.35rem; max-width:24rem; }
+  .name-field label{ font-family:"IBM Plex Mono",monospace; font-size:0.7rem; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink-soft); }
+  .name-field input{
+    font:inherit; padding:0.6rem 0.7rem; border-radius:6px; border:1px solid var(--line);
+    background:var(--paper-raised); color:var(--ink); min-height:44px;
+  }
+
+  .decided{ margin-top:1.75rem; }
+  .decided ul{ list-style:none; margin:0.5rem 0 0; padding:0; display:flex; flex-direction:column; gap:0.4rem; }
+  .decided li{ font-size:0.9rem; color:var(--ink-soft); }
+  .decided strong{ color:var(--ink); }
+
+  .cat{ margin: 2.25rem 0 0; }
+  .cat h2{ font-size:1.05rem; font-weight:700; color:var(--crust-text); margin-bottom:1rem; }
+
+  .q{ margin-bottom:1rem; }
+  .q-head{ display:flex; gap:0.6rem; align-items:baseline; margin-bottom:0.5rem; }
+  .q-num{ font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--ink-soft); font-size:0.85rem; min-width:1.6rem; }
+  .q-text{ font-size:0.98rem; }
+  .q textarea{
+    width:100%; min-height:64px; font:inherit; font-size:0.94rem; padding:0.65rem 0.8rem;
+    border-radius:6px; border:1px solid var(--line); background:var(--paper-raised); color:var(--ink);
+    resize:vertical;
+  }
+  .q textarea:focus{ outline:2px solid var(--crust); outline-offset:1px; }
+  .q textarea.answered{ border-left:3px solid var(--ok); }
+
+  .actions{ display:flex; flex-wrap:wrap; gap:0.75rem; margin-top:1.5rem; }
+  .btn.ghost{ background:transparent; color:var(--crust-text); }
+
+  .export-out{ margin-top:1.25rem; }
+  .export-out textarea{
+    width:100%; min-height:220px; font-family:"IBM Plex Mono",monospace; font-size:0.8rem; line-height:1.5;
+    padding:0.9rem; border-radius:6px; border:1px solid var(--line); background:var(--paper-raised); color:var(--ink);
+  }
+  .copy-msg{ font-size:0.82rem; color:var(--ok); margin-top:0.5rem; min-height:1.2em; }
+  [hidden]{ display:none !important; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <a class="crumb" href="index.html">← Lộ trình Vbread App</a>
+
+  <header class="hero">
+    <p class="eyebrow">Trước GĐ-00 · phiếu chốt nghiệp vụ</p>
+    <h1>Khảo sát chốt nghiệp vụ</h1>
+    <p class="lede">22 câu hỏi trong <a href="vbread.html">Vbread.md</a> đang chờ chủ chuỗi và cộng sự chốt lại, chia theo 6 nhóm. Trả lời trực tiếp dưới mỗi câu — nội dung được lưu tạm ngay trên máy anh trong lúc gõ.</p>
+
+    <div class="decided">
+      <p class="ticket-code mono" style="margin:0;">Đã chốt</p>
+      <ul>
+        <li><strong>Tên dự án:</strong> tạm gọi là Vbread (có thể đổi sau) — chốt 17/09/2026.</li>
+      </ul>
+    </div>
+
+    <div class="name-field">
+      <label for="respondent">Người trả lời</label>
+      <input id="respondent" type="text" placeholder="Tên của anh / cộng sự" autocomplete="name">
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <p class="progress-label mono"><span id="progressCount">0</span>/22 câu đã có câu trả lời</p>
+    </div>
+  </header>
+
+  <form id="surveyForm">
+
+    <section class="cat">
+      <h2>Thương hiệu và quy mô</h2>
+      <div class="q"><div class="q-head"><span class="q-num mono">1</span><span class="q-text">Hiện có bao nhiêu xe? Dự kiến bao nhiêu xe sau 6 và 12 tháng?</span></div><textarea data-q="1"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">2</span><span class="q-text">Xe thuộc sở hữu của chuỗi, hay là đối tác nhận chuyển giao mô hình (theo bộ kit hợp tác)? Đối tác có tự xem báo cáo của mình không?</span></div><textarea data-q="2"></textarea></div>
+    </section>
+
+    <section class="cat">
+      <h2>Ca bán và nhân sự</h2>
+      <div class="q"><div class="q-head"><span class="q-num mono">3</span><span class="q-text">Mỗi xe bán mấy ca/ngày, khung giờ nào? Một ca có mấy nhân viên?</span></div><textarea data-q="3"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">4</span><span class="q-text">Một xe có đổi điểm bán trong ngày không?</span></div><textarea data-q="4"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">5</span><span class="q-text">Có bàn giao giữa ca (người này giao cho người kia) không? Có đếm tiền khi bàn giao không?</span></div><textarea data-q="5"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">6</span><span class="q-text">Ai phân công ca: quản lý hay chủ chuỗi? Phân công trước bao lâu?</span></div><textarea data-q="6"></textarea></div>
+    </section>
+
+    <section class="cat">
+      <h2>Hàng hóa</h2>
+      <div class="q"><div class="q-head"><span class="q-num mono">7</span><span class="q-text">Xe nhận hàng từ đâu (kho, nhà cung cấp, bếp)? Ai giao? Giao mấy lần/ngày?</span></div><textarea data-q="7"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">8</span><span class="q-text">Hàng nào cần theo dõi: chỉ bánh nền, hay cả pate, chả, rau, sốt, bao bì? Đơn vị tính là gì?</span></div><textarea data-q="8"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">9</span><span class="q-text">Hàng còn lại cuối ca được xử lý thế nào: để lại xe, trả về kho, hay hủy?</span></div><textarea data-q="9"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">10</span><span class="q-text">Các lý do hao hụt thường gặp?</span></div><textarea data-q="10"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">11</span><span class="q-text">Có cần chụp ảnh khi nhận hàng hoặc hủy hàng không?</span></div><textarea data-q="11"></textarea></div>
+    </section>
+
+    <section class="cat">
+      <h2>Bán hàng và tiền</h2>
+      <div class="q"><div class="q-head"><span class="q-num mono">12</span><span class="q-text">Danh sách món và giá hiện tại? Giá có khác nhau theo xe hoặc điểm bán không?</span></div><textarea data-q="12"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">13</span><span class="q-text">Giảm giá kiểu nào: theo %, theo số tiền, combo, mã khuyến mãi? Ai được phép giảm?</span></div><textarea data-q="13"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">14</span><span class="q-text">Phương thức thanh toán: tiền mặt, chuyển khoản, QR, ví điện tử, app giao hàng?</span></div><textarea data-q="14"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">15</span><span class="q-text">Tiền lẻ đầu ca thường bao nhiêu? Tiền cuối ca nộp cho ai?</span></div><textarea data-q="15"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">16</span><span class="q-text">Chênh lệch bao nhiêu thì phải báo quản lý? Ai chịu trách nhiệm chênh lệch?</span></div><textarea data-q="16"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">17</span><span class="q-text">Có cần in bill hoặc xuất hóa đơn điện tử không?</span></div><textarea data-q="17"></textarea></div>
+    </section>
+
+    <section class="cat">
+      <h2>Thiết bị và vận hành</h2>
+      <div class="q"><div class="q-head"><span class="q-num mono">18</span><span class="q-text">Nhân viên dùng điện thoại riêng hay máy của chuỗi? Android hay iPhone?</span></div><textarea data-q="18"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">19</span><span class="q-text">Tại điểm bán có hay mất mạng không?</span></div><textarea data-q="19"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">20</span><span class="q-text">Chủ chuỗi muốn xem những con số nào đầu tiên mỗi sáng?</span></div><textarea data-q="20"></textarea></div>
+    </section>
+
+    <section class="cat">
+      <h2>Ngân sách</h2>
+      <div class="q"><div class="q-head"><span class="q-num mono">21</span><span class="q-text">Ngân sách chi phí dịch vụ hằng tháng dự kiến (máy chủ, cơ sở dữ liệu, tên miền)?</span></div><textarea data-q="21"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">22</span><span class="q-text">Có muốn thuê người kiểm tra lại code trước khi dùng thật không?</span></div><textarea data-q="22"></textarea></div>
+    </section>
+
+    <div class="actions">
+      <button type="button" class="btn" id="exportBtn">Xuất bản tổng hợp</button>
+      <button type="button" class="btn ghost" id="clearBtn">Xóa nội dung đã nhập</button>
+    </div>
+  </form>
+
+  <section class="export-out" id="exportOut" hidden>
+    <p class="lede" style="margin:0 0 0.75rem;">Sao chép nội dung dưới đây gửi cho Claude, hoặc dán trực tiếp vào <code>docs/02-cau-hoi-can-chot.md</code> rồi commit — lịch sử Git chính là bằng chứng xác nhận (ai chốt, lúc nào).</p>
+      <div class="actions">
+        <button type="button" class="btn" id="copyBtn">Sao chép</button>
+        <button type="button" class="btn ghost" id="downloadBtn">Tải file .md</button>
+      </div>
+      <p class="copy-msg" id="copyMsg"></p>
+      <textarea id="exportText" readonly></textarea>
+  </section>
+
+  <footer class="site-footer">
+    <p><a href="index.html">← Quay lại lộ trình xây dựng</a> · nội dung câu hỏi lấy từ <code>docs/02-cau-hoi-can-chot.md</code>.</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var STORAGE_KEY = "vbread-khaosat-v2";
+  var TOTAL = 22;
+  var textareas = Array.prototype.slice.call(document.querySelectorAll("textarea[data-q]"));
+  var respondent = document.getElementById("respondent");
+  var progressFill = document.getElementById("progressFill");
+  var progressCount = document.getElementById("progressCount");
+
+  var CATEGORIES = [
+    { name: "Thương hiệu và quy mô", ids: [1,2] },
+    { name: "Ca bán và nhân sự", ids: [3,4,5,6] },
+    { name: "Hàng hóa", ids: [7,8,9,10,11] },
+    { name: "Bán hàng và tiền", ids: [12,13,14,15,16,17] },
+    { name: "Thiết bị và vận hành", ids: [18,19,20] },
+    { name: "Ngân sách", ids: [21,22] }
+  ];
+
+  function loadDraft(){
+    var raw;
+    try { raw = localStorage.getItem(STORAGE_KEY); } catch (e) { return; }
+    if (!raw) return;
+    var data;
+    try { data = JSON.parse(raw); } catch (e) { return; }
+    if (data.name) respondent.value = data.name;
+    textareas.forEach(function(t){
+      var v = data.answers && data.answers[t.dataset.q];
+      if (v) { t.value = v; t.classList.add("answered"); }
+    });
+    updateProgress();
+  }
+
+  function saveDraft(){
+    var answers = {};
+    textareas.forEach(function(t){ if (t.value.trim()) answers[t.dataset.q] = t.value; });
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ name: respondent.value, answers: answers }));
+    } catch (e) { /* bỏ qua nếu trình duyệt chặn lưu trữ */ }
+  }
+
+  function updateProgress(){
+    var answered = textareas.filter(function(t){ return t.value.trim().length > 0; }).length;
+    progressCount.textContent = answered;
+    progressFill.style.width = Math.round((answered / TOTAL) * 100) + "%";
+  }
+
+  textareas.forEach(function(t){
+    t.addEventListener("input", function(){
+      t.classList.toggle("answered", t.value.trim().length > 0);
+      updateProgress();
+      saveDraft();
+    });
+  });
+  respondent.addEventListener("input", saveDraft);
+
+  document.getElementById("clearBtn").addEventListener("click", function(){
+    if (!window.confirm("Xóa toàn bộ nội dung đã nhập trên trình duyệt này?")) return;
+    textareas.forEach(function(t){ t.value = ""; t.classList.remove("answered"); });
+    respondent.value = "";
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    updateProgress();
+    document.getElementById("exportOut").hidden = true;
+  });
+
+  function buildMarkdown(){
+    var now = new Date();
+    var fmt = new Intl.DateTimeFormat("vi-VN", {
+      timeZone: "Asia/Ho_Chi_Minh", day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit"
+    });
+    var parts = fmt.formatToParts(now).reduce(function(acc, p){ acc[p.type] = p.value; return acc; }, {});
+    var stamp = parts.day + "/" + parts.month + "/" + parts.year + " " + parts.hour + ":" + parts.minute;
+
+    var lines = [];
+    lines.push("# Câu hỏi cần chốt trước khi lập trình");
+    lines.push("");
+    lines.push("Người trả lời: " + (respondent.value.trim() || "_(chưa ghi tên)_"));
+    lines.push("Thời điểm xuất: " + stamp + " (giờ Việt Nam)");
+    lines.push("");
+
+    var byId = {};
+    textareas.forEach(function(t){ byId[t.dataset.q] = t.value.trim(); });
+
+    var qTexts = {};
+    document.querySelectorAll(".q").forEach(function(q){
+      var num = q.querySelector(".q-num").textContent.trim();
+      qTexts[num] = q.querySelector(".q-text").textContent.trim();
+    });
+
+    CATEGORIES.forEach(function(cat){
+      lines.push("## " + cat.name);
+      cat.ids.forEach(function(id){
+        lines.push(id + ". " + qTexts[id]);
+        lines.push("   Trả lời: " + (byId[id] || "_(chưa trả lời)_"));
+      });
+      lines.push("");
+    });
+
+    return lines.join("\n");
+  }
+
+  document.getElementById("exportBtn").addEventListener("click", function(){
+    var md = buildMarkdown();
+    document.getElementById("exportText").value = md;
+    document.getElementById("exportOut").hidden = false;
+    document.getElementById("exportOut").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  document.getElementById("copyBtn").addEventListener("click", function(){
+    var text = document.getElementById("exportText").value;
+    var msg = document.getElementById("copyMsg");
+    function ok(){ msg.textContent = "Đã sao chép."; setTimeout(function(){ msg.textContent = ""; }, 2500); }
+    function fail(){ msg.textContent = "Không sao chép được — anh chọn thủ công trong khung văn bản rồi Ctrl+C."; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(ok, fail);
+    } else {
+      var ta = document.getElementById("exportText");
+      ta.focus(); ta.select();
+      try { document.execCommand("copy"); ok(); } catch (e) { fail(); }
+    }
+  });
+
+  document.getElementById("downloadBtn").addEventListener("click", function(){
+    var text = document.getElementById("exportText").value;
+    var blob = new Blob([text], { type: "text/markdown;charset=utf-8" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "cau-hoi-can-chot-tra-loi.md";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  loadDraft();
+})();
+</script>
+</body>
+</html>

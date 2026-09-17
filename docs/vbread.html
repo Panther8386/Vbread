@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vbread.md</title>
+<meta name="description" content="Quy tắc và phạm vi làm việc của dự án Vbread App — bản trình diễn nội dung Vbread.md.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="page">
+
+  <a class="crumb" href="index.html">← Lộ trình Vbread App</a>
+
+  <header class="hero">
+    <p class="eyebrow">Tài liệu dự án · chỉ đọc</p>
+    <h1>Vbread.md</h1>
+    <p class="lede">Quy tắc và phạm vi làm việc cho toàn bộ dự án Vbread App — mọi người tham gia (kể cả trợ lý AI) đều theo tài liệu này.</p>
+  </header>
+
+  <div class="prose">
+
+    <h2>Bối cảnh</h2>
+    <ul>
+      <li>Chủ dự án không phải lập trình viên. Luôn giải thích bằng tiếng Việt, câu ngắn, dễ hiểu; nói rõ sắp làm gì trước khi sửa nhiều file.</li>
+      <li>Nghiệp vụ chi tiết: <a href="nghiep-vu.html">Nghiệp vụ MVP</a></li>
+      <li>Câu hỏi còn mở: <a href="khao-sat.html">Khảo sát 23 câu hỏi cần chốt</a></li>
+      <li>Khi gặp điều chưa rõ về nghiệp vụ: hỏi lại, không tự đoán. Nếu buộc phải giả định, ghi rõ <strong>“GIẢ ĐỊNH”</strong> trong câu trả lời và thêm vào danh sách câu hỏi cần chốt.</li>
+    </ul>
+
+    <h2>Người dùng và phân quyền</h2>
+    <ul>
+      <li><code>owner</code> (chủ chuỗi): xem toàn bộ, cấu hình hệ thống.</li>
+      <li><code>manager</code> (quản lý vận hành): chỉ thấy các xe/điểm bán được phân công.</li>
+      <li><code>staff</code> (nhân viên bán hàng): chỉ thấy ca của mình; nhận hàng, bán hàng, kiểm kê, chốt ca.</li>
+      <li>Phân quyền phải được kiểm tra ở cơ sở dữ liệu (Row Level Security của Supabase), không chỉ ẩn nút trên giao diện.</li>
+    </ul>
+
+    <h2>Phạm vi MVP (chỉ làm những phần này)</h2>
+    <ol>
+      <li>Danh mục: xe, điểm bán, sản phẩm, giá bán, tài khoản nhân viên.</li>
+      <li>Ca bán: phân công, mở ca (hàng + tiền đầu ca), bàn giao, đóng ca.</li>
+      <li>Bán hàng: sản phẩm, số lượng, giảm giá, phương thức thanh toán.</li>
+      <li>Hàng hóa: nhận, bán, trả, hủy/hao hụt, kiểm kê, tồn cuối ca.</li>
+      <li>Đối soát tiền: tiền phải có so với tiền thực đếm, chênh lệch và lý do.</li>
+      <li>Báo cáo theo ngày, ca, xe, điểm bán.</li>
+    </ol>
+    <p><strong>KHÔNG làm trong MVP</strong> (chỉ làm khi chủ dự án yêu cầu): đặt hàng online, điều phối đơn, QC/chấm điểm, tài sản, KPI, bếp trung tâm, công thức/giá vốn, tính lương, khách hàng thân thiết, tích hợp bên ngoài.</p>
+
+    <h2>Công nghệ</h2>
+    <ul>
+      <li>Next.js (App Router) + TypeScript, Tailwind CSS, shadcn/ui.</li>
+      <li>Supabase: PostgreSQL, Auth, Row Level Security. Thay đổi cấu trúc dữ liệu luôn bằng file migration trong <code>supabase/migrations/</code>.</li>
+      <li>Giao diện ưu tiên điện thoại (mobile-first), cài được lên màn hình chính (PWA).</li>
+      <li>Kiểm thử: Vitest cho logic tính toán; Playwright cho luồng chính.</li>
+      <li>Triển khai: Vercel (web) + Supabase (dữ liệu).</li>
+    </ul>
+
+    <h2>Quy ước bắt buộc</h2>
+    <ul>
+      <li>Giao diện 100% tiếng Việt. Tên biến, bảng, cột trong code bằng tiếng Anh.</li>
+      <li>Tiền: số nguyên đồng (kiểu <code>bigint</code>), không dùng số thập phân. Hiển thị dạng <code>25.000 ₫</code>.</li>
+      <li>Thời gian: lưu <code>timestamptz</code> (UTC), hiển thị theo <code>Asia/Ho_Chi_Minh</code>, định dạng <code>dd/MM/yyyy HH:mm</code>. “Ngày kinh doanh” tính theo giờ Việt Nam.</li>
+      <li>Số lượng hàng: số nguyên theo đơn vị của sản phẩm (ổ, gói, hộp...).</li>
+      <li>Không xóa cứng dữ liệu nghiệp vụ; dùng trạng thái hoặc <code>deleted_at</code>.</li>
+      <li>Mọi thay đổi trên ca đã chốt, giá bán, phiếu kho, đối soát tiền phải ghi vào bảng <code>audit_logs</code> (ai, lúc nào, giá trị cũ, giá trị mới, lý do).</li>
+      <li>Công thức tính (tồn, tiền phải có, chênh lệch) viết thành hàm riêng trong <code>src/lib/</code> và có test.</li>
+      <li>Nút bấm trên điện thoại cao tối thiểu 44px; thao tác bán một món không quá 2 chạm.</li>
+    </ul>
+
+    <h2>An toàn</h2>
+    <ul>
+      <li>Không bao giờ đọc, in ra hoặc sửa <code>.env.local</code>, trừ khi chủ dự án yêu cầu rõ.</li>
+      <li>Khóa <code>SUPABASE_SERVICE_ROLE_KEY</code> chỉ dùng phía máy chủ, không bao giờ đưa vào code chạy trên trình duyệt.</li>
+      <li>Mọi bảng mới phải bật Row Level Security kèm chính sách truy cập.</li>
+      <li>Không chạy lệnh xóa dữ liệu, reset cơ sở dữ liệu thật hoặc <code>git push --force</code> khi chưa hỏi.</li>
+    </ul>
+
+    <h2>Cách làm việc</h2>
+    <ul>
+      <li>Việc lớn: lập kế hoạch trước, chờ duyệt rồi mới sửa code.</li>
+      <li>Làm từng bước nhỏ; sau mỗi bước chạy <code>npm run lint</code> và <code>npm test</code>, báo kết quả, rồi đề xuất nội dung commit.</li>
+      <li>Kết thúc mỗi tính năng: cập nhật <code>docs/nhat-ky-tien-do.md</code> (đã làm gì, còn gì, lưu ý).</li>
+    </ul>
+
+    <h2>Lệnh thường dùng</h2>
+    <ul>
+      <li><code>npm run dev</code>: chạy thử trên máy tại http://localhost:3000</li>
+      <li><code>npm run lint</code>: kiểm tra lỗi cú pháp</li>
+      <li><code>npm test</code>: chạy kiểm thử</li>
+    </ul>
+
+    <p class="note">Nội dung này là bản trình diễn của file <code>CLAUDE.md</code> trong repo — nguồn dữ liệu thật để trợ lý AI đọc và áp dụng khi làm việc trên dự án. Sửa nội dung ở đó, trang này sẽ được cập nhật theo.</p>
+  </div>
+
+  <footer class="site-footer">
+    <p><a href="index.html">← Quay lại lộ trình xây dựng</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
