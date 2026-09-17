@@ -51,6 +51,56 @@ Bộ câu hỏi cũ (bên dưới, mục "Lưu trữ vòng 1") viết theo kiể
 21. Hiện có bao nhiêu xe? Dự kiến bao nhiêu xe sau 6 và 12 tháng?
 22. MVP có nên theo dõi kho tới từng loại nguyên liệu (pate, chả, rau, sốt...) như 2 đối tác đã đề xuất, hay giữ đơn giản (chỉ món bán + bánh nền + bao bì) rồi mở rộng sau?
 
+## Câu trả lời vòng 2 (bộ câu hỏi mới) — Đinh Xuân Vĩnh, 17/09 17:35
+
+Trả lời đầy đủ, dứt khoát cả 22 câu bắt buộc và 24 câu tùy chọn. Đang chờ thêm cộng sự khác trả lời trước khi tổng hợp thành quyết định cuối — **chưa đưa vào CLAUDE.md/docs/01.**
+
+### Ca bán
+1. Không quy định chung toàn hệ thống — mỗi đối tác tự quyết.
+2. Bàn giao ca: chỉ áp dụng khi đối tác chạy nhiều hơn 1 ca/ngày, tự chọn có bàn giao.
+3. Ai phân công ca: chính đối tác/chủ xe.
+
+### Hàng hóa
+4. Bắt buộc mua nguyên liệu/bánh nền từ nguồn cung do Vbread chỉ định.
+5. Hàng cuối ca: tùy mỗi đối tác tự xử lý.
+6. Lý do hao hụt: định lượng không đều, hư hỏng do thời tiết cực đoan, sự cố ngoài dự kiến.
+
+### Bán hàng và tiền
+7. Giá bán: mỗi đối tác tự đặt giá riêng cho xe của mình.
+8. Giảm giá: đối tác tự quyết — có thể theo hoặc không theo chương trình chung của Vbread.
+9. Tiền cuối ca: nên xây dựng sẵn cơ chế có phần phải nộp về Vbread (phí nhượng quyền theo %), áp dụng theo từng giai đoạn.
+10. Chênh lệch tiền: đúng — người đứng ca giải trình trước, đối tác/chủ xe chịu trách nhiệm cuối.
+11. In bill: mỗi đối tác tự chọn có in hay không.
+
+### Thiết bị và báo cáo
+12. Thiết bị: tùy đối tác tự chọn máy, không có tiêu chuẩn chung.
+13. Số liệu Vbread muốn xem mỗi sáng: số xe đang bán / không bán, doanh thu các xe mới trong 30 ngày đầu, xe chưa đạt target ngày, tổng doanh thu, % đạt mục tiêu doanh thu.
+
+### Ngân sách và kiểm tra
+14. Ngân sách dịch vụ: khoảng 3.000.000 ₫/tháng.
+15. Có, muốn thuê người kiểm tra code trước khi dùng thật.
+
+### Mô hình nhượng quyền
+16. Kit chuyển giao: cần màn hình quản lý danh mục (thêm/sửa/xóa) và build thành combo áp dụng theo từng thời điểm.
+17. Phí nhượng quyền: cho chọn 1 trong 2 phương án — trả 1 lần, hoặc trả định kỳ (% ban đầu + % hàng tháng trong N tháng) — cần cho thiết lập chi tiết từng tùy chọn.
+18. Hợp đồng: thời hạn 12/24/36 tháng tùy đối tác chọn; điều kiện chấm dứt là đối tác không còn công nợ.
+19. Giấy phép kinh doanh/ATTP: Vbread chịu trách nhiệm.
+20. Mục đích app: cả hai — đối tác tự quản lý xe, và Vbread giám sát nhiều đối tác cùng lúc.
+
+### Phạm vi MVP
+21. Hiện có 0 xe. Dự kiến 30–50 xe sau 6–12 tháng.
+22. MVP nên theo dõi kho tới từng loại nguyên liệu (không giữ đơn giản).
+
+### Phần 2: Định hướng sau MVP
+- **01 Đặt hàng online**: tất cả kênh; xác nhận đơn cả 2 cách (ưu tiên xe nhận trực tiếp); có cả giao tận nơi (thu phí) và tự đến lấy, khách chọn lúc đặt.
+- **02 QC/chấm điểm**: cả quản lý và khách chấm; tiêu chí: chất lượng sản phẩm, thái độ, tốc độ phục vụ; ảnh hưởng cả 3 (thưởng phạt, xếp hạng, theo dõi).
+- **03 Quản lý tài sản**: theo dõi vật tư/thiết bị trong kit ban đầu (bảo hành, bảo trì, vòng đời); cần lịch bảo trì/khấu hao; đối tác/chủ xe chịu trách nhiệm khi hư/mất.
+- **04 KPI**: đo thời gian hoạt động, hiệu quả theo múi giờ, tốc độ xử lý đơn, đánh giá quản lý & khách; tính theo cả ca; dùng cho cả 3 mục đích.
+- **05 Bếp trung tâm**: chưa có, còn dự kiến; định mức chưa có — cần màn hình tự thêm/sửa/xóa; giá vốn biến động theo thị trường.
+- **06 Lương**: cho chọn tùy phương án (giờ/ca/doanh số); có phụ cấp/thưởng; cần xuất bảng lương theo kỳ.
+- **07 Khách hàng thân thiết**: nhận diện qua cả 3 cách; khách tự đổi thưởng khi đủ điểm; cho đối tác/chủ xe tự chọn có áp dụng hay không.
+- **08 Tích hợp**: ưu tiên OTA, Facebook, Zalo; cần đồng bộ 2 chiều; chủ nền tảng (Vbread) quản lý tài khoản/API key.
+
 ## Lưu trữ vòng 1 (bộ câu hỏi cũ, đã có người trả lời — giữ lại làm tư liệu)
 
 ### Thương hiệu và quy mô
