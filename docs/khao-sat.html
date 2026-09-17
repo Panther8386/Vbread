@@ -5,53 +5,55 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Khảo sát chốt nghiệp vụ</title>
 <meta name="description" content="Trả lời các câu hỏi nghiệp vụ cần chốt trước khi lập trình Vbread App.">
+<link rel="icon" href="assets/icons/favicon.ico">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <link rel="stylesheet" href="assets/site.css">
 <style>
   .progress-wrap{ margin-top:1.25rem; }
-  .progress-bar{ height:8px; border-radius:999px; background:var(--line); overflow:hidden; }
-  .progress-fill{ height:100%; background:var(--crust); border-radius:999px; transition:width 0.2s ease; width:0%; }
-  .progress-label{ font-family:"IBM Plex Mono",monospace; font-size:0.78rem; color:var(--ink-soft); margin-top:0.4rem; }
+  .progress-bar{ height:8px; border-radius:999px; background:var(--color-border); overflow:hidden; }
+  .progress-fill{ height:100%; background:var(--color-primary); border-radius:999px; transition:width 0.2s ease; width:0%; }
+  .progress-label{ font-family:"IBM Plex Mono",monospace; font-size:0.78rem; color:var(--color-muted); margin-top:0.4rem; }
 
   .name-field{ margin-top:1.25rem; display:flex; flex-direction:column; gap:0.35rem; max-width:24rem; }
-  .name-field label{ font-family:"IBM Plex Mono",monospace; font-size:0.7rem; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink-soft); }
+  .name-field label{ font-family:"IBM Plex Mono",monospace; font-size:0.7rem; letter-spacing:0.05em; text-transform:uppercase; color:var(--color-muted); }
   .name-field input{
-    font:inherit; padding:0.6rem 0.7rem; border-radius:6px; border:1px solid var(--line);
-    background:var(--paper-raised); color:var(--ink); min-height:44px;
+    font:inherit; padding:0.6rem 0.7rem; border-radius:8px; border:1px solid var(--color-border);
+    background:var(--color-surface); color:var(--color-foreground); min-height:44px;
   }
 
   .decided{ margin-top:1.75rem; }
   .decided ul{ list-style:none; margin:0.5rem 0 0; padding:0; display:flex; flex-direction:column; gap:0.4rem; }
-  .decided li{ font-size:0.9rem; color:var(--ink-soft); }
-  .decided strong{ color:var(--ink); }
+  .decided li{ font-size:0.9rem; color:var(--color-muted); }
+  .decided strong{ color:var(--color-foreground); }
 
   .cat{ margin: 2.25rem 0 0; }
-  .cat h2{ font-size:1.05rem; font-weight:700; color:var(--crust-text); margin-bottom:1rem; }
+  .cat h2{ font-size:1.05rem; font-weight:700; color:var(--color-primary); margin-bottom:1rem; }
 
-  .part2-divider{ margin: 3rem 0 0; padding-top:1.75rem; border-top:2px dashed var(--line); }
+  .part2-divider{ margin: 3rem 0 0; padding-top:1.75rem; border-top:2px dashed var(--color-border); }
   .part2-divider h2{ font-size:1.25rem; margin:0.3rem 0 0.4rem; }
-  .part2-divider .lede-sm{ font-size:0.9rem; color:var(--ink-soft); margin:0; max-width:56ch; }
+  .part2-divider .lede-sm{ font-size:0.9rem; color:var(--color-muted); margin:0; max-width:56ch; }
 
   .q{ margin-bottom:1rem; }
   .q-head{ display:flex; gap:0.6rem; align-items:baseline; margin-bottom:0.5rem; }
-  .q-num{ font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--ink-soft); font-size:0.85rem; min-width:1.6rem; }
+  .q-num{ font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--color-muted); font-size:0.85rem; min-width:1.6rem; }
   .q-text{ font-size:0.98rem; }
   .q textarea{
     width:100%; min-height:64px; font:inherit; font-size:0.94rem; padding:0.65rem 0.8rem;
-    border-radius:6px; border:1px solid var(--line); background:var(--paper-raised); color:var(--ink);
+    border-radius:8px; border:1px solid var(--color-border); background:var(--color-surface); color:var(--color-foreground);
     resize:vertical;
   }
-  .q textarea:focus{ outline:2px solid var(--crust); outline-offset:1px; }
-  .q textarea.answered{ border-left:3px solid var(--ok); }
+  .q textarea:focus{ outline:2px solid var(--color-primary); outline-offset:1px; }
+  .q textarea.answered{ border-left:3px solid var(--color-secondary); }
 
   .actions{ display:flex; flex-wrap:wrap; gap:0.75rem; margin-top:1.5rem; }
-  .btn.ghost{ background:transparent; color:var(--crust-text); }
+  .btn.ghost{ background:transparent; color:var(--color-primary); }
 
   .export-out{ margin-top:1.25rem; }
   .export-out textarea{
     width:100%; min-height:220px; font-family:"IBM Plex Mono",monospace; font-size:0.8rem; line-height:1.5;
-    padding:0.9rem; border-radius:6px; border:1px solid var(--line); background:var(--paper-raised); color:var(--ink);
+    padding:0.9rem; border-radius:8px; border:1px solid var(--color-border); background:var(--color-surface); color:var(--color-foreground);
   }
-  .copy-msg{ font-size:0.82rem; color:var(--ok); margin-top:0.5rem; min-height:1.2em; }
+  .copy-msg{ font-size:0.82rem; color:var(--color-secondary); margin-top:0.5rem; min-height:1.2em; }
   [hidden]{ display:none !important; }
 </style>
 </head>
@@ -61,6 +63,7 @@
   <a class="crumb" href="index.html">← Lộ trình Vbread App</a>
 
   <header class="hero">
+    <img class="brand-logo" src="assets/logo/vbread-logo-horizontal.svg" alt="Vbread" width="150" height="49">
     <p class="eyebrow">Trước GĐ-00 · phiếu chốt nghiệp vụ</p>
     <h1>Khảo sát chốt nghiệp vụ</h1>
     <p class="lede">22 câu hỏi trong <a href="vbread.html">Vbread.md</a> đang chờ chủ chuỗi và cộng sự chốt lại, chia theo 6 nhóm. Trả lời trực tiếp dưới mỗi câu — nội dung được lưu tạm ngay trên máy anh trong lúc gõ.</p>

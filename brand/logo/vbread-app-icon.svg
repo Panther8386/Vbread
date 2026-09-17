@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Vbread app icon</title>
+  <desc id="desc">Maskable app icon with the Vbread bread-V mark.</desc>
+  <defs>
+    <mask id="bread-cuts">
+      <rect width="512" height="512" fill="white"/>
+      <g fill="black" transform="rotate(-24 352 206)">
+        <rect x="314" y="130" width="78" height="24" rx="12"/>
+        <rect x="314" y="184" width="78" height="24" rx="12"/>
+        <rect x="314" y="238" width="78" height="24" rx="12"/>
+      </g>
+    </mask>
+  </defs>
+  <rect width="512" height="512" rx="104" fill="#C83B22"/>
+  <g fill="#FFF8E8">
+    <path d="M126 153c-6-20 6-34 26-38l50-10c20-4 32 6 38 26l62 186-46 92c-10 20-28 20-36 0l-94-256Z"/>
+    <path mask="url(#bread-cuts)" d="M238 410h64c18 0 30-8 38-26l96-246c8-20-2-34-22-40l-48-12c-20-6-34 4-42 24L224 378c-8 20-2 32 14 32Z"/>
+  </g>
+</svg>

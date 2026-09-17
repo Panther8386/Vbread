@@ -1,0 +1,31 @@
+:root {
+  --color-primary: #c83b22;
+  --color-primary-foreground: #fff8e8;
+  --color-secondary: #2f6b45;
+  --color-secondary-foreground: #ffffff;
+  --color-accent: #f2b544;
+  --color-accent-foreground: #20201d;
+  --color-background: #fff8e8;
+  --color-surface: #ffffff;
+  --color-foreground: #20201d;
+  --color-muted: #6f726c;
+  --color-border: #ddd8cc;
+
+  --font-heading: "Be Vietnam Pro", sans-serif;
+  --font-body: "IBM Plex Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+.dark {
+  --color-primary: #f06445;
+  --color-primary-foreground: #18110f;
+  --color-secondary: #65b985;
+  --color-secondary-foreground: #0e1a13;
+  --color-accent: #f2b544;
+  --color-accent-foreground: #20201d;
+  --color-background: #121816;
+  --color-surface: #1b2420;
+  --color-foreground: #fff8e8;
+  --color-muted: #aeb8b0;
+  --color-border: #36423c;
+}

@@ -5,14 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nghiệp vụ MVP</title>
 <meta name="description" content="Nghiệp vụ MVP: vận hành chuỗi xe bánh mì Vbread — mô hình, menu, luồng ca bán, công thức, dữ liệu và báo cáo.">
+<link rel="icon" href="assets/icons/favicon.ico">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <link rel="stylesheet" href="assets/site.css">
 <style>
   .prose li.xn, .prose li.gd{ list-style:none; margin-left:-1.3rem; padding-left:1.3rem; position:relative; }
   .prose li.xn::before, .prose li.gd::before{
     content:"XN"; position:absolute; left:0; top:0.15rem; font-family:"IBM Plex Mono",monospace;
-    font-size:0.62rem; font-weight:600; letter-spacing:0.03em; padding:0 0.3rem; border-radius:3px; border:1px solid var(--ok); color:var(--ok);
+    font-size:0.62rem; font-weight:600; letter-spacing:0.03em; padding:0 0.3rem; border-radius:3px; border:1px solid var(--color-secondary); color:var(--color-secondary);
   }
-  .prose li.gd::before{ content:"GĐ"; border-color:var(--warn); color:var(--warn); }
+  .prose li.gd::before{ content:"GĐ"; border-color:var(--color-accent); color:var(--color-accent); }
   .prose li.xn, .prose li.gd{ padding-left:2.6rem; }
   .prose li.xn::before, .prose li.gd::before{ left:0; }
 </style>
@@ -23,6 +25,7 @@
   <a class="crumb" href="index.html">← Lộ trình Vbread App</a>
 
   <header class="hero">
+    <img class="brand-logo" src="assets/logo/vbread-logo-horizontal.svg" alt="Vbread" width="150" height="49">
     <p class="eyebrow">Tài liệu nghiệp vụ · chỉ đọc</p>
     <h1>Nghiệp vụ MVP</h1>
     <p class="lede">Vận hành chuỗi xe bánh mì lưu động. <span class="tag tag--ok">XN</span> đã xác nhận · <span class="tag tag--warn">GĐ</span> giả định, cần chốt trong <a href="khao-sat.html">trang khảo sát</a>.</p>

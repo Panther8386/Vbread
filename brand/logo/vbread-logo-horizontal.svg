@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 256" role="img" aria-labelledby="title desc">
+  <title id="title">Vbread horizontal logo</title>
+  <desc id="desc">Vbread wordmark paired with the bread-V symbol.</desc>
+  <defs>
+    <mask id="bread-cuts">
+      <rect width="256" height="256" fill="white"/>
+      <g fill="black" transform="rotate(-24 176 103)">
+        <rect x="157" y="65" width="39" height="12" rx="6"/>
+        <rect x="157" y="92" width="39" height="12" rx="6"/>
+        <rect x="157" y="119" width="39" height="12" rx="6"/>
+      </g>
+    </mask>
+  </defs>
+  <g fill="#C83B22">
+    <path d="M47 53C44 43 50 37 60 35l25-5c10-2 16 3 19 13l39 116-29 58c-5 10-14 10-18 0L47 53Z"/>
+    <path mask="url(#bread-cuts)" d="M105 218h32c9 0 15-4 19-13l59-151c4-10-1-17-11-20l-24-6c-10-3-17 2-21 12L98 202c-4 10-1 16 7 16Z"/>
+  </g>
+  <text x="260" y="172" fill="#20201D" font-family="'Be Vietnam Pro', Arial, sans-serif" font-size="126" font-weight="900" letter-spacing="-7">Vbread</text>
+</svg>
