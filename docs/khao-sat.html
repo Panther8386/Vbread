@@ -66,12 +66,17 @@
     <img class="brand-logo" src="assets/logo/vbread-logo-horizontal.svg" alt="Vbread" width="150" height="49">
     <p class="eyebrow">Trước GĐ-00 · phiếu chốt nghiệp vụ</p>
     <h1>Khảo sát chốt nghiệp vụ</h1>
-    <p class="lede">22 câu hỏi trong <a href="vbread.html">Vbread.md</a> đang chờ chủ chuỗi và cộng sự chốt lại, chia theo 6 nhóm. Trả lời trực tiếp dưới mỗi câu — nội dung được lưu tạm ngay trên máy anh trong lúc gõ.</p>
+    <p class="lede">22 câu hỏi trong <a href="vbread.html">Vbread.md</a> đang chờ chủ chuỗi và cộng sự chốt lại, chia theo 7 nhóm — đã cập nhật cho đúng mô hình <strong>chuyển giao cho đối tác</strong>. Trả lời trực tiếp dưới mỗi câu — nội dung được lưu tạm ngay trên máy anh trong lúc gõ.</p>
 
     <div class="decided">
       <p class="ticket-code mono" style="margin:0;">Đã chốt</p>
       <ul>
-        <li><strong>Tên dự án:</strong> tạm gọi là Vbread (có thể đổi sau) — chốt 17/09/2026.</li>
+        <li><strong>Tên dự án:</strong> tạm gọi là Vbread (có thể đổi sau).</li>
+        <li><strong>Mô hình sở hữu xe:</strong> chuyển giao cho đối tác — đối tác tự làm chủ xe của họ.</li>
+        <li><strong>Đổi điểm bán:</strong> xe không đổi điểm bán trong ngày.</li>
+        <li><strong>Chụp ảnh:</strong> cần chụp ảnh khi nhận/hủy hàng.</li>
+        <li><strong>Thanh toán:</strong> hỗ trợ đầy đủ tiền mặt/chuyển khoản/QR/ví điện tử.</li>
+        <li><strong>Mạng:</strong> điểm bán có mạng, MVP chưa cần bán khi mất mạng.</li>
       </ul>
     </div>
 
@@ -89,49 +94,53 @@
   <form id="surveyForm">
 
     <section class="cat">
-      <h2>Thương hiệu và quy mô</h2>
-      <div class="q"><div class="q-head"><span class="q-num mono">1</span><span class="q-text">Hiện có bao nhiêu xe? Dự kiến bao nhiêu xe sau 6 và 12 tháng?</span></div><textarea data-q="1"></textarea></div>
-      <div class="q"><div class="q-head"><span class="q-num mono">2</span><span class="q-text">Xe thuộc sở hữu của chuỗi, hay là đối tác nhận chuyển giao mô hình (theo bộ kit hợp tác)? Đối tác có tự xem báo cáo của mình không?</span></div><textarea data-q="2"></textarea></div>
-    </section>
-
-    <section class="cat">
-      <h2>Ca bán và nhân sự</h2>
-      <div class="q"><div class="q-head"><span class="q-num mono">3</span><span class="q-text">Mỗi xe bán mấy ca/ngày, khung giờ nào? Một ca có mấy nhân viên?</span></div><textarea data-q="3"></textarea></div>
-      <div class="q"><div class="q-head"><span class="q-num mono">4</span><span class="q-text">Một xe có đổi điểm bán trong ngày không?</span></div><textarea data-q="4"></textarea></div>
-      <div class="q"><div class="q-head"><span class="q-num mono">5</span><span class="q-text">Có bàn giao giữa ca (người này giao cho người kia) không? Có đếm tiền khi bàn giao không?</span></div><textarea data-q="5"></textarea></div>
-      <div class="q"><div class="q-head"><span class="q-num mono">6</span><span class="q-text">Ai phân công ca: quản lý hay chủ chuỗi? Phân công trước bao lâu?</span></div><textarea data-q="6"></textarea></div>
+      <h2>Ca bán</h2>
+      <div class="q"><div class="q-head"><span class="q-num mono">1</span><span class="q-text">Số ca/ngày mỗi xe: có quy định chung cho toàn hệ thống không, hay mỗi đối tác tự quyết theo tình hình kinh doanh của mình?</span></div><textarea data-q="1"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">2</span><span class="q-text">Bàn giao giữa ca (đếm tiền khi đổi người): bắt buộc với tất cả đối tác, hay chỉ áp dụng khi đối tác chạy nhiều hơn 1 ca/ngày và tự chọn có bàn giao?</span></div><textarea data-q="2"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">3</span><span class="q-text">Trong 1 xe, ai phân công ca cho nhân viên: chính đối tác/chủ xe, hay người quản lý do đối tác đó thuê riêng?</span></div><textarea data-q="3"></textarea></div>
     </section>
 
     <section class="cat">
       <h2>Hàng hóa</h2>
-      <div class="q"><div class="q-head"><span class="q-num mono">7</span><span class="q-text">Xe nhận hàng từ đâu (kho, nhà cung cấp, bếp)? Ai giao? Giao mấy lần/ngày?</span></div><textarea data-q="7"></textarea></div>
-      <div class="q"><div class="q-head"><span class="q-num mono">8</span><span class="q-text">Hàng nào cần theo dõi: chỉ bánh nền, hay cả pate, chả, rau, sốt, bao bì? Đơn vị tính là gì?</span></div><textarea data-q="8"></textarea></div>
-      <div class="q"><div class="q-head"><span class="q-num mono">9</span><span class="q-text">Hàng còn lại cuối ca được xử lý thế nào: để lại xe, trả về kho, hay hủy?</span></div><textarea data-q="9"></textarea></div>
-      <div class="q"><div class="q-head"><span class="q-num mono">10</span><span class="q-text">Các lý do hao hụt thường gặp?</span></div><textarea data-q="10"></textarea></div>
-      <div class="q"><div class="q-head"><span class="q-num mono">11</span><span class="q-text">Có cần chụp ảnh khi nhận hàng hoặc hủy hàng không?</span></div><textarea data-q="11"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">4</span><span class="q-text">Đối tác có bắt buộc phải mua nguyên liệu/bánh nền từ nguồn cung do Vbread chỉ định không, hay được tự tìm nhà cung cấp riêng?</span></div><textarea data-q="4"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">5</span><span class="q-text">Hàng còn lại cuối ca: có quy định chung (để lại xe / trả kho / hủy) hay tùy mỗi đối tác tự xử lý?</span></div><textarea data-q="5"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">6</span><span class="q-text">Các lý do hao hụt thường gặp là gì (để đưa sẵn vào danh sách lý do trong app)?</span></div><textarea data-q="6"></textarea></div>
     </section>
 
     <section class="cat">
       <h2>Bán hàng và tiền</h2>
-      <div class="q"><div class="q-head"><span class="q-num mono">12</span><span class="q-text">Danh sách món và giá hiện tại? Giá có khác nhau theo xe hoặc điểm bán không?</span></div><textarea data-q="12"></textarea></div>
-      <div class="q"><div class="q-head"><span class="q-num mono">13</span><span class="q-text">Giảm giá kiểu nào: theo %, theo số tiền, combo, mã khuyến mãi? Ai được phép giảm?</span></div><textarea data-q="13"></textarea></div>
-      <div class="q"><div class="q-head"><span class="q-num mono">14</span><span class="q-text">Phương thức thanh toán: tiền mặt, chuyển khoản, QR, ví điện tử, app giao hàng?</span></div><textarea data-q="14"></textarea></div>
-      <div class="q"><div class="q-head"><span class="q-num mono">15</span><span class="q-text">Tiền lẻ đầu ca thường bao nhiêu? Tiền cuối ca nộp cho ai?</span></div><textarea data-q="15"></textarea></div>
-      <div class="q"><div class="q-head"><span class="q-num mono">16</span><span class="q-text">Chênh lệch bao nhiêu thì phải báo quản lý? Ai chịu trách nhiệm chênh lệch?</span></div><textarea data-q="16"></textarea></div>
-      <div class="q"><div class="q-head"><span class="q-num mono">17</span><span class="q-text">Có cần in bill hoặc xuất hóa đơn điện tử không?</span></div><textarea data-q="17"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">7</span><span class="q-text">Giá bán: Vbread quy định 1 mức giá chung cho toàn hệ thống, hay mỗi đối tác được tự đặt giá riêng cho xe của mình?</span></div><textarea data-q="7"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">8</span><span class="q-text">Giảm giá: đối tác tự quyết định, hay phải theo chương trình chung do Vbread đưa ra?</span></div><textarea data-q="8"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">9</span><span class="q-text">Tiền bán hàng cuối ca: đối tác giữ toàn bộ (vì là tiền của họ), hay có phần phải nộp về cho Vbread theo kỳ (ví dụ phí nhượng quyền tính theo % doanh số)?</span></div><textarea data-q="9"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">10</span><span class="q-text">Khi có chênh lệch tiền: người đứng ca chịu trách nhiệm giải trình trước, đối tác/chủ xe chịu trách nhiệm cuối cùng — cách hiểu này đúng không?</span></div><textarea data-q="10"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">11</span><span class="q-text">In bill hoặc xuất hóa đơn điện tử: bắt buộc với mọi đối tác, hay để mỗi đối tác tự chọn?</span></div><textarea data-q="11"></textarea></div>
     </section>
 
     <section class="cat">
-      <h2>Thiết bị và vận hành</h2>
-      <div class="q"><div class="q-head"><span class="q-num mono">18</span><span class="q-text">Nhân viên dùng điện thoại riêng hay máy của chuỗi? Android hay iPhone?</span></div><textarea data-q="18"></textarea></div>
-      <div class="q"><div class="q-head"><span class="q-num mono">19</span><span class="q-text">Tại điểm bán có hay mất mạng không?</span></div><textarea data-q="19"></textarea></div>
-      <div class="q"><div class="q-head"><span class="q-num mono">20</span><span class="q-text">Chủ chuỗi muốn xem những con số nào đầu tiên mỗi sáng?</span></div><textarea data-q="20"></textarea></div>
+      <h2>Thiết bị và báo cáo</h2>
+      <div class="q"><div class="q-head"><span class="q-num mono">12</span><span class="q-text">Thiết bị bán hàng (điện thoại): Vbread có tiêu chuẩn chung không, hay tùy đối tác tự chọn máy?</span></div><textarea data-q="12"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">13</span><span class="q-text">Vbread (chủ đầu tư mô hình) muốn xem những con số nào đầu tiên mỗi sáng, tổng hợp từ tất cả đối tác?</span></div><textarea data-q="13"></textarea></div>
     </section>
 
     <section class="cat">
-      <h2>Ngân sách</h2>
-      <div class="q"><div class="q-head"><span class="q-num mono">21</span><span class="q-text">Ngân sách chi phí dịch vụ hằng tháng dự kiến (máy chủ, cơ sở dữ liệu, tên miền)?</span></div><textarea data-q="21"></textarea></div>
-      <div class="q"><div class="q-head"><span class="q-num mono">22</span><span class="q-text">Có muốn thuê người kiểm tra lại code trước khi dùng thật không?</span></div><textarea data-q="22"></textarea></div>
+      <h2>Ngân sách và kiểm tra</h2>
+      <div class="q"><div class="q-head"><span class="q-num mono">14</span><span class="q-text">Ngân sách chi phí dịch vụ hằng tháng (máy chủ, cơ sở dữ liệu, tên miền) do Vbread chi trả — dự kiến khoảng bao nhiêu?</span></div><textarea data-q="14"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">15</span><span class="q-text">Có muốn thuê người kiểm tra lại code trước khi đưa vào dùng thật không?</span></div><textarea data-q="15"></textarea></div>
+    </section>
+
+    <section class="cat">
+      <h2>Mô hình nhượng quyền</h2>
+      <div class="q"><div class="q-head"><span class="q-num mono">16</span><span class="q-text">Bộ kit chuyển giao cho đối tác gồm những gì (xe, thiết bị, đào tạo, lô nguyên liệu ban đầu...)?</span></div><textarea data-q="16"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">17</span><span class="q-text">Phí nhượng quyền: đối tác trả 1 lần khi nhận chuyển giao, hay trả định kỳ theo % doanh số? Nếu có tỷ lệ %, dự kiến bao nhiêu?</span></div><textarea data-q="17"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">18</span><span class="q-text">Hợp đồng với đối tác có thời hạn bao lâu? Điều kiện chấm dứt hợp đồng là gì?</span></div><textarea data-q="18"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">19</span><span class="q-text">Giấy phép kinh doanh và an toàn thực phẩm cho từng xe: Vbread hay đối tác chịu trách nhiệm?</span></div><textarea data-q="19"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">20</span><span class="q-text">App này chủ yếu để đối tác tự quản lý xe của họ, để Vbread giám sát nhiều đối tác cùng lúc, hay cả hai mục đích?</span></div><textarea data-q="20"></textarea></div>
+    </section>
+
+    <section class="cat">
+      <h2>Phạm vi MVP</h2>
+      <div class="q"><div class="q-head"><span class="q-num mono">21</span><span class="q-text">Hiện có bao nhiêu xe? Dự kiến bao nhiêu xe sau 6 và 12 tháng?</span></div><textarea data-q="21"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">22</span><span class="q-text">MVP có nên theo dõi kho tới từng loại nguyên liệu (pate, chả, rau, sốt...) như 2 đối tác đã đề xuất, hay giữ đơn giản (chỉ món bán + bánh nền + bao bì) rồi mở rộng sau?</span></div><textarea data-q="22"></textarea></div>
     </section>
 
     <div class="part2-divider">
@@ -220,7 +229,7 @@
 
 <script>
 (function(){
-  var STORAGE_KEY = "vbread-khaosat-v3";
+  var STORAGE_KEY = "vbread-khaosat-v4";
   var textareas = Array.prototype.slice.call(document.querySelectorAll("textarea[data-q]"));
   var requiredTextareas = textareas.filter(function(t){ return !t.hasAttribute("data-optional"); });
   var TOTAL = requiredTextareas.length;
@@ -229,12 +238,13 @@
   var progressCount = document.getElementById("progressCount");
 
   var CATEGORIES = [
-    { name: "Thương hiệu và quy mô", ids: [1,2] },
-    { name: "Ca bán và nhân sự", ids: [3,4,5,6] },
-    { name: "Hàng hóa", ids: [7,8,9,10,11] },
-    { name: "Bán hàng và tiền", ids: [12,13,14,15,16,17] },
-    { name: "Thiết bị và vận hành", ids: [18,19,20] },
-    { name: "Ngân sách", ids: [21,22] }
+    { name: "Ca bán", ids: [1,2,3] },
+    { name: "Hàng hóa", ids: [4,5,6] },
+    { name: "Bán hàng và tiền", ids: [7,8,9,10,11] },
+    { name: "Thiết bị và báo cáo", ids: [12,13] },
+    { name: "Ngân sách và kiểm tra", ids: [14,15] },
+    { name: "Mô hình nhượng quyền", ids: [16,17,18,19,20] },
+    { name: "Phạm vi MVP", ids: [21,22] }
   ];
 
   var FUTURE_CATEGORIES = [

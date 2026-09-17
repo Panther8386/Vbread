@@ -4,38 +4,168 @@ Trả lời ngay dưới mỗi câu, rồi chuyển các mục tương ứng tro
 
 ## Đã chốt
 
-- **Tên dự án**: tạm gọi là **Vbread** (có thể đổi sau). — chốt ngày 17/09/2026.
+- **Tên dự án**: tạm gọi là **Vbread** (có thể đổi sau). — chốt 17/09/2026.
+- **Mô hình sở hữu xe**: chuyển giao cho đối tác — đối tác tự làm chủ xe của họ. — chốt 17/09/2026, xác nhận bởi chủ dự án.
+- **Đổi điểm bán trong ngày**: xe không đổi điểm bán trong ngày. — cả 2 người trả lời vòng 1 đều xác nhận giống nhau.
+- **Chụp ảnh nhận/hủy hàng**: có, cần chụp ảnh. — cả 2 người trả lời vòng 1 đều xác nhận giống nhau.
+- **Phương thức thanh toán**: hỗ trợ đầy đủ (tiền mặt, chuyển khoản, QR, ví điện tử...), không giới hạn. — cả 2 người trả lời vòng 1 đều xác nhận giống nhau.
+- **Mạng tại điểm bán**: có mạng, không cần tính năng bán khi mất mạng cho MVP. — cả 2 người trả lời vòng 1 đều xác nhận giống nhau.
 
-## Thương hiệu và quy mô
+## Câu hỏi cần trả lời (đã cập nhật cho đúng mô hình đối tác)
+
+Bộ câu hỏi cũ (bên dưới, mục "Lưu trữ vòng 1") viết theo kiểu "1 chuỗi tự vận hành" nên một số câu hỏi sai đối tượng hoặc bắt phải chọn 1 đáp án chung trong khi thực ra mỗi đối tác có thể tự quyết khác nhau. Bộ câu hỏi dưới đây đã sửa lại, dùng cho trang khảo sát từ nay.
+
+### Ca bán
+1. Số ca/ngày mỗi xe: có quy định chung cho toàn hệ thống không, hay mỗi đối tác tự quyết theo tình hình kinh doanh của mình?
+2. Bàn giao giữa ca (đếm tiền khi đổi người): bắt buộc với tất cả đối tác, hay chỉ áp dụng khi đối tác chạy nhiều hơn 1 ca/ngày và tự chọn có bàn giao?
+3. Trong 1 xe, ai phân công ca cho nhân viên: chính đối tác/chủ xe, hay người quản lý do đối tác đó thuê riêng?
+
+### Hàng hóa
+4. Đối tác có bắt buộc phải mua nguyên liệu/bánh nền từ nguồn cung do Vbread chỉ định không, hay được tự tìm nhà cung cấp riêng?
+5. Hàng còn lại cuối ca: có quy định chung (để lại xe / trả kho / hủy) hay tùy mỗi đối tác tự xử lý?
+6. Các lý do hao hụt thường gặp là gì (để đưa sẵn vào danh sách lý do trong app)?
+
+### Bán hàng và tiền
+7. Giá bán: Vbread quy định 1 mức giá chung cho toàn hệ thống, hay mỗi đối tác được tự đặt giá riêng cho xe của mình?
+8. Giảm giá: đối tác tự quyết định, hay phải theo chương trình chung do Vbread đưa ra?
+9. Tiền bán hàng cuối ca: đối tác giữ toàn bộ (vì là tiền của họ), hay có phần phải nộp về cho Vbread theo kỳ (ví dụ phí nhượng quyền tính theo % doanh số)?
+10. Khi có chênh lệch tiền: người đứng ca chịu trách nhiệm giải trình trước, đối tác/chủ xe chịu trách nhiệm cuối cùng — cách hiểu này đúng không?
+11. In bill hoặc xuất hóa đơn điện tử: bắt buộc với mọi đối tác, hay để mỗi đối tác tự chọn?
+
+### Thiết bị và báo cáo
+12. Thiết bị bán hàng (điện thoại): Vbread có tiêu chuẩn chung không, hay tùy đối tác tự chọn máy?
+13. Vbread (chủ đầu tư mô hình) muốn xem những con số nào đầu tiên mỗi sáng, tổng hợp từ tất cả đối tác?
+
+### Ngân sách và kiểm tra
+14. Ngân sách chi phí dịch vụ hằng tháng (máy chủ, cơ sở dữ liệu, tên miền) do Vbread chi trả — dự kiến khoảng bao nhiêu?
+15. Có muốn thuê người kiểm tra lại code trước khi đưa vào dùng thật không?
+
+### Mô hình nhượng quyền (câu hỏi mới)
+16. Bộ kit chuyển giao cho đối tác gồm những gì (xe, thiết bị, đào tạo, lô nguyên liệu ban đầu...)?
+17. Phí nhượng quyền: đối tác trả 1 lần khi nhận chuyển giao, hay trả định kỳ theo % doanh số? Nếu có tỷ lệ %, dự kiến bao nhiêu?
+18. Hợp đồng với đối tác có thời hạn bao lâu? Điều kiện chấm dứt hợp đồng là gì?
+19. Giấy phép kinh doanh và an toàn thực phẩm cho từng xe: Vbread hay đối tác chịu trách nhiệm?
+20. App này chủ yếu để đối tác tự quản lý xe của họ, để Vbread giám sát nhiều đối tác cùng lúc, hay cả hai mục đích?
+
+### Phạm vi MVP
+21. Hiện có bao nhiêu xe? Dự kiến bao nhiêu xe sau 6 và 12 tháng?
+22. MVP có nên theo dõi kho tới từng loại nguyên liệu (pate, chả, rau, sốt...) như 2 đối tác đã đề xuất, hay giữ đơn giản (chỉ món bán + bánh nền + bao bì) rồi mở rộng sau?
+
+## Lưu trữ vòng 1 (bộ câu hỏi cũ, đã có người trả lời — giữ lại làm tư liệu)
+
+### Thương hiệu và quy mô
 1. Hiện có bao nhiêu xe? Dự kiến bao nhiêu xe sau 6 và 12 tháng?
-2. Xe thuộc sở hữu của chuỗi, hay là đối tác nhận chuyển giao mô hình (theo bộ kit hợp tác)? Đối tác có tự xem báo cáo của mình không?
+   - **Lê Quỳnh** (17/09 11:42): 0 xe hiện tại.
+   - **Văn Kiều Trang** (17/09 13:54): 25–30 xe sau 12 tháng.
+2. Xe thuộc sở hữu của chuỗi, hay là đối tác nhận chuyển giao mô hình? Đối tác có tự xem báo cáo của mình không?
+   - **Lê Quỳnh**: đối tác — dự kiến có thể tự xem báo cáo.
+   - **Văn Kiều Trang**: đối tác nhận chuyển giao — đối tác có thể tự xem báo cáo.
 
-## Ca bán và nhân sự
+### Ca bán và nhân sự
 3. Mỗi xe bán mấy ca/ngày, khung giờ nào? Một ca có mấy nhân viên?
+   - **Lê Quỳnh**: 1 nhân sự/ca.
+   - **Văn Kiều Trang**: ~1 nhân viên/ca; 3 ca/ngày — Ca 1: 5h–13h, Ca 2: 13h–21h, Ca 3: 21h–5h.
 4. Một xe có đổi điểm bán trong ngày không?
-5. Có bàn giao giữa ca (người này giao cho người kia) không? Có đếm tiền khi bàn giao không?
+   - **Lê Quỳnh**: Không.
+   - **Văn Kiều Trang**: Không.
+5. Có bàn giao giữa ca không? Có đếm tiền khi bàn giao không?
+   - **Lê Quỳnh**: không cần, chủ sở hữu mô hình tự quản.
+   - **Văn Kiều Trang**: có, có đếm tiền.
 6. Ai phân công ca: quản lý hay chủ chuỗi? Phân công trước bao lâu?
+   - **Lê Quỳnh**: chủ xe bánh mì.
+   - **Văn Kiều Trang**: quản lý, phân công trước 1 tuần.
 
-## Hàng hóa
-7. Xe nhận hàng từ đâu (kho, nhà cung cấp, bếp)? Ai giao? Giao mấy lần/ngày?
-8. Hàng nào cần theo dõi: chỉ bánh nền, hay cả pate, chả, rau, sốt, bao bì? Đơn vị tính là gì?
-9. Hàng còn lại cuối ca được xử lý thế nào: để lại xe, trả về kho, hay hủy?
+### Hàng hóa
+7. Xe nhận hàng từ đâu? Ai giao? Giao mấy lần/ngày?
+   - **Lê Quỳnh**: từ nhà cung cấp, tùy theo doanh số mỗi điểm.
+   - **Văn Kiều Trang**: từ nhà cung cấp, nhà cung cấp giao, cần khi nào giao khi đó.
+8. Hàng nào cần theo dõi? Đơn vị tính là gì?
+   - **Lê Quỳnh**: tất cả, theo từng loại nguyên liệu.
+   - **Văn Kiều Trang**: tất cả.
+9. Hàng còn lại cuối ca được xử lý thế nào?
+   - **Lê Quỳnh**: bảo quản tại điểm.
+   - **Văn Kiều Trang**: tùy tình hình.
 10. Các lý do hao hụt thường gặp?
+    - **Lê Quỳnh**: định lượng chưa chính xác.
 11. Có cần chụp ảnh khi nhận hàng hoặc hủy hàng không?
+    - **Lê Quỳnh**: có.
+    - **Văn Kiều Trang**: cần.
 
-## Bán hàng và tiền
-12. Danh sách món và giá hiện tại? Giá có khác nhau theo xe hoặc điểm bán không?
-13. Giảm giá kiểu nào: theo %, theo số tiền, combo, mã khuyến mãi? Ai được phép giảm?
-14. Phương thức thanh toán: tiền mặt, chuyển khoản, QR, ví điện tử, app giao hàng?
+### Bán hàng và tiền
+12. Giá có khác nhau theo xe hoặc điểm bán không?
+    - **Lê Quỳnh**: không khác.
+    - **Văn Kiều Trang**: có khác.
+13. Giảm giá kiểu nào? Ai được phép giảm?
+    - **Lê Quỳnh**: chủ quầy xe quyết.
+    - **Văn Kiều Trang**: tùy chương trình, quản lý đưa ra chương trình.
+14. Phương thức thanh toán?
+    - **Lê Quỳnh**: có đủ.
+    - **Văn Kiều Trang**: tất cả.
 15. Tiền lẻ đầu ca thường bao nhiêu? Tiền cuối ca nộp cho ai?
-16. Chênh lệch bao nhiêu thì phải báo quản lý? Ai chịu trách nhiệm chênh lệch?
+    - **Lê Quỳnh**: chủ xe tự quản.
+    - **Văn Kiều Trang**: nộp cho quản lý.
+16. Chênh lệch bao nhiêu thì phải báo quản lý? Ai chịu trách nhiệm?
+    - **Lê Quỳnh**: chủ xe.
+    - **Văn Kiều Trang**: người đứng ca chịu trách nhiệm.
 17. Có cần in bill hoặc xuất hóa đơn điện tử không?
+    - **Lê Quỳnh**: có.
+    - **Văn Kiều Trang**: không cần.
 
-## Thiết bị và vận hành
-18. Nhân viên dùng điện thoại riêng hay máy của chuỗi? Android hay iPhone?
+### Thiết bị và vận hành
+18. Nhân viên dùng điện thoại riêng hay máy của chuỗi?
+    - **Lê Quỳnh**: nên là máy kết hợp của người bán hàng.
+    - **Văn Kiều Trang**: tùy tình hình.
 19. Tại điểm bán có hay mất mạng không?
+    - **Lê Quỳnh**: có sử dụng mạng tại điểm.
+    - **Văn Kiều Trang**: phải có mạng.
 20. Chủ chuỗi muốn xem những con số nào đầu tiên mỗi sáng?
+    - **Lê Quỳnh**: dự toán bán hàng của mỗi điểm.
 
-## Ngân sách
-21. Ngân sách chi phí dịch vụ hằng tháng dự kiến (máy chủ, cơ sở dữ liệu, tên miền)?
+### Ngân sách
+21. Ngân sách chi phí dịch vụ hằng tháng dự kiến?
+    - **Lê Quỳnh**: chủ đầu tư mô hình quyết định.
 22. Có muốn thuê người kiểm tra lại code trước khi dùng thật không?
+    - **Lê Quỳnh**: để chủ đầu tư xem xét.
+    - **Văn Kiều Trang**: không.
+
+## Phần 2: Định hướng sau MVP (tùy chọn, chưa chặn GĐ-00)
+
+### 01 · Đặt hàng online & điều phối đơn
+- Đặt qua kênh nào? — **Lê Quỳnh**: nên là Zalo. **Văn Kiều Trang**: tất cả kênh.
+- Ai xác nhận đơn? — **Lê Quỳnh**: xe chọn đơn gần nhất để giao. **Văn Kiều Trang**: có người điều phối.
+- Có giao tận nơi không? — **Lê Quỳnh**: nên có. **Văn Kiều Trang**: có, trong bán kính cho phép.
+
+### 02 · QC / chấm điểm điểm bán
+- Ai chấm điểm? — **Lê Quỳnh**: có kiểm tra giám sát. **Văn Kiều Trang**: cả quản lý và khách hàng.
+- Tiêu chí gồm gì? — **Lê Quỳnh**: có bảng điểm chấm vệ sinh.
+- Điểm số ảnh hưởng gì? — **Lê Quỳnh**: có thưởng phạt theo hệ thống. **Văn Kiều Trang**: thưởng phạt, xếp hạng.
+
+### 03 · Quản lý tài sản
+- Danh mục tài sản? — **Lê Quỳnh**: tài sản mô hình, chủ xe quản lý.
+- Cần lịch bảo trì/khấu hao? — **Lê Quỳnh**: không cần. **Văn Kiều Trang**: cần.
+- Ai chịu trách nhiệm khi hư/mất? — **Lê Quỳnh**: chủ điểm bán. **Văn Kiều Trang**: người đứng ca.
+
+### 04 · KPI nhân viên
+- Đo trên chỉ số nào? — **Lê Quỳnh**: tăng số lượng dịch vụ/sản phẩm của mô hình. **Văn Kiều Trang**: doanh số, đánh giá khách hàng.
+- Theo cá nhân hay theo ca? — **Lê Quỳnh**: theo điểm bán. **Văn Kiều Trang**: theo cả ca.
+- Dùng để làm gì? — **Lê Quỳnh**: thưởng, kích hoạt điểm bán năng động hơn. **Văn Kiều Trang**: tất cả (thưởng, xếp lịch, nhắc nhở).
+
+### 05 · Bếp trung tâm & công thức / giá vốn
+- Đã hoạt động chưa? — **Lê Quỳnh**: không cần bếp trung tâm.
+- Định mức chuẩn? — **Lê Quỳnh**: có định mức. **Văn Kiều Trang**: sẽ có file định mức.
+- Giá vốn cố định hay biến động? — **Lê Quỳnh**: cố định. **Văn Kiều Trang**: biến động theo thị trường.
+
+### 06 · Tính lương
+- Theo giờ, ca cố định, hay doanh số? — **Lê Quỳnh**: không tính lương (đối tác tự trả). **Văn Kiều Trang**: theo ca cố định.
+- Phụ cấp/thưởng thêm? — Cả hai: không.
+- Xuất bảng lương theo kỳ? — **Lê Quỳnh**: không. **Văn Kiều Trang**: cần.
+
+### 07 · Khách hàng thân thiết
+- Nhận diện khách qua gì? — Cả hai: số điện thoại.
+- Cơ chế tích điểm? — **Lê Quỳnh**: nếu có nên thiết lập. **Văn Kiều Trang**: tích điểm đổi quà hoặc giảm giá.
+- Áp dụng phạm vi nào? — **Lê Quỳnh**: áp dụng cho mỗi điểm xe. **Văn Kiều Trang**: tất cả.
+
+### 08 · Tích hợp bên ngoài
+- Ưu tiên hệ thống nào? — **Lê Quỳnh**: do quản trị mô hình quyết.
+- Đồng bộ hai chiều? — Cả hai: có.
+- Ai quản lý tài khoản/API key? — **Lê Quỳnh**: chủ đầu tư xem xét.
