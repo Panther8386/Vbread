@@ -27,6 +27,10 @@
   .cat{ margin: 2.25rem 0 0; }
   .cat h2{ font-size:1.05rem; font-weight:700; color:var(--crust-text); margin-bottom:1rem; }
 
+  .part2-divider{ margin: 3rem 0 0; padding-top:1.75rem; border-top:2px dashed var(--line); }
+  .part2-divider h2{ font-size:1.25rem; margin:0.3rem 0 0.4rem; }
+  .part2-divider .lede-sm{ font-size:0.9rem; color:var(--ink-soft); margin:0; max-width:56ch; }
+
   .q{ margin-bottom:1rem; }
   .q-head{ display:flex; gap:0.6rem; align-items:baseline; margin-bottom:0.5rem; }
   .q-num{ font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--ink-soft); font-size:0.85rem; min-width:1.6rem; }
@@ -127,6 +131,68 @@
       <div class="q"><div class="q-head"><span class="q-num mono">22</span><span class="q-text">Có muốn thuê người kiểm tra lại code trước khi dùng thật không?</span></div><textarea data-q="22"></textarea></div>
     </section>
 
+    <div class="part2-divider">
+      <p class="ticket-code mono">Phần 2 · không bắt buộc</p>
+      <h2>Định hướng sau MVP</h2>
+      <p class="lede-sm">8 hạng mục hiện <strong>ngoài phạm vi MVP</strong> — chưa chặn GĐ-00, trả lời khi nào chủ chuỗi sẵn sàng nghĩ tới cũng được.</p>
+    </div>
+
+    <section class="cat">
+      <h2>01 · Đặt hàng online &amp; điều phối đơn</h2>
+      <div class="q"><div class="q-head"><span class="q-num mono">f1</span><span class="q-text">Đặt qua kênh nào: app riêng, Zalo, hay app giao hàng có sẵn?</span></div><textarea data-q="f1" data-optional="1"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">f2</span><span class="q-text">Ai xác nhận đơn — xe nhận trực tiếp hay có người điều phối trung tâm?</span></div><textarea data-q="f2" data-optional="1"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">f3</span><span class="q-text">Có giao tận nơi không, hay chỉ đặt trước rồi khách tự đến lấy?</span></div><textarea data-q="f3" data-optional="1"></textarea></div>
+    </section>
+
+    <section class="cat">
+      <h2>02 · QC / chấm điểm điểm bán</h2>
+      <div class="q"><div class="q-head"><span class="q-num mono">f4</span><span class="q-text">Ai chấm điểm: quản lý đi kiểm tra, khách hàng đánh giá, hay cả hai?</span></div><textarea data-q="f4" data-optional="1"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">f5</span><span class="q-text">Tiêu chí chấm điểm gồm những gì?</span></div><textarea data-q="f5" data-optional="1"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">f6</span><span class="q-text">Điểm số ảnh hưởng gì — thưởng phạt, xếp hạng, hay chỉ để theo dõi?</span></div><textarea data-q="f6" data-optional="1"></textarea></div>
+    </section>
+
+    <section class="cat">
+      <h2>03 · Quản lý tài sản</h2>
+      <div class="q"><div class="q-head"><span class="q-num mono">f7</span><span class="q-text">Danh mục tài sản cần theo dõi gồm những gì?</span></div><textarea data-q="f7" data-optional="1"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">f8</span><span class="q-text">Có cần lịch bảo trì hoặc khấu hao không?</span></div><textarea data-q="f8" data-optional="1"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">f9</span><span class="q-text">Ai chịu trách nhiệm khi tài sản hư hỏng hoặc mất?</span></div><textarea data-q="f9" data-optional="1"></textarea></div>
+    </section>
+
+    <section class="cat">
+      <h2>04 · KPI nhân viên</h2>
+      <div class="q"><div class="q-head"><span class="q-num mono">f10</span><span class="q-text">KPI đo trên những chỉ số nào?</span></div><textarea data-q="f10" data-optional="1"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">f11</span><span class="q-text">Tính theo cá nhân hay theo cả ca (vì 1 ca thường có 1–2 người)?</span></div><textarea data-q="f11" data-optional="1"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">f12</span><span class="q-text">Kết quả KPI dùng để làm gì: thưởng, xếp lịch ưu tiên, nhắc nhở?</span></div><textarea data-q="f12" data-optional="1"></textarea></div>
+    </section>
+
+    <section class="cat">
+      <h2>05 · Bếp trung tâm &amp; công thức / giá vốn</h2>
+      <div class="q"><div class="q-head"><span class="q-num mono">f13</span><span class="q-text">Bếp trung tâm đã hoạt động chưa, hay còn đang dự kiến?</span></div><textarea data-q="f13" data-optional="1"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">f14</span><span class="q-text">Định mức chuẩn cho mỗi món là gì (bao nhiêu pate, chả, rau...)?</span></div><textarea data-q="f14" data-optional="1"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">f15</span><span class="q-text">Giá vốn nguyên liệu lấy từ nhà cung cấp cố định hay biến động theo thị trường?</span></div><textarea data-q="f15" data-optional="1"></textarea></div>
+    </section>
+
+    <section class="cat">
+      <h2>06 · Tính lương</h2>
+      <div class="q"><div class="q-head"><span class="q-num mono">f16</span><span class="q-text">Lương theo giờ, theo ca cố định, hay theo doanh số?</span></div><textarea data-q="f16" data-optional="1"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">f17</span><span class="q-text">Có phụ cấp hoặc thưởng nào cần tính thêm không?</span></div><textarea data-q="f17" data-optional="1"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">f18</span><span class="q-text">Có cần xuất bảng lương theo kỳ (tuần/tháng) không?</span></div><textarea data-q="f18" data-optional="1"></textarea></div>
+    </section>
+
+    <section class="cat">
+      <h2>07 · Khách hàng thân thiết</h2>
+      <div class="q"><div class="q-head"><span class="q-num mono">f19</span><span class="q-text">Nhận diện khách qua gì: số điện thoại, app, hay thẻ thành viên?</span></div><textarea data-q="f19" data-optional="1"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">f20</span><span class="q-text">Cơ chế tích điểm và đổi thưởng như thế nào?</span></div><textarea data-q="f20" data-optional="1"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">f21</span><span class="q-text">Áp dụng ở tất cả xe hay chỉ theo khu vực?</span></div><textarea data-q="f21" data-optional="1"></textarea></div>
+    </section>
+
+    <section class="cat">
+      <h2>08 · Tích hợp bên ngoài</h2>
+      <div class="q"><div class="q-head"><span class="q-num mono">f22</span><span class="q-text">Ưu tiên tích hợp với hệ thống nào trước?</span></div><textarea data-q="f22" data-optional="1"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">f23</span><span class="q-text">Có cần đồng bộ hai chiều (đơn hàng, tồn kho) không?</span></div><textarea data-q="f23" data-optional="1"></textarea></div>
+      <div class="q"><div class="q-head"><span class="q-num mono">f24</span><span class="q-text">Ai quản lý tài khoản và API key của bên thứ ba?</span></div><textarea data-q="f24" data-optional="1"></textarea></div>
+    </section>
+
     <div class="actions">
       <button type="button" class="btn" id="exportBtn">Xuất bản tổng hợp</button>
       <button type="button" class="btn ghost" id="clearBtn">Xóa nội dung đã nhập</button>
@@ -151,9 +217,10 @@
 
 <script>
 (function(){
-  var STORAGE_KEY = "vbread-khaosat-v2";
-  var TOTAL = 22;
+  var STORAGE_KEY = "vbread-khaosat-v3";
   var textareas = Array.prototype.slice.call(document.querySelectorAll("textarea[data-q]"));
+  var requiredTextareas = textareas.filter(function(t){ return !t.hasAttribute("data-optional"); });
+  var TOTAL = requiredTextareas.length;
   var respondent = document.getElementById("respondent");
   var progressFill = document.getElementById("progressFill");
   var progressCount = document.getElementById("progressCount");
@@ -165,6 +232,17 @@
     { name: "Bán hàng và tiền", ids: [12,13,14,15,16,17] },
     { name: "Thiết bị và vận hành", ids: [18,19,20] },
     { name: "Ngân sách", ids: [21,22] }
+  ];
+
+  var FUTURE_CATEGORIES = [
+    { name: "01 · Đặt hàng online & điều phối đơn", ids: ["f1","f2","f3"] },
+    { name: "02 · QC / chấm điểm điểm bán", ids: ["f4","f5","f6"] },
+    { name: "03 · Quản lý tài sản", ids: ["f7","f8","f9"] },
+    { name: "04 · KPI nhân viên", ids: ["f10","f11","f12"] },
+    { name: "05 · Bếp trung tâm & công thức / giá vốn", ids: ["f13","f14","f15"] },
+    { name: "06 · Tính lương", ids: ["f16","f17","f18"] },
+    { name: "07 · Khách hàng thân thiết", ids: ["f19","f20","f21"] },
+    { name: "08 · Tích hợp bên ngoài", ids: ["f22","f23","f24"] }
   ];
 
   function loadDraft(){
@@ -190,7 +268,7 @@
   }
 
   function updateProgress(){
-    var answered = textareas.filter(function(t){ return t.value.trim().length > 0; }).length;
+    var answered = requiredTextareas.filter(function(t){ return t.value.trim().length > 0; }).length;
     progressCount.textContent = answered;
     progressFill.style.width = Math.round((answered / TOTAL) * 100) + "%";
   }
@@ -245,6 +323,22 @@
       });
       lines.push("");
     });
+
+    var futureAnswered = FUTURE_CATEGORIES.some(function(cat){
+      return cat.ids.some(function(id){ return byId[id]; });
+    });
+    if (futureAnswered) {
+      lines.push("## Phần 2: Định hướng sau MVP (tùy chọn)");
+      lines.push("");
+      FUTURE_CATEGORIES.forEach(function(cat){
+        lines.push("### " + cat.name);
+        cat.ids.forEach(function(id){
+          lines.push("- " + qTexts[id]);
+          lines.push("  Trả lời: " + (byId[id] || "_(chưa trả lời)_"));
+        });
+        lines.push("");
+      });
+    }
 
     return lines.join("\n");
   }
