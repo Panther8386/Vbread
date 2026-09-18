@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Đánh giá khảo sát chốt nghiệp vụ</title>
+<meta name="description" content="Tổng hợp và đánh giá câu trả lời của 3 cộng sự qua 2 vòng khảo sát nghiệp vụ Vbread App.">
+<link rel="icon" href="assets/icons/favicon.ico">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .people-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1rem; margin:1.5rem 0 2.5rem; }
+  .person-card{ background:var(--color-surface); border:1px solid var(--color-border); border-radius:10px; padding:1rem 1.1rem; }
+  .person-card h3{ font-size:1.02rem; margin:0 0 0.5rem; }
+  .person-card .rounds{ display:flex; flex-direction:column; gap:0.35rem; }
+  .round-badge{ font-family:"IBM Plex Mono",monospace; font-size:0.72rem; color:var(--color-muted); }
+  .round-badge strong{ color:var(--color-foreground); font-weight:600; }
+
+  .section-lead{ font-size:0.95rem; color:var(--color-muted); max-width:60ch; margin:0.5rem 0 1.25rem; }
+  .section-title{ font-size:1.25rem; font-weight:800; margin:2.5rem 0 0.25rem; padding-top:1.5rem; border-top:2px dashed var(--color-border); }
+  .section-title:first-of-type{ border-top:none; padding-top:0; margin-top:0; }
+  .section-eyebrow{ font-family:"IBM Plex Mono",monospace; font-size:0.7rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--color-primary); margin:0; }
+
+  .consensus-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:0.6rem; margin-top:1rem; }
+  .consensus-item{
+    display:flex; gap:0.6rem; align-items:flex-start; padding:0.65rem 0.8rem; border-radius:8px;
+    background:var(--color-surface); border-left:3px solid var(--color-secondary); font-size:0.88rem;
+  }
+  .consensus-item .n{ font-family:"IBM Plex Mono",monospace; font-size:0.68rem; color:var(--color-secondary); font-weight:700; white-space:nowrap; padding-top:0.1rem; }
+
+  .conflict-table{ width:100%; border-collapse:collapse; margin:1rem 0; font-size:0.88rem; }
+  .conflict-table th, .conflict-table td{ padding:0.6rem 0.7rem; border-bottom:1px solid var(--color-border); text-align:left; vertical-align:top; }
+  .conflict-table th{ font-family:"IBM Plex Mono",monospace; font-size:0.68rem; letter-spacing:0.04em; text-transform:uppercase; color:var(--color-muted); }
+  .conflict-table td.q{ font-weight:600; }
+  .conflict-table td.agree{ color:var(--color-secondary); }
+  .conflict-table td.alone{ color:var(--color-primary); }
+  .conflict-wrap{ overflow-x:auto; border-radius:10px; border:1px solid var(--color-border); }
+  .conflict-wrap table{ margin:0; }
+
+  .risk-ticket{ background:var(--color-surface); border-left:3px solid var(--color-accent); border-radius:10px; padding:1.1rem 1.25rem; margin:1.25rem 0; }
+  .risk-ticket p.tag-line{ font-family:"IBM Plex Mono",monospace; font-size:0.68rem; letter-spacing:0.05em; text-transform:uppercase; color:var(--color-accent-foreground); background:var(--color-accent); display:inline-block; padding:0.15rem 0.5rem; border-radius:4px; margin:0 0 0.6rem; }
+
+  .insight{ display:flex; gap:0.9rem; padding:1rem 0; border-bottom:1px dashed var(--color-border); }
+  .insight:last-child{ border-bottom:none; }
+  .insight .num{ font-family:"Be Vietnam Pro",sans-serif; font-weight:800; font-size:1.4rem; color:var(--color-border); min-width:2rem; }
+  .insight h4{ margin:0 0 0.35rem; font-size:0.98rem; }
+  .insight p{ margin:0; font-size:0.9rem; color:var(--color-muted); }
+
+  .steps{ list-style:none; margin:1rem 0 0; padding:0; display:flex; flex-direction:column; gap:0.75rem; }
+  .steps li{ display:flex; gap:0.75rem; align-items:flex-start; font-size:0.92rem; }
+  .steps .stepnum{
+    flex:none; width:26px; height:26px; border-radius:50%; background:var(--color-primary); color:var(--color-primary-foreground);
+    display:flex; align-items:center; justify-content:center; font-family:"IBM Plex Mono",monospace; font-size:0.78rem; font-weight:700;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <a class="crumb" href="index.html">← Lộ trình Vbread App</a>
+
+  <header class="hero">
+    <img class="brand-logo" src="assets/logo/vbread-logo-horizontal.svg" alt="Vbread" width="150" height="49">
+    <p class="eyebrow">Tổng hợp · phiếu đánh giá</p>
+    <h1>Đánh giá khảo sát chốt nghiệp vụ</h1>
+    <p class="lede">3 cộng sự đã trả lời qua 2 vòng khảo sát (<a href="khao-sat.html">xem trang khảo sát</a>). Trang này tổng hợp phần đã đồng thuận, phần còn mâu thuẫn, và nhận xét để chủ dự án quyết định bước tiếp theo.</p>
+    <dl class="meta">
+      <div><dt>Người trả lời</dt><dd>3 cộng sự</dd></div>
+      <div><dt>Vòng khảo sát</dt><dd>2 vòng</dd></div>
+      <div><dt>Cập nhật</dt><dd>18/09/2026</dd></div>
+    </dl>
+  </header>
+
+  <p class="section-eyebrow">Ai đã trả lời</p>
+  <div class="people-grid">
+    <div class="person-card">
+      <h3>Lê Quỳnh</h3>
+      <div class="rounds">
+        <span class="round-badge">Vòng 1 · <strong>17/09 11:42</strong> (bộ câu hỏi cũ)</span>
+        <span class="round-badge">Vòng 2 · <strong>17/09 18:16</strong> (bộ câu hỏi mới)</span>
+      </div>
+    </div>
+    <div class="person-card">
+      <h3>Văn Kiều Trang</h3>
+      <div class="rounds">
+        <span class="round-badge">Vòng 1 · <strong>17/09 13:54</strong></span>
+        <span class="round-badge">Vòng 2 · <strong>17/09 17:53</strong></span>
+      </div>
+    </div>
+    <div class="person-card">
+      <h3>Đinh Xuân Vĩnh</h3>
+      <div class="rounds">
+        <span class="round-badge">Vòng 2 · <strong>17/09 17:35</strong> — trả lời đủ cả 46 câu (22 bắt buộc + 24 tùy chọn)</span>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Đã đồng thuận rõ ràng</h2>
+  <p class="section-lead">Không còn tranh luận — mọi người trả lời cùng hướng, có thể đưa vào tài liệu chính thức ngay.</p>
+  <div class="consensus-grid">
+    <div class="consensus-item"><span class="n">✓</span><span>Tên dự án tạm gọi là <strong>Vbread</strong></span></div>
+    <div class="consensus-item"><span class="n">✓</span><span>Mô hình <strong>chuyển giao cho đối tác</strong> — đối tác tự làm chủ xe</span></div>
+    <div class="consensus-item"><span class="n">✓</span><span>Xe <strong>không đổi điểm bán</strong> trong ngày</span></div>
+    <div class="consensus-item"><span class="n">✓</span><span>Cần <strong>chụp ảnh</strong> khi nhận/hủy hàng</span></div>
+    <div class="consensus-item"><span class="n">✓</span><span>Hỗ trợ <strong>đầy đủ phương thức thanh toán</strong></span></div>
+    <div class="consensus-item"><span class="n">✓</span><span>Điểm bán <strong>có mạng</strong>, MVP chưa cần bán offline</span></div>
+    <div class="consensus-item"><span class="n">✓</span><span><strong>Đối tác/chủ xe</strong> tự phân công ca cho nhân viên của mình</span></div>
+    <div class="consensus-item"><span class="n">✓</span><span><strong>Giảm giá</strong> do đối tác tự quyết định</span></div>
+    <div class="consensus-item"><span class="n">✓</span><span><strong>Bắt buộc</strong> mua nguyên liệu/bánh nền từ Vbread</span></div>
+    <div class="consensus-item"><span class="n">✓</span><span>Hợp đồng đối tác <strong>có thời hạn và điều kiện ràng buộc</strong></span></div>
+    <div class="consensus-item"><span class="n">✓</span><span><strong>Vbread</strong> chịu trách nhiệm giấy phép kinh doanh/ATTP</span></div>
+    <div class="consensus-item"><span class="n">✓</span><span>App dùng cho <strong>cả đối tác tự quản lý và Vbread giám sát</strong></span></div>
+    <div class="consensus-item"><span class="n">✓</span><span>Quy mô dự kiến <strong>20–50 xe/điểm</strong> sau 6–12 tháng</span></div>
+    <div class="consensus-item"><span class="n">✓</span><span>MVP nên <strong>theo dõi nguyên liệu chi tiết</strong> để đồng nhất chất lượng</span></div>
+  </div>
+
+  <h2 class="section-title">Còn mâu thuẫn — cần chủ dự án chốt</h2>
+  <p class="section-lead">6 điểm dưới đây <strong>Đinh Xuân Vĩnh và Văn Kiều Trang</strong> đồng ý với nhau, nhưng <strong>Lê Quỳnh</strong> (vòng 2) trả lời ngược lại.</p>
+  <div class="conflict-wrap">
+    <table class="conflict-table">
+      <thead><tr><th style="width:26%">Câu hỏi</th><th>Vĩnh + Trang</th><th>Quỳnh</th></tr></thead>
+      <tbody>
+        <tr><td class="q">Số ca/ngày</td><td class="agree">Mỗi đối tác tự quyết</td><td class="alone">Quy định chung toàn hệ thống</td></tr>
+        <tr><td class="q">Giá bán</td><td class="agree">Mỗi đối tác tự đặt giá riêng</td><td class="alone">1 giá chung toàn hệ thống</td></tr>
+        <tr><td class="q">In bill / hóa đơn</td><td class="agree">Đối tác tự chọn</td><td class="alone">Nên bắt buộc (đúng quy định pháp lý)</td></tr>
+        <tr><td class="q">Thiết bị bán hàng</td><td class="agree">Tùy đối tác tự chọn</td><td class="alone">Nên đưa chung vào mô hình</td></tr>
+        <tr><td class="q">Ai trả ngân sách dịch vụ</td><td class="agree">Vbread trả (Vĩnh: ~3 triệu/tháng)</td><td class="alone">Tính vào chi phí của chủ xe</td></tr>
+        <tr><td class="q">Tiền cuối ca / phí nhượng quyền</td><td class="agree">Có phần nộp về Vbread theo giai đoạn (%)</td><td class="alone">Đối tác giữ toàn bộ; phí nhượng quyền trả 1 lần duy nhất</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="risk-ticket">
+    <p class="tag-line">Rủi ro cao nhất — hỏi trước tiên</p>
+    <p style="margin:0 0 0.5rem; font-weight:700;">Vbread có phải là chủ đầu tư mô hình cuối cùng không?</p>
+    <p style="margin:0; color:var(--color-muted); font-size:0.9rem;">Câu 13 (vòng 2), Quỳnh trả lời: <em>"Ko phải vbread chủ đầu tư là đơn vị hợp tác chuyển nhượng"</em>. Có thể ý là còn một <strong>bên khác đứng trên Vbread</strong> (docs/01 có ghi bánh nền là "của Vbread (Global Malls)" — có thể Global Malls là bên nhượng quyền gốc). Nếu đúng, mọi mục "Vbread chịu trách nhiệm X" ở trên có thể cần bên đó phê duyệt lại — nên xác minh <strong>trước</strong> khi chốt các điểm mâu thuẫn còn lại.</p>
+  </div>
+
+  <h2 class="section-title">Nhận xét</h2>
+  <div class="insights">
+    <div class="insight">
+      <span class="num">01</span>
+      <div>
+        <h4>Xu hướng chung: nhượng quyền có ràng buộc chất lượng, tự chủ vận hành hàng ngày</h4>
+        <p>Gần như mọi điểm đã đồng thuận đều nghiêng theo hướng này — Vbread giữ quyền về thương hiệu, nguồn nguyên liệu, giấy phép và giám sát chất lượng; đối tác tự chủ trong vận hành ngày-qua-ngày (phân ca, giảm giá, xử lý hàng).</p>
+      </div>
+    </div>
+    <div class="insight">
+      <span class="num">02</span>
+      <div>
+        <h4>6 điểm mâu thuẫn thực ra là 1 câu hỏi, không phải 6</h4>
+        <p>Tất cả đều xoay quanh một trục duy nhất: <strong>đối tác được tự chủ đến đâu?</strong> Nếu chủ dự án chọn một mức tự chủ chung (ví dụ "tự chủ vận hành nhưng theo chuẩn thương hiệu"), câu trả lời cho cả 6 mục có thể suy ra cùng lúc, không cần chốt riêng từng câu.</p>
+      </div>
+    </div>
+    <div class="insight">
+      <span class="num">03</span>
+      <div>
+        <h4>Lê Quỳnh trả lời khác nhau giữa 2 vòng của chính mình</h4>
+        <p>Vòng 1 (bộ câu hỏi cũ) nghiêng về tự chủ ("chủ xe tự quản"); vòng 2 (bộ câu hỏi mới, cùng người) lại nghiêng tập trung. Nên hỏi lại trực tiếp Quỳnh — có thể do hiểu câu hỏi khác nhau giữa 2 lần, không hẳn là đổi quan điểm.</p>
+      </div>
+    </div>
+    <div class="insight">
+      <span class="num">04</span>
+      <div>
+        <h4>Bảng tài chính đối tác đã có dữ liệu thật để thay số ví dụ</h4>
+        <p>Bộ kit hợp tác thực tế (14.930.000 ₫, xem sheet "Bộ Kit" trong file tài chính nội bộ) đã có — nên dùng số này thay cho phần ước lượng ban đầu trong mục vốn đầu tư, để điểm hoàn vốn tính ra chính xác hơn.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Đề xuất bước tiếp theo</h2>
+  <ol class="steps">
+    <li><span class="stepnum">1</span><span>Xác minh vai trò Global Malls / "đơn vị hợp tác chuyển nhượng" — hỏi thẳng Quỳnh hoặc tự chốt nếu chủ dự án đã rõ.</span></li>
+    <li><span class="stepnum">2</span><span>Chốt trực tiếp mức độ tự chủ chung cho đối tác (áp dụng luôn cho cả 6 điểm mâu thuẫn) — trả lời ngay ở đây hoặc trong <a href="khao-sat.html">trang khảo sát</a>.</span></li>
+    <li><span class="stepnum">3</span><span>Sau khi chốt, cập nhật một lần vào <code>CLAUDE.md</code> và <code>docs/01-nghiep-vu-mvp.md</code>, chuyển các mục liên quan từ [GĐ] sang [XN].</span></li>
+  </ol>
+
+  <footer class="site-footer">
+    <p><a href="index.html">← Quay lại lộ trình xây dựng</a> · dữ liệu gốc lưu tại <code>docs/02-cau-hoi-can-chot.md</code>.</p>
+  </footer>
+
+</div>
+</body>
+</html>

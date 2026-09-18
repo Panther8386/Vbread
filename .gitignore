@@ -141,3 +141,6 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Tài liệu nội bộ (số liệu tài chính, hợp đồng...) - không đưa lên repo công khai
+/noi-bo/
