@@ -53,7 +53,18 @@ KHÔNG làm trong MVP (chỉ làm khi chủ dự án yêu cầu): đặt hàng o
 - Kết thúc mỗi tính năng: cập nhật `docs/nhat-ky-tien-do.md` (đã làm gì, còn gì, lưu ý).
 
 ## Lệnh thường dùng
-<!-- Cập nhật sau khi tạo khung dự án (chạy /init để Claude đề xuất) -->
 - `npm run dev`: chạy thử trên máy tại http://localhost:3000
 - `npm run lint`: kiểm tra lỗi cú pháp
-- `npm test`: chạy kiểm thử
+- `npm test`: chạy kiểm thử (Vitest, các hàm trong src/lib/)
+- `npm run e2e`: chạy kiểm thử luồng chính (Playwright)
+- `npm run build`: build thử trước khi triển khai
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

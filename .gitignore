@@ -144,3 +144,9 @@ vite.config.ts.timestamp-*
 
 # Tài liệu nội bộ (số liệu tài chính, hợp đồng...) - không đưa lên repo công khai
 /noi-bo/
+
+# Next.js
+next-env.d.ts
+.vercel
+*.pem
+.DS_Store
