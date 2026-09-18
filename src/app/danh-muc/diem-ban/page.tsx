@@ -1,6 +1,6 @@
 import { getCurrentUser } from "@/lib/current-user";
 import { createClient } from "@/lib/supabase/server";
-import { createLocation, toggleLocationStatus } from "./actions";
+import { createLocation, toggleLocationStatus, updateLocation } from "./actions";
 
 export default async function DiemBanPage() {
   const user = await getCurrentUser();
@@ -16,34 +16,56 @@ export default async function DiemBanPage() {
     <div className="mx-auto flex max-w-2xl flex-col gap-6">
       <h1 className="font-heading text-2xl font-extrabold text-foreground">Điểm bán</h1>
 
-      <ul className="flex flex-col gap-2">
+      <ul className="flex flex-col gap-3">
         {(locations ?? []).map((loc) => (
           <li
             key={loc.id}
-            className="flex items-center justify-between gap-3 rounded-md border border-border bg-surface px-4 py-3"
+            className={`rounded-md border border-border bg-surface p-4 ${loc.status === "inactive" ? "opacity-50" : ""}`}
           >
-            <div>
-              <p className="font-medium text-foreground">{loc.name}</p>
-              {loc.address && <p className="text-sm text-muted">{loc.address}</p>}
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-xs text-muted">
-                {loc.status === "active" ? "đang mở" : "đã tắt"}
-              </span>
-              {isOwner && (
-                <form action={toggleLocationStatus}>
-                  <input type="hidden" name="id" value={loc.id} />
-                  <input
-                    type="hidden"
-                    name="nextStatus"
-                    value={loc.status === "active" ? "inactive" : "active"}
-                  />
+            {isOwner ? (
+              <form action={updateLocation} className="flex flex-col gap-2">
+                <input type="hidden" name="id" value={loc.id} />
+                <input
+                  name="name"
+                  defaultValue={loc.name}
+                  required
+                  className="h-10 rounded-md border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-primary"
+                />
+                <input
+                  name="address"
+                  defaultValue={loc.address ?? ""}
+                  placeholder="Địa chỉ"
+                  className="h-10 rounded-md border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-primary"
+                />
+                <div className="flex items-center gap-3">
                   <button type="submit" className="text-sm text-primary underline">
-                    {loc.status === "active" ? "Tắt" : "Bật"}
+                    Lưu
                   </button>
-                </form>
-              )}
-            </div>
+                  <span className="font-mono text-xs text-muted">
+                    {loc.status === "active" ? "đang mở" : "đã tắt"}
+                  </span>
+                </div>
+              </form>
+            ) : (
+              <div>
+                <p className="font-medium text-foreground">{loc.name}</p>
+                {loc.address && <p className="text-sm text-muted">{loc.address}</p>}
+              </div>
+            )}
+
+            {isOwner && (
+              <form action={toggleLocationStatus} className="mt-2 border-t border-border pt-2">
+                <input type="hidden" name="id" value={loc.id} />
+                <input
+                  type="hidden"
+                  name="nextStatus"
+                  value={loc.status === "active" ? "inactive" : "active"}
+                />
+                <button type="submit" className="text-sm text-destructive underline">
+                  {loc.status === "active" ? "Vô hiệu hóa" : "Kích hoạt lại"}
+                </button>
+              </form>
+            )}
           </li>
         ))}
         {(locations ?? []).length === 0 && (

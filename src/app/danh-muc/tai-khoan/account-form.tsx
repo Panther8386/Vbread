@@ -1,11 +1,11 @@
 "use client";
 
-import { useActionState } from "react";
-import { createAccount, type CreateAccountState } from "./actions";
+import { useActionState, useState } from "react";
+import { createAccount, type ActionState } from "./actions";
 
 type Cart = { id: string; code: string; name: string };
 
-const initialState: CreateAccountState = {};
+const initialState: ActionState = {};
 
 export function AccountForm({
   canCreateOwnerPartner,
@@ -15,6 +15,8 @@ export function AccountForm({
   carts: Cart[];
 }) {
   const [state, formAction, pending] = useActionState(createAccount, initialState);
+  const [role, setRole] = useState("staff");
+  const needsCart = role === "manager" || role === "partner";
 
   return (
     <form action={formAction} className="flex flex-col gap-3 rounded-md border border-border bg-surface p-4">
@@ -42,7 +44,8 @@ export function AccountForm({
       <select
         name="role"
         required
-        defaultValue="staff"
+        value={role}
+        onChange={(e) => setRole(e.target.value)}
         className="h-11 rounded-md border border-border bg-background px-3 text-base text-foreground outline-none focus:border-primary"
       >
         <option value="staff">Nhân viên bán hàng</option>
@@ -50,19 +53,21 @@ export function AccountForm({
         {canCreateOwnerPartner && <option value="partner">Đối tác</option>}
         {canCreateOwnerPartner && <option value="owner">Chủ đầu tư</option>}
       </select>
-      <select
-        name="cart_id"
-        defaultValue=""
-        className="h-11 rounded-md border border-border bg-background px-3 text-base text-foreground outline-none focus:border-primary"
-      >
-        <option value="">Không gán xe cụ thể</option>
-        {carts.map((c) => (
-          <option key={c.id} value={c.id}>
-            {c.code} — {c.name}
-          </option>
-        ))}
-      </select>
-      <p className="text-xs text-muted">Bắt buộc chọn xe nếu vai trò là Quản lý.</p>
+
+      {needsCart && (
+        <fieldset className="flex flex-col gap-2 rounded-md border border-border p-3">
+          <legend className="px-1 text-xs uppercase text-muted">
+            Chọn xe (bắt buộc, chọn được nhiều xe)
+          </legend>
+          {carts.length === 0 && <p className="text-sm text-muted">Chưa có xe nào.</p>}
+          {carts.map((c) => (
+            <label key={c.id} className="flex items-center gap-2 text-sm text-foreground">
+              <input type="checkbox" name="cart_id" value={c.id} className="size-4" />
+              {c.code} — {c.name}
+            </label>
+          ))}
+        </fieldset>
+      )}
 
       {state.error && <p className="text-sm text-destructive">{state.error}</p>}
       {state.success && <p className="text-sm text-secondary">Đã tạo tài khoản thành công.</p>}

@@ -1,13 +1,7 @@
 import { getCurrentUser } from "@/lib/current-user";
 import { createClient } from "@/lib/supabase/server";
 import { AccountForm } from "./account-form";
-
-const ROLE_LABEL: Record<string, string> = {
-  owner: "Chủ đầu tư",
-  partner: "Đối tác",
-  manager: "Quản lý",
-  staff: "Nhân viên",
-};
+import { AccountRow } from "./account-row";
 
 export default async function TaiKhoanPage() {
   const user = await getCurrentUser();
@@ -28,16 +22,7 @@ export default async function TaiKhoanPage() {
 
       <ul className="flex flex-col gap-2">
         {(accounts ?? []).map((a) => (
-          <li
-            key={a.id}
-            className="flex items-center justify-between gap-3 rounded-md border border-border bg-surface px-4 py-3"
-          >
-            <div>
-              <p className="font-medium text-foreground">{a.full_name || "(chưa có tên)"}</p>
-              <p className="text-sm text-muted">{a.phone}</p>
-            </div>
-            <span className="font-mono text-xs text-primary">{ROLE_LABEL[a.role] ?? a.role}</span>
-          </li>
+          <AccountRow key={a.id} account={a} canEdit={isOwner} />
         ))}
         {(accounts ?? []).length === 0 && <p className="text-sm text-muted">Chưa có tài khoản nào.</p>}
       </ul>

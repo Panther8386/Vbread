@@ -1,7 +1,7 @@
 import { getCurrentUser } from "@/lib/current-user";
 import { createClient } from "@/lib/supabase/server";
 import { formatVnd } from "@/lib/currency";
-import { addPrice } from "./actions";
+import { addPrice, deletePrice, updatePrice } from "./actions";
 
 export default async function GiaPage() {
   const user = await getCurrentUser();
@@ -13,13 +13,19 @@ export default async function GiaPage() {
     .eq("status", "active")
     .order("code");
 
-  const { data: currentPrices } = await supabase
-    .from("current_prices")
-    .select("product_id, price, effective_date");
+  const { data: allPrices } = await supabase
+    .from("prices")
+    .select("id, product_id, price, effective_date")
+    .order("effective_date", { ascending: false })
+    .order("created_at", { ascending: false });
 
-  const priceByProduct = new Map(
-    (currentPrices ?? []).map((p) => [p.product_id, p]),
-  );
+  // Moi san pham lay dong gia moi nhat (dong dau tien sau khi sap xep o tren).
+  const latestPriceByProduct = new Map<string, { id: string; price: number; effective_date: string }>();
+  for (const row of allPrices ?? []) {
+    if (!latestPriceByProduct.has(row.product_id)) {
+      latestPriceByProduct.set(row.product_id, row);
+    }
+  }
 
   const isOwner = user?.role === "owner";
   const today = new Date().toISOString().slice(0, 10);
@@ -28,47 +34,72 @@ export default async function GiaPage() {
     <div className="mx-auto flex max-w-2xl flex-col gap-6">
       <h1 className="font-heading text-2xl font-extrabold text-foreground">Giá bán</h1>
       <p className="text-sm text-muted">
-        1 giá chung cho toàn hệ thống. Thêm giá mới không xóa giá cũ — giữ lịch sử theo ngày hiệu lực.
+        1 giá chung cho toàn hệ thống. Mọi thay đổi (thêm/sửa/xóa) đều được ghi lại trong nhật ký.
       </p>
 
-      <div className="overflow-x-auto rounded-md border border-border">
-        <table className="w-full text-left text-sm">
-          <thead>
-            <tr className="border-b border-border text-xs uppercase text-muted">
-              <th className="px-3 py-2">Mã</th>
-              <th className="px-3 py-2">Sản phẩm</th>
-              <th className="px-3 py-2">Giá hiện hành</th>
-              <th className="px-3 py-2">Hiệu lực từ</th>
-            </tr>
-          </thead>
-          <tbody>
-            {(products ?? []).map((p) => {
-              const current = priceByProduct.get(p.id);
-              return (
-                <tr key={p.id} className="border-b border-border last:border-0">
-                  <td className="px-3 py-2 font-mono">{p.code}</td>
-                  <td className="px-3 py-2">{p.name}</td>
-                  <td className="px-3 py-2 font-mono">
-                    {current ? formatVnd(current.price) : "chưa có giá"}
-                  </td>
-                  <td className="px-3 py-2 text-muted">{current?.effective_date ?? "—"}</td>
-                </tr>
-              );
-            })}
-            {(products ?? []).length === 0 && (
-              <tr>
-                <td colSpan={4} className="px-3 py-4 text-center text-muted">
-                  Chưa có sản phẩm nào — thêm sản phẩm trước ở trang Sản phẩm.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+      <ul className="flex flex-col gap-3">
+        {(products ?? []).map((p) => {
+          const current = latestPriceByProduct.get(p.id);
+          return (
+            <li key={p.id} className="rounded-md border border-border bg-surface p-4">
+              <p className="font-mono text-sm text-primary">{p.code}</p>
+              <p className="font-medium text-foreground">{p.name}</p>
+
+              {current ? (
+                isOwner ? (
+                  <form action={updatePrice} className="mt-2 flex flex-col gap-2 border-t border-border pt-2">
+                    <input type="hidden" name="id" value={current.id} />
+                    <div className="flex gap-2">
+                      <input
+                        name="price"
+                        type="number"
+                        min="0"
+                        step="1000"
+                        defaultValue={current.price}
+                        required
+                        className="h-10 flex-1 rounded-md border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-primary"
+                      />
+                      <input
+                        name="effective_date"
+                        type="date"
+                        defaultValue={current.effective_date}
+                        required
+                        className="h-10 rounded-md border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-primary"
+                      />
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <button type="submit" className="text-sm text-primary underline">
+                        Lưu
+                      </button>
+                      <span className="text-xs text-muted">Hiện: {formatVnd(current.price)}</span>
+                    </div>
+                  </form>
+                ) : (
+                  <p className="mt-1 font-mono text-sm text-foreground">{formatVnd(current.price)}</p>
+                )
+              ) : (
+                <p className="mt-1 text-sm text-muted">Chưa có giá</p>
+              )}
+
+              {isOwner && current && (
+                <form action={deletePrice} className="mt-2">
+                  <input type="hidden" name="id" value={current.id} />
+                  <button type="submit" className="text-sm text-destructive underline">
+                    Xóa dòng giá này
+                  </button>
+                </form>
+              )}
+            </li>
+          );
+        })}
+        {(products ?? []).length === 0 && (
+          <p className="text-sm text-muted">Chưa có sản phẩm nào — thêm sản phẩm trước ở trang Sản phẩm.</p>
+        )}
+      </ul>
 
       {isOwner && (products ?? []).length > 0 && (
         <form action={addPrice} className="flex flex-col gap-3 rounded-md border border-border bg-surface p-4">
-          <h2 className="font-heading text-lg font-bold text-foreground">Thêm giá mới</h2>
+          <h2 className="font-heading text-lg font-bold text-foreground">Thêm giá mới (giữ lịch sử)</h2>
           <select
             name="product_id"
             required
