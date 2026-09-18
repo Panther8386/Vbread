@@ -11,13 +11,20 @@ Trả lời ngay dưới mỗi câu, rồi chuyển các mục tương ứng tro
 - **Phương thức thanh toán**: hỗ trợ đầy đủ (tiền mặt, chuyển khoản, QR, ví điện tử...), không giới hạn. — cả 2 người trả lời vòng 1 đều xác nhận giống nhau.
 - **Mạng tại điểm bán**: có mạng, không cần tính năng bán khi mất mạng cho MVP. — cả 2 người trả lời vòng 1 đều xác nhận giống nhau.
 - **Global Malls = Vbread, không có bên thứ ba đứng trên**: Global Malls (Vbread) là đơn vị cung ứng bánh mì nền và các sản phẩm do chính họ sản xuất, tự chịu trách nhiệm chất lượng & ATTP cho các sản phẩm đó. Các nhà cung cấp khác (pate, chả, rau...) tự chịu trách nhiệm chất lượng & ATTP cho nguyên liệu của họ. Chủ dự án (người trả lời trong hội thoại này) chính là người xây dựng nền tảng để phát triển chuỗi — không cần chờ phê duyệt từ bên nào khác. — chốt 18/09/2026, xác nhận trực tiếp bởi chủ dự án, giải quyết dứt điểm rủi ro nêu trong `danh-gia-khao-sat.html`.
+- **6 điểm mâu thuẫn ở `danh-gia-khao-sat.html` — chốt 18/09/2026 bởi chủ dự án:**
+  1. **Số ca/ngày**: quy định chung cho toàn hệ thống (không để đối tác tự quyết). *Còn thiếu: số ca và giờ ca cụ thể — xem câu hỏi ở cuối file.*
+  2. **Giá bán**: 1 giá chung cho toàn hệ thống (không khác theo xe/điểm bán).
+  3. **In bill / hóa đơn**: bắt buộc (đúng quy định pháp lý) — đổi ngược lại giả định cũ "MVP chưa in bill".
+  4. **Thiết bị bán hàng**: một phần bắt buộc (chuẩn chung), một phần đối tác tự trang bị hoặc dùng đồ có sẵn. *Còn thiếu: phần nào bắt buộc, phần nào tự do — xem câu hỏi ở cuối file.*
+  5. **Ngân sách chi phí dịch vụ hằng tháng**: đối tác/chủ xe trả, không phải Vbread.
+  6. **Tiền cuối ca & phí nhượng quyền**: đối tác giữ toàn bộ tiền bán hàng (không có % doanh số định kỳ); có **phí nhượng quyền trả 1 lần** khi nhận chuyển giao, và **phí dịch vụ trả hàng tháng** riêng (chính là ngân sách ở mục 5).
 
 ## Câu hỏi cần trả lời (đã cập nhật cho đúng mô hình đối tác)
 
 Bộ câu hỏi cũ (bên dưới, mục "Lưu trữ vòng 1") viết theo kiểu "1 chuỗi tự vận hành" nên một số câu hỏi sai đối tượng hoặc bắt phải chọn 1 đáp án chung trong khi thực ra mỗi đối tác có thể tự quyết khác nhau. Bộ câu hỏi dưới đây đã sửa lại, dùng cho trang khảo sát từ nay.
 
 ### Ca bán
-1. Số ca/ngày mỗi xe: có quy định chung cho toàn hệ thống không, hay mỗi đối tác tự quyết theo tình hình kinh doanh của mình?
+1. ~~Số ca/ngày mỗi xe: có quy định chung cho toàn hệ thống không, hay mỗi đối tác tự quyết~~ — **ĐÃ CHỐT: quy định chung.** Còn thiếu: số ca và giờ ca cụ thể (xem mục "Còn thiếu chi tiết" cuối file).
 2. Bàn giao giữa ca (đếm tiền khi đổi người): bắt buộc với tất cả đối tác, hay chỉ áp dụng khi đối tác chạy nhiều hơn 1 ca/ngày và tự chọn có bàn giao?
 3. Trong 1 xe, ai phân công ca cho nhân viên: chính đối tác/chủ xe, hay người quản lý do đối tác đó thuê riêng?
 
@@ -27,23 +34,23 @@ Bộ câu hỏi cũ (bên dưới, mục "Lưu trữ vòng 1") viết theo kiể
 6. Các lý do hao hụt thường gặp là gì (để đưa sẵn vào danh sách lý do trong app)?
 
 ### Bán hàng và tiền
-7. Giá bán: Vbread quy định 1 mức giá chung cho toàn hệ thống, hay mỗi đối tác được tự đặt giá riêng cho xe của mình?
+7. ~~Giá bán: Vbread quy định 1 mức giá chung, hay mỗi đối tác tự đặt giá riêng~~ — **ĐÃ CHỐT: 1 giá chung toàn hệ thống.**
 8. Giảm giá: đối tác tự quyết định, hay phải theo chương trình chung do Vbread đưa ra?
-9. Tiền bán hàng cuối ca: đối tác giữ toàn bộ (vì là tiền của họ), hay có phần phải nộp về cho Vbread theo kỳ (ví dụ phí nhượng quyền tính theo % doanh số)?
+9. ~~Tiền bán hàng cuối ca: đối tác giữ toàn bộ, hay có phần nộp về theo % doanh số~~ — **ĐÃ CHỐT: đối tác giữ toàn bộ**, không có % doanh số định kỳ (xem câu 17).
 10. Khi có chênh lệch tiền: người đứng ca chịu trách nhiệm giải trình trước, đối tác/chủ xe chịu trách nhiệm cuối cùng — cách hiểu này đúng không?
-11. In bill hoặc xuất hóa đơn điện tử: bắt buộc với mọi đối tác, hay để mỗi đối tác tự chọn?
+11. ~~In bill hoặc xuất hóa đơn điện tử: bắt buộc hay tự chọn~~ — **ĐÃ CHỐT: bắt buộc** (đúng quy định pháp lý).
 
 ### Thiết bị và báo cáo
-12. Thiết bị bán hàng (điện thoại): Vbread có tiêu chuẩn chung không, hay tùy đối tác tự chọn máy?
+12. ~~Thiết bị bán hàng: Vbread có tiêu chuẩn chung không, hay tùy đối tác~~ — **ĐÃ CHỐT: một phần bắt buộc (chuẩn chung), một phần đối tác tự trang bị/dùng đồ có sẵn.** Còn thiếu: phần nào bắt buộc cụ thể (xem mục "Còn thiếu chi tiết" cuối file).
 13. Vbread (chủ đầu tư mô hình) muốn xem những con số nào đầu tiên mỗi sáng, tổng hợp từ tất cả đối tác?
 
 ### Ngân sách và kiểm tra
-14. Ngân sách chi phí dịch vụ hằng tháng (máy chủ, cơ sở dữ liệu, tên miền) do Vbread chi trả — dự kiến khoảng bao nhiêu?
+14. ~~Ngân sách chi phí dịch vụ hằng tháng do Vbread hay đối tác chi trả~~ — **ĐÃ CHỐT: đối tác/chủ xe trả**, dưới dạng phí dịch vụ hàng tháng (xem câu 17).
 15. Có muốn thuê người kiểm tra lại code trước khi đưa vào dùng thật không?
 
 ### Mô hình nhượng quyền (câu hỏi mới)
 16. Bộ kit chuyển giao cho đối tác gồm những gì (xe, thiết bị, đào tạo, lô nguyên liệu ban đầu...)?
-17. Phí nhượng quyền: đối tác trả 1 lần khi nhận chuyển giao, hay trả định kỳ theo % doanh số? Nếu có tỷ lệ %, dự kiến bao nhiêu?
+17. ~~Phí nhượng quyền: trả 1 lần hay theo % doanh số~~ — **ĐÃ CHỐT: trả 1 lần khi nhận chuyển giao, cộng thêm phí dịch vụ trả hàng tháng riêng** (không có % doanh số định kỳ). Còn thiếu: số tiền cụ thể của cả 2 loại phí.
 18. Hợp đồng với đối tác có thời hạn bao lâu? Điều kiện chấm dứt hợp đồng là gì?
 19. Giấy phép kinh doanh và an toàn thực phẩm cho từng xe: Vbread hay đối tác chịu trách nhiệm?
 20. App này chủ yếu để đối tác tự quản lý xe của họ, để Vbread giám sát nhiều đối tác cùng lúc, hay cả hai mục đích?
@@ -51,6 +58,14 @@ Bộ câu hỏi cũ (bên dưới, mục "Lưu trữ vòng 1") viết theo kiể
 ### Phạm vi MVP
 21. Hiện có bao nhiêu xe? Dự kiến bao nhiêu xe sau 6 và 12 tháng?
 22. MVP có nên theo dõi kho tới từng loại nguyên liệu (pate, chả, rau, sốt...) như 2 đối tác đã đề xuất, hay giữ đơn giản (chỉ món bán + bánh nền + bao bì) rồi mở rộng sau?
+
+## Còn thiếu chi tiết (đã chốt hướng, cần số cụ thể)
+
+Sau khi chốt 6 điểm ở trên (18/09/2026), còn 3 chi tiết cụ thể cần chủ dự án bổ sung:
+
+1. **Số ca/ngày và giờ ca chính xác** — đã chốt là quy định chung cho toàn hệ thống, nhưng chưa có số ca và khung giờ cụ thể (ví dụ 2 ca: sáng/chiều, hay 3 ca chạy 24/24 như Văn Kiều Trang từng đề xuất ở vòng 1?).
+2. **Thiết bị nào bắt buộc, thiết bị nào tự do** — đã chốt là "một phần bắt buộc", cần liệt kê rõ: ví dụ máy quét/thanh toán bắt buộc dùng chung, còn điện thoại cá nhân thì đối tác tự lo?
+3. **Số tiền phí nhượng quyền (trả 1 lần) và phí dịch vụ (trả hàng tháng)** — đã chốt cách tính (không theo % doanh số), cần số cụ thể để đưa vào bảng tài chính đối tác.
 
 ## Câu trả lời vòng 2 (bộ câu hỏi mới) — Đinh Xuân Vĩnh, 17/09 17:35
 

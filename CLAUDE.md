@@ -1,6 +1,6 @@
 # Vbread App: nền tảng vận hành chuỗi xe bánh mì
 
-<!-- Tên thương hiệu đang chờ xác nhận: Vbread hay Vbreak. Sửa dòng này khi đã chốt. -->
+<!-- Tên thương hiệu: tạm gọi Vbread, đã chốt 17/09/2026 (xem docs/02-cau-hoi-can-chot.md), có thể đổi sau. -->
 
 ## Bối cảnh
 - Chủ dự án không phải lập trình viên. Luôn giải thích bằng tiếng Việt, câu ngắn, dễ hiểu; nói rõ mình sắp làm gì trước khi sửa nhiều file.
@@ -17,7 +17,7 @@
 ## Phạm vi MVP (chỉ làm những phần này)
 1. Danh mục: xe, điểm bán, sản phẩm, giá bán, tài khoản nhân viên.
 2. Ca bán: phân công, mở ca (hàng + tiền đầu ca), bàn giao, đóng ca.
-3. Bán hàng: sản phẩm, số lượng, giảm giá, phương thức thanh toán.
+3. Bán hàng: sản phẩm, số lượng, giảm giá, phương thức thanh toán, in bill/xuất hóa đơn (bắt buộc).
 4. Hàng hóa: nhận, bán, trả, hủy/hao hụt, kiểm kê, tồn cuối ca.
 5. Đối soát tiền: tiền phải có so với tiền thực đếm, chênh lệch và lý do.
 6. Báo cáo theo ngày, ca, xe, điểm bán.

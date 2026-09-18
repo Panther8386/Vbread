@@ -9,10 +9,12 @@ Ký hiệu: **[XN]** = đã xác nhận (theo mô tả dự án) · **[GĐ]** = 
 - [XN] Nhân viên thao tác trên điện thoại tại xe; quản lý xem tổng quan trên máy tính hoặc điện thoại.
 - [XN] Tiền Việt Nam, múi giờ Việt Nam.
 - [XN] Global Malls (Vbread) là đơn vị cung ứng bánh mì nền và các sản phẩm do chính họ sản xuất, tự chịu trách nhiệm chất lượng & ATTP cho các sản phẩm đó. Các nhà cung cấp khác (pate, chả, rau...) tự chịu trách nhiệm chất lượng & ATTP cho nguyên liệu của họ — không có bên thứ ba nào đứng trên Vbread trong mô hình.
-- [GĐ] Mỗi ca có 1 xe, 1 điểm bán và 1–2 nhân viên. Mỗi ngày mỗi xe có tối đa 2 ca.
+- [XN] Số ca/ngày và khung giờ ca là **quy định chung cho toàn hệ thống**, không để mỗi đối tác tự đặt. [GĐ] Số ca và giờ ca cụ thể chưa chốt (tạm giữ giả định 1 xe, 1 điểm bán, 1–2 nhân viên/ca, tối đa 2 ca/ngày — chờ xác nhận số chính xác).
 - [GĐ] Nhân viên dùng điện thoại riêng có mạng 4G; MVP chưa cần bán khi mất mạng.
 - [GĐ] Thanh toán: tiền mặt, chuyển khoản/QR ngân hàng. MVP chỉ ghi nhận phương thức, chưa kết nối ngân hàng.
-- [GĐ] MVP chưa in bill.
+- [XN] Bắt buộc in bill / xuất hóa đơn cho khách (đúng quy định pháp lý) — đảo ngược giả định cũ "MVP chưa in bill".
+- [XN] Thiết bị bán hàng: một phần bắt buộc dùng chung theo chuẩn Vbread, một phần đối tác được tự trang bị hoặc dùng máy có sẵn. [GĐ] Danh sách cụ thể phần nào bắt buộc chưa chốt.
+- [XN] Đối tác giữ toàn bộ tiền bán hàng cuối ca (không trích % doanh số nộp về Vbread). Đối tác trả **phí nhượng quyền 1 lần** khi nhận chuyển giao và **phí dịch vụ hàng tháng** riêng (cho hạ tầng/nền tảng) — hai khoản này tách biệt với doanh thu bán hàng. [GĐ] Số tiền cụ thể của 2 loại phí chưa chốt.
 
 ## 2. Menu tham khảo (theo tài liệu Vbread)
 
@@ -22,14 +24,14 @@ Ký hiệu: **[XN]** = đã xác nhận (theo mô tả dự án) · **[GĐ]** = 
 | BM02 | Bánh mì chả | 25.000–30.000 ₫ |
 | BM03 | Bánh mì pate chả | 25.000–30.000 ₫ |
 
-- [GĐ] Giá bán do chủ chuỗi đặt; có thể khác nhau theo xe hoặc điểm bán; lưu lịch sử giá theo ngày hiệu lực.
+- [XN] Giá bán do chủ chuỗi (Vbread) đặt, **1 mức giá chung cho toàn hệ thống** (không khác theo xe/điểm bán); lưu lịch sử giá theo ngày hiệu lực.
 - [GĐ] MVP theo dõi tồn kho ở mức **món bán + bánh nền + bao bì**. Việc tự trừ pate, chả, rau theo công thức để giai đoạn sau.
 
 ## 3. Luồng một ca bán
 
 1. **Phân công** (quản lý): chọn ngày, xe, điểm bán, khung giờ, nhân viên.
 2. **Mở ca** (nhân viên): xác nhận hàng nhận đầu ca (từng mặt hàng, số lượng) và tiền lẻ đầu ca; có thể chụp ảnh.
-3. **Bán hàng**: chạm món → số lượng → giảm giá (nếu có) → phương thức thanh toán → lưu. Được sửa hoặc hủy đơn khi ghi lý do.
+3. **Bán hàng**: chạm món → số lượng → giảm giá (nếu có) → phương thức thanh toán → lưu → in bill/xuất hóa đơn. Được sửa hoặc hủy đơn khi ghi lý do.
 4. **Phát sinh trong ca**: nhận thêm hàng, trả hàng, hủy/hao hụt (bắt buộc chọn lý do: hỏng, rơi, quá hạn, khác).
 5. **Kiểm kê cuối ca**: nhập số lượng thực tế còn lại.
 6. **Chốt ca**: đếm tiền mặt, xác nhận số tiền chuyển khoản; hệ thống tính chênh lệch; nhân viên ghi lý do nếu có chênh lệch.
@@ -55,7 +57,7 @@ Ký hiệu: **[XN]** = đã xác nhận (theo mô tả dự án) · **[GĐ]** = 
 | `locations` | Điểm bán: tên, địa chỉ, tọa độ (tùy chọn) |
 | `manager_scopes` | Quản lý nào phụ trách xe nào |
 | `products` | Mã, tên, đơn vị, nhóm (món bán, bánh nền, bao bì), trạng thái |
-| `prices` | Giá theo sản phẩm, xe/điểm bán (tùy chọn), ngày hiệu lực |
+| `prices` | Giá theo sản phẩm, ngày hiệu lực (1 giá chung toàn hệ thống, không theo xe/điểm bán) |
 | `shifts` | Ca: ngày kinh doanh, xe, điểm bán, giờ, trạng thái (đã lên lịch, đang bán, chờ duyệt, đã duyệt) |
 | `shift_staff` | Nhân viên trong ca |
 | `stock_movements` | Phiếu hàng: loại (nhận, trả, hủy, hao hụt, kiểm kê), sản phẩm, số lượng, lý do, ảnh |
@@ -75,4 +77,4 @@ Ký hiệu: **[XN]** = đã xác nhận (theo mô tả dự án) · **[GĐ]** = 
 
 ## 7. Để sau MVP
 
-Bán khi mất mạng, in bill, QR thanh toán tự đối soát, đặt hàng online và điều phối đơn, trừ nguyên liệu theo công thức, giá vốn và lợi nhuận, QC/chấm điểm điểm bán, tài sản, KPI, tính lương, khách hàng thân thiết.
+Bán khi mất mạng, QR thanh toán tự đối soát, đặt hàng online và điều phối đơn, trừ nguyên liệu theo công thức, giá vốn và lợi nhuận, QC/chấm điểm điểm bán, tài sản, KPI, tính lương, khách hàng thân thiết. Quản lý phí nhượng quyền/phí dịch vụ giữa Vbread và đối tác (thu tiền, hóa đơn) — cần chốt có làm trong app này hay xử lý riêng ngoài app.
