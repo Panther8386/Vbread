@@ -1,23 +1,16 @@
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
+import { getCurrentUser } from "@/lib/current-user";
 import { buttonVariants } from "@/components/ui/button";
 
+const ROLE_LABEL: Record<string, string> = {
+  owner: "Chủ đầu tư",
+  partner: "Đối tác",
+  manager: "Quản lý",
+  staff: "Nhân viên",
+};
+
 export default async function Home() {
-  const supabase = await createClient();
-  const { data: userData } = await supabase.auth.getUser();
-
-  let fullName: string | null = null;
-  let role: string | null = null;
-
-  if (userData.user) {
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("full_name, role")
-      .eq("id", userData.user.id)
-      .single();
-    fullName = profile?.full_name ?? null;
-    role = profile?.role ?? null;
-  }
+  const user = await getCurrentUser();
 
   return (
     <main className="flex flex-1 flex-col items-center justify-center gap-4 px-6 py-16 text-center">
@@ -28,12 +21,15 @@ export default async function Home() {
         Vbread – Vận hành xe bánh mì
       </h1>
 
-      {userData.user ? (
+      {user ? (
         <>
           <p className="max-w-sm text-base text-muted">
-            Xin chào{fullName ? ` ${fullName}` : ""} — vai trò:{" "}
-            <span className="font-mono text-foreground">{role ?? "chưa gán"}</span>
+            Xin chào {user.fullName || "bạn"} — vai trò:{" "}
+            <span className="font-mono text-foreground">{ROLE_LABEL[user.role] ?? user.role}</span>
           </p>
+          <Link href="/danh-muc/xe" className={buttonVariants({ className: "h-11" })}>
+            Vào Danh mục
+          </Link>
           <Link href="/doi-mat-khau" className="text-sm text-primary underline">
             Đổi mật khẩu
           </Link>

@@ -30,6 +30,7 @@ type Key = "partnerA" | "partnerB" | "manager" | "staff";
 const users = {} as Record<Key, { id: string; email: string }>;
 let cartAId: string;
 let cartBId: string;
+let productId: string;
 
 async function createTestUser(key: Key, role: string) {
   const email = `test-${suffix}-${key}@vbread.local`;
@@ -84,9 +85,21 @@ beforeAll(async () => {
     .from("manager_scopes")
     .insert({ manager_id: users.manager.id, cart_id: cartAId });
   if (scopeError) throw scopeError;
+
+  const { data: product, error: productError } = await admin
+    .from("products")
+    .insert({ code: `TEST-P-${suffix}`, name: "Món test", unit: "ổ", product_group: "mon_ban" })
+    .select()
+    .single();
+  if (productError) throw productError;
+  productId = product.id;
 });
 
 afterAll(async () => {
+  if (productId) {
+    await admin.from("prices").delete().eq("product_id", productId);
+    await admin.from("products").delete().eq("id", productId);
+  }
   if (cartAId) await admin.from("manager_scopes").delete().eq("cart_id", cartAId);
   if (cartAId || cartBId) {
     await admin.from("carts").delete().in("id", [cartAId, cartBId].filter(Boolean));
@@ -152,5 +165,36 @@ describe("RLS: hồ sơ (profiles)", () => {
     const { data, error } = await client.from("profiles").select("id").eq("id", users.staff.id);
     expect(error).toBeNull();
     expect(data?.length).toBe(1);
+  });
+});
+
+describe("RLS: sản phẩm & giá (products, prices)", () => {
+  it("ai đã đăng nhập cũng đọc được sản phẩm", async () => {
+    const client = await signIn("staff");
+    const { data, error } = await client.from("products").select("id").eq("id", productId);
+    expect(error).toBeNull();
+    expect(data?.length).toBe(1);
+  });
+
+  it("partner không thêm được sản phẩm mới (chỉ owner)", async () => {
+    const client = await signIn("partnerA");
+    const { error } = await client
+      .from("products")
+      .insert({ code: `TEST-P2-${suffix}`, name: "Không được phép", unit: "ổ", product_group: "mon_ban" });
+    expect(error).not.toBeNull();
+  });
+
+  it("partner không thêm được giá mới (chỉ owner)", async () => {
+    const client = await signIn("partnerA");
+    const { error } = await client
+      .from("prices")
+      .insert({ product_id: productId, price: 20000, effective_date: "2026-01-01" });
+    expect(error).not.toBeNull();
+  });
+
+  it("chưa đăng nhập không đọc được sản phẩm", async () => {
+    const client = anonClient();
+    const { error } = await client.from("products").select("id");
+    expect(error).not.toBeNull();
   });
 });
