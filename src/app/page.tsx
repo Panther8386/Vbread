@@ -29,10 +29,15 @@ export default async function Home() {
       </h1>
 
       {userData.user ? (
-        <p className="max-w-sm text-base text-muted">
-          Xin chào{fullName ? ` ${fullName}` : ""} — vai trò:{" "}
-          <span className="font-mono text-foreground">{role ?? "chưa gán"}</span>
-        </p>
+        <>
+          <p className="max-w-sm text-base text-muted">
+            Xin chào{fullName ? ` ${fullName}` : ""} — vai trò:{" "}
+            <span className="font-mono text-foreground">{role ?? "chưa gán"}</span>
+          </p>
+          <Link href="/doi-mat-khau" className="text-sm text-primary underline">
+            Đổi mật khẩu
+          </Link>
+        </>
       ) : (
         <>
           <p className="max-w-sm text-base text-muted">
