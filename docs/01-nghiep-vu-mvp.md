@@ -8,7 +8,7 @@ Ký hiệu: **[XN]** = đã xác nhận (theo mô tả dự án) · **[GĐ]** = 
 - [XN] Ba vai trò: chủ chuỗi, quản lý vận hành, nhân viên bán hàng.
 - [XN] Nhân viên thao tác trên điện thoại tại xe; quản lý xem tổng quan trên máy tính hoặc điện thoại.
 - [XN] Tiền Việt Nam, múi giờ Việt Nam.
-- [GĐ] Bánh mì nền là bánh cấp đông của Vbread (Global Malls). Xe nhận bánh nền và nguyên liệu (pate, chả, rau, sốt, bao bì) từ kho của chuỗi.
+- [XN] Global Malls (Vbread) là đơn vị cung ứng bánh mì nền và các sản phẩm do chính họ sản xuất, tự chịu trách nhiệm chất lượng & ATTP cho các sản phẩm đó. Các nhà cung cấp khác (pate, chả, rau...) tự chịu trách nhiệm chất lượng & ATTP cho nguyên liệu của họ — không có bên thứ ba nào đứng trên Vbread trong mô hình.
 - [GĐ] Mỗi ca có 1 xe, 1 điểm bán và 1–2 nhân viên. Mỗi ngày mỗi xe có tối đa 2 ca.
 - [GĐ] Nhân viên dùng điện thoại riêng có mạng 4G; MVP chưa cần bán khi mất mạng.
 - [GĐ] Thanh toán: tiền mặt, chuyển khoản/QR ngân hàng. MVP chỉ ghi nhận phương thức, chưa kết nối ngân hàng.

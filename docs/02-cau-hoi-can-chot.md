@@ -10,6 +10,7 @@ Trả lời ngay dưới mỗi câu, rồi chuyển các mục tương ứng tro
 - **Chụp ảnh nhận/hủy hàng**: có, cần chụp ảnh. — cả 2 người trả lời vòng 1 đều xác nhận giống nhau.
 - **Phương thức thanh toán**: hỗ trợ đầy đủ (tiền mặt, chuyển khoản, QR, ví điện tử...), không giới hạn. — cả 2 người trả lời vòng 1 đều xác nhận giống nhau.
 - **Mạng tại điểm bán**: có mạng, không cần tính năng bán khi mất mạng cho MVP. — cả 2 người trả lời vòng 1 đều xác nhận giống nhau.
+- **Global Malls = Vbread, không có bên thứ ba đứng trên**: Global Malls (Vbread) là đơn vị cung ứng bánh mì nền và các sản phẩm do chính họ sản xuất, tự chịu trách nhiệm chất lượng & ATTP cho các sản phẩm đó. Các nhà cung cấp khác (pate, chả, rau...) tự chịu trách nhiệm chất lượng & ATTP cho nguyên liệu của họ. Chủ dự án (người trả lời trong hội thoại này) chính là người xây dựng nền tảng để phát triển chuỗi — không cần chờ phê duyệt từ bên nào khác. — chốt 18/09/2026, xác nhận trực tiếp bởi chủ dự án, giải quyết dứt điểm rủi ro nêu trong `danh-gia-khao-sat.html`.
 
 ## Câu hỏi cần trả lời (đã cập nhật cho đúng mô hình đối tác)
 
