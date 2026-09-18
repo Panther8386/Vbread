@@ -107,7 +107,27 @@ Trả lời đầy đủ, dứt khoát cả 22 câu bắt buộc và 24 câu tù
 
 Câu chưa trả lời (để trống, chưa có ý kiến khác Vĩnh): 13 (số liệu dashboard), 14 (ngân sách), 16 (kit chuyển giao), 17 (phí nhượng quyền %), 22 (phạm vi theo dõi kho).
 
-→ **2/2 người trả lời vòng 2 đồng thuận tuyệt đối** trên toàn bộ câu hỏi họ cùng trả lời. Đang chờ xác nhận từ chủ dự án để đưa vào CLAUDE.md/docs/01 — xem phần "Cần anh chốt thêm" ở đầu file.
+→ **2/2 người trả lời vòng 2 đồng thuận tuyệt đối** trên toàn bộ câu hỏi họ cùng trả lời. (Cập nhật: xem mục tiếp theo — thế đồng thuận này đã bị vỡ bởi người trả lời thứ 3.)
+
+## Câu trả lời vòng 2 (bộ câu hỏi mới) — Quỳnh, 17/09 18:16
+
+**Làm vỡ thế đồng thuận với Vĩnh/Trang** — ngược lại ở nhiều câu quan trọng:
+
+| Câu | Vĩnh + Trang | Quỳnh |
+|---|---|---|
+| 1. Số ca/ngày | Mỗi đối tác tự quyết | **Có quy định chung** cho toàn hệ thống |
+| 7. Giá bán | Mỗi đối tác tự đặt giá riêng | **1 giá chung** toàn hệ thống |
+| 11. In bill | Đối tác tự chọn | **Nên bắt buộc** (hợp quy định pháp lý) |
+| 12. Thiết bị | Tùy đối tác chọn | **Nên đưa chung vào mô hình** (tiêu chuẩn chung) |
+| 14. Ai trả ngân sách dịch vụ | Vbread trả (Vĩnh: 3 triệu/tháng) | **Nên tính vào chi phí của chủ xe** (đối tác trả) |
+
+Các câu còn lại tương đối khớp hướng chung (đối tác/chủ xe tự phân ca, tự chịu trách nhiệm chênh lệch, hợp đồng có cam kết thu hồi, Vbread/chủ sở hữu mô hình chịu trách nhiệm giấy phép, cần theo dõi nguyên liệu để đồng nhất chất lượng).
+
+**Điểm cần hỏi lại rõ ràng** (câu 13, Quỳnh viết): *"Ko phải vbread chủ đầu tư là đơn vị hợp tác chuyển nhượng"* — câu này khó hiểu, có thể ý là **Vbread không phải là chủ đầu tư cuối cùng**, mà còn có một **"đơn vị hợp tác chuyển nhượng"** khác ở trên (nhớ lại docs/01 có ghi "bánh cấp đông của Vbread (Global Malls)" — có thể Global Malls là bên nhượng quyền gốc, Vbread chỉ là thương hiệu vận hành). Cần hỏi thẳng Quỳnh hoặc chủ dự án: **Vbread có phải là chủ đầu tư mô hình cuối cùng không, hay còn một bên khác (ví dụ Global Malls) đứng trên?**
+
+Số liệu quy mô: Quỳnh nói "50 điểm khu vực SG" (khác cách nói vùng miền so với Vĩnh "30–50 xe" / Trang "20–30 xe" — có thể là cùng một con số, chỉ khác cách diễn đạt phạm vi).
+
+→ **Không nên chốt vào CLAUDE.md/docs/01 lúc này** — cần chủ dự án quyết định trực tiếp 5 điểm mâu thuẫn trong bảng trên, và làm rõ câu hỏi về "đơn vị hợp tác chuyển nhượng".
 
 ## Lưu trữ vòng 1 (bộ câu hỏi cũ, đã có người trả lời — giữ lại làm tư liệu)
 
