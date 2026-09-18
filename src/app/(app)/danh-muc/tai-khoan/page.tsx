@@ -22,7 +22,7 @@ export default async function TaiKhoanPage() {
 
       <ul className="flex flex-col gap-2">
         {(accounts ?? []).map((a) => (
-          <AccountRow key={a.id} account={a} canEdit={isOwner} />
+          <AccountRow key={a.id} account={a} canEdit={isOwner} isSelf={a.id === user?.id} />
         ))}
         {(accounts ?? []).length === 0 && <p className="text-sm text-muted">Chưa có tài khoản nào.</p>}
       </ul>

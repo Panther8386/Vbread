@@ -133,15 +133,43 @@ export async function updateAccount(
   return { success: true };
 }
 
-export async function setAccountStatus(formData: FormData) {
+export async function setAccountStatus(
+  _prevState: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
   const caller = await getCurrentUser();
-  if (caller?.role !== "owner") return;
+  if (caller?.role !== "owner") return { error: "Không có quyền." };
 
   const id = String(formData.get("id") ?? "");
   const nextStatus = String(formData.get("nextStatus") ?? "");
-  if (!id || (nextStatus !== "active" && nextStatus !== "inactive")) return;
+  if (!id || (nextStatus !== "active" && nextStatus !== "inactive")) {
+    return { error: "Thiếu dữ liệu." };
+  }
+
+  // Khong bao gio duoc tu vo hieu hoa chinh minh - day la nguyen nhan gay khoa
+  // tai khoan owner duy nhat truoc do.
+  if (nextStatus === "inactive" && id === caller.id) {
+    return { error: "Không thể tự vô hiệu hóa chính tài khoản đang đăng nhập." };
+  }
 
   const admin = createAdminClient();
+
+  // Neu dang vo hieu hoa 1 owner: dam bao luon con it nhat 1 owner dang hoat dong.
+  if (nextStatus === "inactive") {
+    const { data: target } = await admin.from("profiles").select("role").eq("id", id).single();
+    if (target?.role === "owner") {
+      const { count } = await admin
+        .from("profiles")
+        .select("id", { count: "exact", head: true })
+        .eq("role", "owner")
+        .eq("status", "active")
+        .neq("id", id);
+      if (!count || count < 1) {
+        return { error: "Không thể vô hiệu hóa — đây là chủ đầu tư đang hoạt động duy nhất." };
+      }
+    }
+  }
+
   await admin.from("profiles").update({ status: nextStatus }).eq("id", id);
   // Khoa/mo dang nhap that su, khong chi doi trang thai hien thi.
   await admin.auth.admin.updateUserById(id, {
@@ -149,4 +177,5 @@ export async function setAccountStatus(formData: FormData) {
   });
 
   revalidatePath("/danh-muc/tai-khoan");
+  return { success: true };
 }

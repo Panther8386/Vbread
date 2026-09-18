@@ -8,9 +8,10 @@ const NAV = [
   { href: "/danh-muc/san-pham", label: "Sản phẩm", roles: ["owner"] },
   { href: "/danh-muc/gia", label: "Giá bán", roles: ["owner"] },
   { href: "/danh-muc/tai-khoan", label: "Tài khoản", roles: ["owner", "partner"] },
+  { href: "/cau-hinh", label: "Cấu hình", roles: ["owner", "partner", "manager", "staff"] },
 ] as const;
 
-export default async function DanhMucLayout({ children }: { children: React.ReactNode }) {
+export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
 
@@ -21,7 +22,7 @@ export default async function DanhMucLayout({ children }: { children: React.Reac
       <header className="border-b border-border px-4 py-3">
         <nav className="flex flex-wrap gap-4">
           <Link href="/" className="text-sm text-muted hover:text-foreground">
-            ← Trang chủ
+            Vbread
           </Link>
           {items.map((item) => (
             <Link key={item.href} href={item.href} className="text-sm text-foreground hover:text-primary">
