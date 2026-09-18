@@ -77,4 +77,6 @@ Ký hiệu: **[XN]** = đã xác nhận (theo mô tả dự án) · **[GĐ]** = 
 
 ## 7. Để sau MVP
 
-Bán khi mất mạng, QR thanh toán tự đối soát, đặt hàng online và điều phối đơn, trừ nguyên liệu theo công thức, giá vốn và lợi nhuận, QC/chấm điểm điểm bán, tài sản, KPI, tính lương, khách hàng thân thiết. Quản lý phí nhượng quyền/phí dịch vụ giữa Vbread và đối tác (thu tiền, hóa đơn) — cần chốt có làm trong app này hay xử lý riêng ngoài app.
+Bán khi mất mạng, QR thanh toán tự đối soát, đặt hàng online và điều phối đơn, trừ nguyên liệu theo công thức, giá vốn và lợi nhuận, QC/chấm điểm điểm bán, tài sản, KPI, tính lương, khách hàng thân thiết.
+
+[XN] Quản lý phí nhượng quyền & hợp đồng đối tác (thu phí 1 lần khi chuyển giao, thu phí dịch vụ hàng tháng, theo dõi hợp đồng 12/24/36 tháng) — **làm trong app này, ở giai đoạn sau MVP** (không làm thủ công ngoài app, nhưng cũng không chặn tiến độ MVP). Xem GĐ-08 trong lộ trình.

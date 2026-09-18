@@ -18,6 +18,7 @@ Trả lời ngay dưới mỗi câu, rồi chuyển các mục tương ứng tro
   4. **Thiết bị bán hàng**: một phần bắt buộc (chuẩn chung), một phần đối tác tự trang bị hoặc dùng đồ có sẵn. *Còn thiếu: phần nào bắt buộc, phần nào tự do — xem câu hỏi ở cuối file.*
   5. **Ngân sách chi phí dịch vụ hằng tháng**: đối tác/chủ xe trả, không phải Vbread.
   6. **Tiền cuối ca & phí nhượng quyền**: đối tác giữ toàn bộ tiền bán hàng (không có % doanh số định kỳ); có **phí nhượng quyền trả 1 lần** khi nhận chuyển giao, và **phí dịch vụ trả hàng tháng** riêng (chính là ngân sách ở mục 5).
+- **Quản lý phí nhượng quyền/phí dịch vụ**: làm trong app này (không xử lý thủ công ngoài app), nhưng **để giai đoạn sau MVP** (GĐ-08 trong lộ trình) — không chặn tiến độ GĐ-00 đến GĐ-07. — chốt 18/09/2026.
 
 ## Câu hỏi cần trả lời (đã cập nhật cho đúng mô hình đối tác)
 
