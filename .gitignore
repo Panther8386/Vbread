@@ -150,3 +150,6 @@ next-env.d.ts
 .vercel
 *.pem
 .DS_Store
+
+# Claude Code - cai dat rieng cua may nay, khong dung chung
+.claude/settings.local.json
