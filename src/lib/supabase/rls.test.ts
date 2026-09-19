@@ -198,3 +198,112 @@ describe("RLS: sản phẩm & giá (products, prices)", () => {
     expect(error).not.toBeNull();
   });
 });
+
+describe("RLS: ca bán (shifts)", () => {
+  let locationId: string;
+  let templateId: string;
+  let shiftAId: string;
+
+  beforeAll(async () => {
+    const { data: location, error: locationError } = await admin
+      .from("locations")
+      .insert({ name: `Điểm test ${suffix}` })
+      .select()
+      .single();
+    if (locationError) throw locationError;
+    locationId = location.id;
+
+    const { data: template, error: templateError } = await admin
+      .from("shift_templates")
+      .insert({ name: `Ca test ${suffix}`, start_time: "06:00", end_time: "14:00" })
+      .select()
+      .single();
+    if (templateError) throw templateError;
+    templateId = template.id;
+
+    const { data: shiftA, error: shiftAError } = await admin
+      .from("shifts")
+      .insert({
+        business_date: "2026-01-01",
+        cart_id: cartAId,
+        location_id: locationId,
+        shift_template_id: templateId,
+      })
+      .select()
+      .single();
+    if (shiftAError) throw shiftAError;
+    shiftAId = shiftA.id;
+
+    const { error: staffError } = await admin
+      .from("shift_staff")
+      .insert({ shift_id: shiftAId, staff_id: users.staff.id });
+    if (staffError) throw staffError;
+  });
+
+  afterAll(async () => {
+    if (shiftAId) {
+      await admin.from("shift_staff").delete().eq("shift_id", shiftAId);
+      await admin.from("shifts").delete().eq("cart_id", cartAId).eq("business_date", "2026-01-03");
+      await admin.from("shifts").delete().eq("id", shiftAId);
+    }
+    if (templateId) await admin.from("shift_templates").delete().eq("id", templateId);
+    if (locationId) await admin.from("locations").delete().eq("id", locationId);
+  });
+
+  it("partner A thấy ca của xe mình", async () => {
+    const client = await signIn("partnerA");
+    const { data, error } = await client.from("shifts").select("id").eq("id", shiftAId);
+    expect(error).toBeNull();
+    expect(data?.length).toBe(1);
+  });
+
+  it("partner B không thấy ca của xe A", async () => {
+    const client = await signIn("partnerB");
+    const { data, error } = await client.from("shifts").select("id").eq("id", shiftAId);
+    expect(error).toBeNull();
+    expect(data ?? []).toEqual([]);
+  });
+
+  it("manager (được gán xe A) đọc được ca nhưng không tạo được ca mới", async () => {
+    const client = await signIn("manager");
+    const { data, error } = await client.from("shifts").select("id").eq("id", shiftAId);
+    expect(error).toBeNull();
+    expect(data?.length).toBe(1);
+
+    const { error: insertError } = await client.from("shifts").insert({
+      business_date: "2026-01-02",
+      cart_id: cartAId,
+      location_id: locationId,
+      shift_template_id: templateId,
+    });
+    expect(insertError).not.toBeNull();
+  });
+
+  it("staff được gán vào ca thấy đúng ca đó và xem được tên xe của ca", async () => {
+    const client = await signIn("staff");
+    const { data, error } = await client.from("shifts").select("id").eq("id", shiftAId);
+    expect(error).toBeNull();
+    expect(data?.length).toBe(1);
+
+    const { data: cart, error: cartError } = await client.from("carts").select("id").eq("id", cartAId);
+    expect(cartError).toBeNull();
+    expect(cart?.length).toBe(1);
+  });
+
+  it("partner A tự phân công ca mới cho xe mình được (RLS cho phép insert)", async () => {
+    const client = await signIn("partnerA");
+    const { error } = await client.from("shifts").insert({
+      business_date: "2026-01-03",
+      cart_id: cartAId,
+      location_id: locationId,
+      shift_template_id: templateId,
+    });
+    expect(error).toBeNull();
+  });
+
+  it("chưa đăng nhập không đọc được ca", async () => {
+    const client = anonClient();
+    const { error } = await client.from("shifts").select("id");
+    expect(error).not.toBeNull();
+  });
+});

@@ -19,15 +19,19 @@ Trả lời ngay dưới mỗi câu, rồi chuyển các mục tương ứng tro
   5. **Ngân sách chi phí dịch vụ hằng tháng**: đối tác/chủ xe trả, không phải Vbread.
   6. **Tiền cuối ca & phí nhượng quyền**: đối tác giữ toàn bộ tiền bán hàng (không có % doanh số định kỳ); có **phí nhượng quyền trả 1 lần** khi nhận chuyển giao, và **phí dịch vụ trả hàng tháng** riêng (chính là ngân sách ở mục 5).
 - **Quản lý phí nhượng quyền/phí dịch vụ**: làm trong app này (không xử lý thủ công ngoài app), nhưng **để giai đoạn sau MVP** (GĐ-08 trong lộ trình) — không chặn tiến độ GĐ-00 đến GĐ-07. — chốt 18/09/2026.
+- **3 điểm còn thiếu của GĐ-02 (Ca bán) — chốt 19/09/2026 bởi chủ dự án:**
+  1. **Số ca/giờ ca cụ thể**: không cố định cứng trong code — owner tự cấu hình "ca mẫu" (tên, giờ bắt đầu/kết thúc) trong màn hình Cấu hình hệ thống, thêm/sửa được theo thời gian.
+  2. **Ai phân công ca**: chỉ đối tác/chủ xe (quản lý do đối tác thuê chỉ xem, không phân công).
+  3. **Bàn giao giữa ca**: tùy chọn, chỉ áp dụng khi xe chạy nhiều hơn 1 ca/ngày, đối tác tự chọn có dùng hay không — làm ở giai đoạn mở ca/đóng ca (chưa làm ở bước phân công ca).
 
 ## Câu hỏi cần trả lời (đã cập nhật cho đúng mô hình đối tác)
 
 Bộ câu hỏi cũ (bên dưới, mục "Lưu trữ vòng 1") viết theo kiểu "1 chuỗi tự vận hành" nên một số câu hỏi sai đối tượng hoặc bắt phải chọn 1 đáp án chung trong khi thực ra mỗi đối tác có thể tự quyết khác nhau. Bộ câu hỏi dưới đây đã sửa lại, dùng cho trang khảo sát từ nay.
 
 ### Ca bán
-1. ~~Số ca/ngày mỗi xe: có quy định chung cho toàn hệ thống không, hay mỗi đối tác tự quyết~~ — **ĐÃ CHỐT: quy định chung.** Còn thiếu: số ca và giờ ca cụ thể (xem mục "Còn thiếu chi tiết" cuối file).
-2. Bàn giao giữa ca (đếm tiền khi đổi người): bắt buộc với tất cả đối tác, hay chỉ áp dụng khi đối tác chạy nhiều hơn 1 ca/ngày và tự chọn có bàn giao?
-3. Trong 1 xe, ai phân công ca cho nhân viên: chính đối tác/chủ xe, hay người quản lý do đối tác đó thuê riêng?
+1. ~~Số ca/ngày mỗi xe: có quy định chung cho toàn hệ thống không, hay mỗi đối tác tự quyết~~ — **ĐÃ CHỐT: quy định chung, owner tự cấu hình ca mẫu (không cố định cứng số ca/giờ ca).**
+2. ~~Bàn giao giữa ca~~ — **ĐÃ CHỐT: tùy chọn, chỉ áp dụng khi xe chạy nhiều hơn 1 ca/ngày, đối tác tự chọn có dùng hay không.**
+3. ~~Trong 1 xe, ai phân công ca cho nhân viên~~ — **ĐÃ CHỐT: chỉ đối tác/chủ xe (quản lý chỉ xem).**
 
 ### Hàng hóa
 4. Đối tác có bắt buộc phải mua nguyên liệu/bánh nền từ nguồn cung do Vbread chỉ định không, hay được tự tìm nhà cung cấp riêng?
@@ -62,11 +66,10 @@ Bộ câu hỏi cũ (bên dưới, mục "Lưu trữ vòng 1") viết theo kiể
 
 ## Còn thiếu chi tiết (đã chốt hướng, cần số cụ thể)
 
-Sau khi chốt 6 điểm ở trên (18/09/2026), còn 3 chi tiết cụ thể cần chủ dự án bổ sung:
+Sau khi chốt 6 điểm ở mục "Đã chốt" (18/09/2026) và 3 điểm về Ca bán (19/09/2026), còn 2 chi tiết cụ thể cần chủ dự án bổ sung:
 
-1. **Số ca/ngày và giờ ca chính xác** — đã chốt là quy định chung cho toàn hệ thống, nhưng chưa có số ca và khung giờ cụ thể (ví dụ 2 ca: sáng/chiều, hay 3 ca chạy 24/24 như Văn Kiều Trang từng đề xuất ở vòng 1?).
-2. **Thiết bị nào bắt buộc, thiết bị nào tự do** — đã chốt là "một phần bắt buộc", cần liệt kê rõ: ví dụ máy quét/thanh toán bắt buộc dùng chung, còn điện thoại cá nhân thì đối tác tự lo?
-3. **Số tiền phí nhượng quyền (trả 1 lần) và phí dịch vụ (trả hàng tháng)** — đã chốt cách tính (không theo % doanh số), cần số cụ thể để đưa vào bảng tài chính đối tác.
+1. **Thiết bị nào bắt buộc, thiết bị nào tự do** — đã chốt là "một phần bắt buộc", cần liệt kê rõ: ví dụ máy quét/thanh toán bắt buộc dùng chung, còn điện thoại cá nhân thì đối tác tự lo?
+2. **Số tiền phí nhượng quyền (trả 1 lần) và phí dịch vụ (trả hàng tháng)** — đã chốt cách tính (không theo % doanh số), cần số cụ thể để đưa vào bảng tài chính đối tác.
 
 ## Câu trả lời vòng 2 (bộ câu hỏi mới) — Đinh Xuân Vĩnh, 17/09 17:35
 

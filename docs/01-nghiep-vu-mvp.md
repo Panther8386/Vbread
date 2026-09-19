@@ -9,7 +9,9 @@ Ký hiệu: **[XN]** = đã xác nhận (theo mô tả dự án) · **[GĐ]** = 
 - [XN] Nhân viên thao tác trên điện thoại tại xe; quản lý xem tổng quan trên máy tính hoặc điện thoại.
 - [XN] Tiền Việt Nam, múi giờ Việt Nam.
 - [XN] Global Malls (Vbread) là đơn vị cung ứng bánh mì nền và các sản phẩm do chính họ sản xuất, tự chịu trách nhiệm chất lượng & ATTP cho các sản phẩm đó. Các nhà cung cấp khác (pate, chả, rau...) tự chịu trách nhiệm chất lượng & ATTP cho nguyên liệu của họ — không có bên thứ ba nào đứng trên Vbread trong mô hình.
-- [XN] Số ca/ngày và khung giờ ca là **quy định chung cho toàn hệ thống**, không để mỗi đối tác tự đặt. [GĐ] Số ca và giờ ca cụ thể chưa chốt (tạm giữ giả định 1 xe, 1 điểm bán, 1–2 nhân viên/ca, tối đa 2 ca/ngày — chờ xác nhận số chính xác).
+- [XN] Số ca/ngày và khung giờ ca là **quy định chung cho toàn hệ thống**, không để mỗi đối tác tự đặt — nhưng **không cố định cứng trong code**: chủ đầu tư (owner) tự cấu hình "ca mẫu" (tên, giờ bắt đầu, giờ kết thúc) trong màn hình Cấu hình hệ thống, có thể thêm/sửa theo thời gian.
+- [XN] **Chỉ đối tác/chủ xe** tự phân công nhân viên vào ca cho xe của mình (không phải quản lý — quản lý do đối tác thuê chỉ xem, không phân công).
+- [XN] **Bàn giao giữa ca**: tùy chọn, chỉ áp dụng khi xe chạy nhiều hơn 1 ca/ngày, đối tác tự chọn có dùng hay không (làm ở giai đoạn "mở ca/đóng ca", chưa làm ở bước phân công ca).
 - [GĐ] Nhân viên dùng điện thoại riêng có mạng 4G; MVP chưa cần bán khi mất mạng.
 - [GĐ] Thanh toán: tiền mặt, chuyển khoản/QR ngân hàng. MVP chỉ ghi nhận phương thức, chưa kết nối ngân hàng.
 - [XN] Bắt buộc in bill / xuất hóa đơn cho khách (đúng quy định pháp lý) — đảo ngược giả định cũ "MVP chưa in bill".
@@ -29,7 +31,7 @@ Ký hiệu: **[XN]** = đã xác nhận (theo mô tả dự án) · **[GĐ]** = 
 
 ## 3. Luồng một ca bán
 
-1. **Phân công** (quản lý): chọn ngày, xe, điểm bán, khung giờ, nhân viên.
+1. **Phân công** (đối tác/chủ xe): chọn ngày, xe, điểm bán, ca (theo ca mẫu owner đã cấu hình), nhân viên.
 2. **Mở ca** (nhân viên): xác nhận hàng nhận đầu ca (từng mặt hàng, số lượng) và tiền lẻ đầu ca; có thể chụp ảnh.
 3. **Bán hàng**: chạm món → số lượng → giảm giá (nếu có) → phương thức thanh toán → lưu → in bill/xuất hóa đơn. Được sửa hoặc hủy đơn khi ghi lý do.
 4. **Phát sinh trong ca**: nhận thêm hàng, trả hàng, hủy/hao hụt (bắt buộc chọn lý do: hỏng, rơi, quá hạn, khác).
@@ -58,7 +60,8 @@ Ký hiệu: **[XN]** = đã xác nhận (theo mô tả dự án) · **[GĐ]** = 
 | `manager_scopes` | Quản lý nào phụ trách xe nào |
 | `products` | Mã, tên, đơn vị, nhóm (món bán, bánh nền, bao bì), trạng thái |
 | `prices` | Giá theo sản phẩm, ngày hiệu lực (1 giá chung toàn hệ thống, không theo xe/điểm bán) |
-| `shifts` | Ca: ngày kinh doanh, xe, điểm bán, giờ, trạng thái (đã lên lịch, đang bán, chờ duyệt, đã duyệt) |
+| `shift_templates` | Ca mẫu do owner cấu hình: tên, giờ bắt đầu, giờ kết thúc, trạng thái |
+| `shifts` | Ca cụ thể đã phân công: ngày kinh doanh, xe, điểm bán, ca mẫu, trạng thái (đã lên lịch, đã hủy — sẽ thêm đang bán/chờ duyệt/đã duyệt ở phần mở ca/đóng ca) |
 | `shift_staff` | Nhân viên trong ca |
 | `stock_movements` | Phiếu hàng: loại (nhận, trả, hủy, hao hụt, kiểm kê), sản phẩm, số lượng, lý do, ảnh |
 | `sales`, `sale_items` | Đơn bán và các dòng món |

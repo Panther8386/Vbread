@@ -15,6 +15,14 @@ export default async function CauHinhIndexPage() {
       </Link>
       {user?.role === "owner" && (
         <Link
+          href="/cau-hinh/ca"
+          className="rounded-md border border-border bg-surface px-4 py-3 text-base text-foreground hover:border-primary"
+        >
+          Cấu hình ca
+        </Link>
+      )}
+      {user?.role === "owner" && (
+        <Link
           href="/cau-hinh/nhat-ky"
           className="rounded-md border border-border bg-surface px-4 py-3 text-base text-foreground hover:border-primary"
         >

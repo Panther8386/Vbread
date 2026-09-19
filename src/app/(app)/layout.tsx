@@ -8,6 +8,7 @@ const NAV = [
   { href: "/danh-muc/san-pham", label: "Sản phẩm", roles: ["owner"] },
   { href: "/danh-muc/gia", label: "Giá bán", roles: ["owner"] },
   { href: "/danh-muc/tai-khoan", label: "Tài khoản", roles: ["owner", "partner"] },
+  { href: "/ca-ban", label: "Ca bán", roles: ["owner", "partner", "manager", "staff"] },
   { href: "/cau-hinh", label: "Cấu hình", roles: ["owner", "partner", "manager", "staff"] },
 ] as const;
 
