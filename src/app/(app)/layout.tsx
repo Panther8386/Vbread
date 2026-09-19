@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getCurrentUser } from "@/lib/current-user";
 
 const NAV = [
+  { href: "/bao-cao", label: "Báo cáo", roles: ["owner", "partner", "manager"] },
   { href: "/danh-muc/xe", label: "Xe", roles: ["owner", "partner"] },
   { href: "/danh-muc/diem-ban", label: "Điểm bán", roles: ["owner", "partner", "manager", "staff"] },
   { href: "/danh-muc/san-pham", label: "Sản phẩm", roles: ["owner"] },
