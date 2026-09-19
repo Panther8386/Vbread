@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getCurrentUser } from "@/lib/current-user";
 import { createClient } from "@/lib/supabase/server";
 import { formatDateTimeVn } from "@/lib/date";
@@ -10,7 +11,12 @@ const TABLE_LABEL: Record<string, string> = {
   products: "Sản phẩm",
   prices: "Giá bán",
   manager_scopes: "Phân quyền quản lý",
+  shift_templates: "Cấu hình ca",
+  shifts: "Ca bán",
+  shift_staff: "Nhân viên trong ca",
 };
+
+const PAGE_SIZE = 30;
 
 function formatValue(value: unknown): string {
   if (value === undefined) return "—";
@@ -19,7 +25,20 @@ function formatValue(value: unknown): string {
   return String(value);
 }
 
-export default async function NhatKyPage() {
+function buildHref(params: { page?: number; table?: string; who?: string }) {
+  const q = new URLSearchParams();
+  if (params.table) q.set("table", params.table);
+  if (params.who) q.set("who", params.who);
+  if (params.page && params.page > 1) q.set("page", String(params.page));
+  const qs = q.toString();
+  return qs ? `/cau-hinh/nhat-ky?${qs}` : "/cau-hinh/nhat-ky";
+}
+
+export default async function NhatKyPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string; table?: string; who?: string }>;
+}) {
   const user = await getCurrentUser();
   if (user?.role !== "owner") {
     return (
@@ -29,24 +48,92 @@ export default async function NhatKyPage() {
     );
   }
 
+  const { page: pageParam, table: tableFilter, who: whoFilter } = await searchParams;
+  const page = Math.max(1, Number(pageParam) || 1);
+  const from = (page - 1) * PAGE_SIZE;
+  const to = from + PAGE_SIZE - 1;
+
   const supabase = await createClient();
-  const { data: logs } = await supabase
+
+  let query = supabase
     .from("audit_logs")
-    .select("id, table_name, record_id, changed_by, changed_at, old_value, new_value, reason")
+    .select("id, table_name, record_id, changed_by, changed_at, old_value, new_value, reason", {
+      count: "exact",
+    })
     .order("changed_at", { ascending: false })
-    .limit(200);
+    .range(from, to);
+  if (tableFilter) query = query.eq("table_name", tableFilter);
+  if (whoFilter) query = query.eq("changed_by", whoFilter);
+
+  const { data: logs, count } = await query;
+  const totalPages = Math.max(1, Math.ceil((count ?? 0) / PAGE_SIZE));
 
   const changerIds = [...new Set((logs ?? []).map((l) => l.changed_by).filter(Boolean))] as string[];
-  const { data: profiles } =
+  const { data: changers } =
     changerIds.length > 0
       ? await supabase.from("profiles").select("id, full_name, phone").in("id", changerIds)
       : { data: [] };
-  const nameById = new Map((profiles ?? []).map((p) => [p.id, p.full_name || p.phone]));
+  const nameById = new Map((changers ?? []).map((p) => [p.id, p.full_name || p.phone]));
+
+  const { data: allUsers } = await supabase
+    .from("profiles")
+    .select("id, full_name, phone")
+    .order("full_name");
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-4">
       <h1 className="font-heading text-2xl font-extrabold text-foreground">Nhật ký thay đổi</h1>
-      <p className="text-sm text-muted">200 thay đổi gần nhất trên toàn hệ thống.</p>
+      <p className="text-sm text-muted">
+        {count ?? 0} thay đổi{tableFilter || whoFilter ? " khớp bộ lọc" : " trên toàn hệ thống"} — trang{" "}
+        {page}/{totalPages}.
+      </p>
+
+      <form method="get" className="flex flex-wrap items-end gap-3 rounded-md border border-border bg-surface p-4">
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="table" className="text-xs text-muted">
+            Bảng
+          </label>
+          <select
+            id="table"
+            name="table"
+            defaultValue={tableFilter ?? ""}
+            className="h-10 rounded-md border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-primary"
+          >
+            <option value="">Tất cả</option>
+            {Object.entries(TABLE_LABEL).map(([value, label]) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="who" className="text-xs text-muted">
+            Người sửa
+          </label>
+          <select
+            id="who"
+            name="who"
+            defaultValue={whoFilter ?? ""}
+            className="h-10 rounded-md border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-primary"
+          >
+            <option value="">Tất cả</option>
+            {(allUsers ?? []).map((u) => (
+              <option key={u.id} value={u.id}>
+                {u.full_name || u.phone}
+              </option>
+            ))}
+          </select>
+        </div>
+        <button type="submit" className="h-10 rounded-lg bg-primary px-4 font-heading font-bold text-primary-foreground">
+          Lọc
+        </button>
+        {(tableFilter || whoFilter) && (
+          <Link href="/cau-hinh/nhat-ky" className="text-sm text-primary underline">
+            Bỏ lọc
+          </Link>
+        )}
+      </form>
 
       <ul className="flex flex-col gap-3">
         {(logs ?? []).map((log) => {
@@ -87,9 +174,37 @@ export default async function NhatKyPage() {
           );
         })}
         {(logs ?? []).length === 0 && (
-          <p className="text-sm text-muted">Chưa có thay đổi nào được ghi nhận.</p>
+          <p className="text-sm text-muted">Không có thay đổi nào khớp.</p>
         )}
       </ul>
+
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between gap-3">
+          {page > 1 ? (
+            <Link
+              href={buildHref({ page: page - 1, table: tableFilter, who: whoFilter })}
+              className="text-sm text-primary underline"
+            >
+              ← Trang trước
+            </Link>
+          ) : (
+            <span />
+          )}
+          <span className="font-mono text-xs text-muted">
+            Trang {page}/{totalPages}
+          </span>
+          {page < totalPages ? (
+            <Link
+              href={buildHref({ page: page + 1, table: tableFilter, who: whoFilter })}
+              className="text-sm text-primary underline"
+            >
+              Trang sau →
+            </Link>
+          ) : (
+            <span />
+          )}
+        </div>
+      )}
     </div>
   );
 }
