@@ -74,7 +74,7 @@
     <dl class="meta">
       <div><dt>Cập nhật</dt><dd>19/09/2026</dd></div>
       <div><dt>Phạm vi</dt><dd>MVP · 6 nhóm nghiệp vụ</dd></div>
-      <div><dt>Trạng thái hiện tại</dt><dd>Đang làm Đóng ca &amp; Đối soát tiền</dd></div>
+      <div><dt>Trạng thái hiện tại</dt><dd>Đang làm bước Duyệt sau khi đóng ca</dd></div>
     </dl>
     <p class="legend"><span class="tag tag--ok">XN</span> đã xác nhận nghiệp vụ &nbsp;·&nbsp; <span class="tag tag--warn">GĐ</span> giả định — cần chủ chuỗi chốt lại</p>
   </header>
@@ -132,7 +132,8 @@
           <li>✓ Owner tự cấu hình ca (tên, khung giờ)</li>
           <li>✓ Phân công ca theo xe / điểm bán / nhân viên</li>
           <li>✓ Mở ca: hàng đầu ca + tiền đầu ca</li>
-          <li>Đang làm: đóng ca &amp; gửi duyệt</li>
+          <li>✓ Đóng ca: kiểm kê + đối soát tiền</li>
+          <li>Đang làm: gửi duyệt sau khi đóng ca</li>
           <li>Chưa làm: bàn giao giữa ca (tùy chọn)</li>
         </ul>
       </div>
@@ -157,38 +158,38 @@
       </div>
     </li>
 
-    <li class="phase" data-status="next">
+    <li class="phase" data-status="done">
       <span class="dot"></span>
       <div class="card">
         <div class="card-top">
           <span class="code mono">GĐ-04</span>
-          <span class="pill">Đang làm</span>
+          <span class="pill">Hoàn thành</span>
         </div>
         <h2>Hàng hóa</h2>
         <p>Theo dõi hàng hóa xuyên suốt ca: nhận, bán, trả, hao hụt, kiểm kê.</p>
         <ul class="chiplist">
-          <li>✓ Phiếu nhận hàng đầu ca &amp; trong ca</li>
-          <li>✓ Phiếu trả / hủy / hao hụt kèm lý do bắt buộc</li>
-          <li>Đang làm: kiểm kê cuối ca</li>
-          <li>Đang làm: tự tính tồn cuối ca</li>
+          <li>Phiếu nhận hàng đầu ca &amp; trong ca</li>
+          <li>Phiếu trả / hủy / hao hụt kèm lý do bắt buộc</li>
+          <li>Kiểm kê cuối ca</li>
+          <li>Tự tính tồn cuối ca (sổ sách)</li>
         </ul>
       </div>
     </li>
 
-    <li class="phase">
+    <li class="phase" data-status="next">
       <span class="dot"></span>
       <div class="card">
         <div class="card-top">
           <span class="code mono">GĐ-05</span>
-          <span class="pill">Chưa bắt đầu</span>
+          <span class="pill">Đang làm</span>
         </div>
         <h2>Đối soát tiền</h2>
         <p>So khớp tiền phải có với tiền thực đếm, ghi lý do chênh lệch, quản lý duyệt.</p>
         <ul class="chiplist">
-          <li>Công thức tiền phải có: tiền mặt &amp; chuyển khoản</li>
-          <li>Bắt buộc ghi lý do khi lệch ≠ 0 ₫</li>
-          <li>Quản lý duyệt khi lệch ≥ 50.000 ₫</li>
-          <li>Ghi vào audit_logs</li>
+          <li>✓ Công thức tiền phải có: tiền mặt &amp; các phương thức khác</li>
+          <li>✓ Bắt buộc ghi lý do khi lệch ≠ 0 ₫</li>
+          <li>✓ Ghi vào audit_logs</li>
+          <li>Đang làm: bước Duyệt sau khi đóng ca (đang chờ chốt lại ai duyệt, vì vai trò quản lý đã đổi)</li>
         </ul>
       </div>
     </li>
