@@ -73,7 +73,12 @@ export default async function BaoCaoPage() {
 
   return (
     <div className="mx-auto flex max-w-xl flex-col gap-6">
-      <h1 className="font-heading text-2xl font-extrabold text-foreground">Tổng quan</h1>
+      <div className="flex items-center justify-between gap-3">
+        <h1 className="font-heading text-2xl font-extrabold text-foreground">Tổng quan</h1>
+        <Link href="/bao-cao/chi-tiet" className="text-sm text-primary underline">
+          Báo cáo chi tiết →
+        </Link>
+      </div>
 
       <div className="grid grid-cols-2 gap-3">
         <div className="rounded-md border border-border bg-surface p-4">
