@@ -16,7 +16,8 @@ const TABLE_LABEL: Record<string, string> = {
   shift_staff: "Nhân viên trong ca",
 };
 
-const PAGE_SIZE = 30;
+const PAGE_SIZE_OPTIONS = [10, 15, 25, 50, 100] as const;
+const DEFAULT_PAGE_SIZE = 25;
 
 function formatValue(value: unknown): string {
   if (value === undefined) return "—";
@@ -25,19 +26,34 @@ function formatValue(value: unknown): string {
   return String(value);
 }
 
-function buildHref(params: { page?: number; table?: string; who?: string }) {
+function buildHref(params: { page?: number; table?: string; who?: string; size?: number }) {
   const q = new URLSearchParams();
   if (params.table) q.set("table", params.table);
   if (params.who) q.set("who", params.who);
+  if (params.size && params.size !== DEFAULT_PAGE_SIZE) q.set("size", String(params.size));
   if (params.page && params.page > 1) q.set("page", String(params.page));
   const qs = q.toString();
   return qs ? `/cau-hinh/nhat-ky?${qs}` : "/cau-hinh/nhat-ky";
 }
 
+/** Danh sách số trang để hiện (có "..." khi nhiều trang), luôn có trang đầu/cuối và quanh trang hiện tại. */
+function getPageNumbers(current: number, total: number): (number | "ellipsis")[] {
+  const keep = new Set<number>([1, total, current - 1, current, current + 1]);
+  const sorted = [...keep].filter((p) => p >= 1 && p <= total).sort((a, b) => a - b);
+  const result: (number | "ellipsis")[] = [];
+  let prev = 0;
+  for (const p of sorted) {
+    if (prev && p - prev > 1) result.push("ellipsis");
+    result.push(p);
+    prev = p;
+  }
+  return result;
+}
+
 export default async function NhatKyPage({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string; table?: string; who?: string }>;
+  searchParams: Promise<{ page?: string; table?: string; who?: string; size?: string }>;
 }) {
   const user = await getCurrentUser();
   if (user?.role !== "owner") {
@@ -48,10 +64,13 @@ export default async function NhatKyPage({
     );
   }
 
-  const { page: pageParam, table: tableFilter, who: whoFilter } = await searchParams;
+  const { page: pageParam, table: tableFilter, who: whoFilter, size: sizeParam } = await searchParams;
+  const pageSize = PAGE_SIZE_OPTIONS.includes(Number(sizeParam) as (typeof PAGE_SIZE_OPTIONS)[number])
+    ? Number(sizeParam)
+    : DEFAULT_PAGE_SIZE;
   const page = Math.max(1, Number(pageParam) || 1);
-  const from = (page - 1) * PAGE_SIZE;
-  const to = from + PAGE_SIZE - 1;
+  const from = (page - 1) * pageSize;
+  const to = from + pageSize - 1;
 
   const supabase = await createClient();
 
@@ -66,7 +85,7 @@ export default async function NhatKyPage({
   if (whoFilter) query = query.eq("changed_by", whoFilter);
 
   const { data: logs, count } = await query;
-  const totalPages = Math.max(1, Math.ceil((count ?? 0) / PAGE_SIZE));
+  const totalPages = Math.max(1, Math.ceil((count ?? 0) / pageSize));
 
   const changerIds = [...new Set((logs ?? []).map((l) => l.changed_by).filter(Boolean))] as string[];
   const { data: changers } =
@@ -125,10 +144,27 @@ export default async function NhatKyPage({
             ))}
           </select>
         </div>
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="size" className="text-xs text-muted">
+            Số dòng/trang
+          </label>
+          <select
+            id="size"
+            name="size"
+            defaultValue={String(pageSize)}
+            className="h-10 rounded-md border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-primary"
+          >
+            {PAGE_SIZE_OPTIONS.map((n) => (
+              <option key={n} value={n}>
+                {n}
+              </option>
+            ))}
+          </select>
+        </div>
         <button type="submit" className="h-10 rounded-lg bg-primary px-4 font-heading font-bold text-primary-foreground">
           Lọc
         </button>
-        {(tableFilter || whoFilter) && (
+        {(tableFilter || whoFilter || pageSize !== DEFAULT_PAGE_SIZE) && (
           <Link href="/cau-hinh/nhat-ky" className="text-sm text-primary underline">
             Bỏ lọc
           </Link>
@@ -179,29 +215,42 @@ export default async function NhatKyPage({
       </ul>
 
       {totalPages > 1 && (
-        <div className="flex items-center justify-between gap-3">
-          {page > 1 ? (
+        <div className="flex flex-wrap items-center justify-center gap-1.5">
+          {page > 1 && (
             <Link
-              href={buildHref({ page: page - 1, table: tableFilter, who: whoFilter })}
-              className="text-sm text-primary underline"
+              href={buildHref({ page: page - 1, table: tableFilter, who: whoFilter, size: pageSize })}
+              className="rounded-md border border-border px-2.5 py-1.5 text-sm text-primary hover:border-primary"
             >
-              ← Trang trước
+              ← Trước
             </Link>
-          ) : (
-            <span />
           )}
-          <span className="font-mono text-xs text-muted">
-            Trang {page}/{totalPages}
-          </span>
-          {page < totalPages ? (
+          {getPageNumbers(page, totalPages).map((p, i) =>
+            p === "ellipsis" ? (
+              <span key={`e${i}`} className="px-1 text-sm text-muted">
+                …
+              </span>
+            ) : (
+              <Link
+                key={p}
+                href={buildHref({ page: p, table: tableFilter, who: whoFilter, size: pageSize })}
+                aria-current={p === page ? "page" : undefined}
+                className={`rounded-md border px-3 py-1.5 font-mono text-sm ${
+                  p === page
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border text-foreground hover:border-primary"
+                }`}
+              >
+                {p}
+              </Link>
+            ),
+          )}
+          {page < totalPages && (
             <Link
-              href={buildHref({ page: page + 1, table: tableFilter, who: whoFilter })}
-              className="text-sm text-primary underline"
+              href={buildHref({ page: page + 1, table: tableFilter, who: whoFilter, size: pageSize })}
+              className="rounded-md border border-border px-2.5 py-1.5 text-sm text-primary hover:border-primary"
             >
-              Trang sau →
+              Sau →
             </Link>
-          ) : (
-            <span />
           )}
         </div>
       )}
