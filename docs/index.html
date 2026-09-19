@@ -22,6 +22,9 @@
   }
   .phase[data-status="next"] .dot{ border-color: var(--color-accent); background: var(--color-accent); }
   .phase[data-status="next"] .card{ border-left-color: var(--color-accent); }
+  .phase[data-status="done"] .dot{ border-color: var(--color-secondary); background: var(--color-secondary); }
+  .phase[data-status="done"] .card{ border-left-color: var(--color-secondary); }
+  .phase[data-status="done"] .pill{ background: var(--color-secondary); border-color: var(--color-secondary); color: var(--color-secondary-foreground); }
 
   .card-top{ display:flex; align-items:center; justify-content:space-between; gap:0.75rem; flex-wrap:wrap; margin-bottom:0.55rem; }
   .code{ font-size:0.78rem; font-weight:600; color: var(--color-primary); letter-spacing:0.03em; }
@@ -69,76 +72,78 @@
     <h1>Lộ trình xây dựng Vbread App</h1>
     <p class="lede">Nền tảng vận hành cho chuỗi xe bánh mì lưu động — danh mục, ca bán, bán hàng, hàng hóa, đối soát tiền và báo cáo. Thứ tự dưới đây theo đúng phạm vi MVP đã chốt trong tài liệu nghiệp vụ.</p>
     <dl class="meta">
-      <div><dt>Cập nhật</dt><dd>17/09/2026</dd></div>
+      <div><dt>Cập nhật</dt><dd>19/09/2026</dd></div>
       <div><dt>Phạm vi</dt><dd>MVP · 6 nhóm nghiệp vụ</dd></div>
-      <div><dt>Trạng thái hiện tại</dt><dd>Đang chuẩn bị nền tảng kỹ thuật</dd></div>
+      <div><dt>Trạng thái hiện tại</dt><dd>Đang làm Đóng ca &amp; Đối soát tiền</dd></div>
     </dl>
     <p class="legend"><span class="tag tag--ok">XN</span> đã xác nhận nghiệp vụ &nbsp;·&nbsp; <span class="tag tag--warn">GĐ</span> giả định — cần chủ chuỗi chốt lại</p>
   </header>
 
   <ol class="roadmap">
 
-    <li class="phase" data-status="next">
+    <li class="phase" data-status="done">
       <span class="dot"></span>
       <div class="card">
         <div class="card-top">
           <span class="code mono">GĐ-00</span>
-          <span class="pill">Tiếp theo</span>
+          <span class="pill">Hoàn thành</span>
         </div>
         <h2>Nền tảng kỹ thuật &amp; hạ tầng</h2>
-        <p>Dựng khung dự án, kết nối cơ sở dữ liệu, bật Row Level Security, chuẩn bị đăng nhập.</p>
+        <p>Dựng khung dự án, kết nối cơ sở dữ liệu, bật Row Level Security, đăng nhập bằng số điện thoại.</p>
         <ul class="chiplist">
           <li>Next.js (App Router) + TypeScript</li>
           <li>Supabase: PostgreSQL, Auth, RLS</li>
           <li>Migration trong supabase/migrations</li>
-          <li>PWA cài màn hình chính</li>
-          <li>Khung Vitest + Playwright</li>
+          <li>Đăng nhập số điện thoại + mật khẩu, đổi mật khẩu</li>
+          <li>Khung Vitest (53 bài kiểm thử tự động)</li>
         </ul>
       </div>
     </li>
 
-    <li class="phase">
+    <li class="phase" data-status="done">
       <span class="dot"></span>
       <div class="card">
         <div class="card-top">
           <span class="code mono">GĐ-01</span>
-          <span class="pill">Chưa bắt đầu</span>
+          <span class="pill">Hoàn thành</span>
         </div>
         <h2>Danh mục</h2>
-        <p>Nhập dữ liệu gốc cho toàn hệ thống: xe, điểm bán, sản phẩm, giá, tài khoản nhân viên.</p>
+        <p>Nhập dữ liệu gốc cho toàn hệ thống: xe, điểm bán, sản phẩm, giá, tài khoản.</p>
         <ul class="chiplist">
           <li>Quản lý xe &amp; điểm bán</li>
           <li>Danh mục sản phẩm &amp; đơn vị tính</li>
           <li>Bảng giá theo ngày hiệu lực</li>
-          <li>Tài khoản &amp; phân quyền owner/manager/staff</li>
+          <li>Tài khoản &amp; phân quyền owner/partner/manager/staff</li>
+          <li>Nhật ký thay đổi (audit log) xem được trên giao diện</li>
         </ul>
       </div>
     </li>
 
-    <li class="phase">
+    <li class="phase" data-status="next">
       <span class="dot"></span>
       <div class="card">
         <div class="card-top">
           <span class="code mono">GĐ-02</span>
-          <span class="pill">Chưa bắt đầu</span>
+          <span class="pill">Đang làm</span>
         </div>
         <h2>Ca bán</h2>
         <p>Quản lý lịch làm việc: phân công ca, mở ca, bàn giao, đóng ca.</p>
         <ul class="chiplist">
-          <li>Phân công ca theo xe / điểm bán / nhân viên</li>
-          <li>Mở ca: hàng đầu ca + tiền đầu ca</li>
-          <li>Bàn giao giữa ca</li>
-          <li>Đóng ca &amp; gửi duyệt</li>
+          <li>✓ Owner tự cấu hình ca (tên, khung giờ)</li>
+          <li>✓ Phân công ca theo xe / điểm bán / nhân viên</li>
+          <li>✓ Mở ca: hàng đầu ca + tiền đầu ca</li>
+          <li>Đang làm: đóng ca &amp; gửi duyệt</li>
+          <li>Chưa làm: bàn giao giữa ca (tùy chọn)</li>
         </ul>
       </div>
     </li>
 
-    <li class="phase">
+    <li class="phase" data-status="done">
       <span class="dot"></span>
       <div class="card">
         <div class="card-top">
           <span class="code mono">GĐ-03</span>
-          <span class="pill">Chưa bắt đầu</span>
+          <span class="pill">Hoàn thành</span>
         </div>
         <h2>Bán hàng</h2>
         <p>Màn hình bán hàng chính cho nhân viên, tối ưu thao tác nhanh trên điện thoại.</p>
@@ -146,26 +151,26 @@
           <li>Bán 1 món trong tối đa 2 chạm</li>
           <li>Giảm giá theo đơn</li>
           <li>Ghi nhận phương thức thanh toán</li>
-          <li>In bill / hóa đơn (bắt buộc)</li>
-          <li>Sửa / hủy đơn kèm lý do</li>
+          <li>Xem/in bill qua trình duyệt — chưa nối hóa đơn điện tử thật</li>
+          <li>Hủy đơn kèm lý do, tự hoàn tồn kho</li>
         </ul>
       </div>
     </li>
 
-    <li class="phase">
+    <li class="phase" data-status="next">
       <span class="dot"></span>
       <div class="card">
         <div class="card-top">
           <span class="code mono">GĐ-04</span>
-          <span class="pill">Chưa bắt đầu</span>
+          <span class="pill">Đang làm</span>
         </div>
         <h2>Hàng hóa</h2>
         <p>Theo dõi hàng hóa xuyên suốt ca: nhận, bán, trả, hao hụt, kiểm kê.</p>
         <ul class="chiplist">
-          <li>Phiếu nhận hàng đầu ca</li>
-          <li>Phiếu trả / hủy kèm lý do</li>
-          <li>Kiểm kê cuối ca</li>
-          <li>Tự tính tồn cuối ca</li>
+          <li>✓ Phiếu nhận hàng đầu ca &amp; trong ca</li>
+          <li>✓ Phiếu trả / hủy / hao hụt kèm lý do bắt buộc</li>
+          <li>Đang làm: kiểm kê cuối ca</li>
+          <li>Đang làm: tự tính tồn cuối ca</li>
         </ul>
       </div>
     </li>
