@@ -63,6 +63,7 @@ export default async function ShiftDetailPage({
           .from("stock_movements")
           .select("id, product_id, movement_type, quantity, created_at")
           .eq("shift_id", shiftId)
+          .eq("movement_type", "nhan")
           .order("created_at")
       : { data: [] };
 
@@ -72,6 +73,15 @@ export default async function ShiftDetailPage({
       ? await supabase.from("products").select("id, code, name, unit").in("id", movementProductIds)
       : { data: [] };
   const productById = new Map((movementProducts ?? []).map((p) => [p.id, p]));
+
+  const { data: sales } =
+    shift.status !== "scheduled"
+      ? await supabase
+          .from("sales")
+          .select("id, total_amount, status, created_at")
+          .eq("shift_id", shiftId)
+          .order("created_at", { ascending: false })
+      : { data: [] };
 
   return (
     <div className="mx-auto flex max-w-xl flex-col gap-6">
@@ -131,6 +141,38 @@ export default async function ShiftDetailPage({
               );
             })}
             {(movements ?? []).length === 0 && <li className="text-sm text-muted">Không nhận hàng đầu ca.</li>}
+          </ul>
+        </div>
+      )}
+
+      {shift.status === "open" && (
+        <Link
+          href={`/ca-ban/${shiftId}/ban-hang`}
+          className="h-11 rounded-lg bg-primary text-center font-heading font-bold leading-[44px] text-primary-foreground"
+        >
+          Bán hàng
+        </Link>
+      )}
+
+      {shift.status !== "scheduled" && (
+        <div className="rounded-md border border-border bg-surface p-4">
+          <h2 className="font-heading text-lg font-bold text-foreground">Đơn hàng trong ca</h2>
+          <ul className="mt-2 flex flex-col gap-1">
+            {(sales ?? []).map((s) => (
+              <li key={s.id}>
+                <Link
+                  href={`/ca-ban/${shiftId}/ban-hang/${s.id}`}
+                  className="flex items-center justify-between text-sm text-primary underline"
+                >
+                  <span>{formatDateTimeVn(s.created_at)}</span>
+                  <span className="font-mono">
+                    {formatVnd(s.total_amount)}
+                    {s.status === "cancelled" ? " (đã hủy)" : ""}
+                  </span>
+                </Link>
+              </li>
+            ))}
+            {(sales ?? []).length === 0 && <li className="text-sm text-muted">Chưa có đơn nào.</li>}
           </ul>
         </div>
       )}

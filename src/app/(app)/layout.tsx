@@ -20,7 +20,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="flex flex-1 flex-col">
-      <header className="border-b border-border px-4 py-3">
+      <header className="print:hidden border-b border-border px-4 py-3">
         <nav className="flex flex-wrap gap-4">
           <Link href="/" className="text-sm text-muted hover:text-foreground">
             Vbread

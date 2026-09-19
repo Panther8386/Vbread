@@ -411,3 +411,114 @@ describe("RLS: mở ca (stock_movements)", () => {
     expect(error).not.toBeNull();
   });
 });
+
+describe("RLS: bán hàng (sales)", () => {
+  let locationId: string;
+  let templateId: string;
+  let shiftAId: string;
+  let saleId: string;
+  let staff2Email: string;
+
+  beforeAll(async () => {
+    const { data: location, error: locationError } = await admin
+      .from("locations")
+      .insert({ name: `Điểm bán hàng ${suffix}` })
+      .select()
+      .single();
+    if (locationError) throw locationError;
+    locationId = location.id;
+
+    const { data: template, error: templateError } = await admin
+      .from("shift_templates")
+      .insert({ name: `Ca bán hàng ${suffix}`, start_time: "06:00", end_time: "14:00" })
+      .select()
+      .single();
+    if (templateError) throw templateError;
+    templateId = template.id;
+
+    const { data: shiftA, error: shiftAError } = await admin
+      .from("shifts")
+      .insert({
+        business_date: "2026-03-01",
+        cart_id: cartAId,
+        location_id: locationId,
+        shift_template_id: templateId,
+        status: "open",
+      })
+      .select()
+      .single();
+    if (shiftAError) throw shiftAError;
+    shiftAId = shiftA.id;
+
+    const { error: staffError } = await admin
+      .from("shift_staff")
+      .insert({ shift_id: shiftAId, staff_id: users.staff.id });
+    if (staffError) throw staffError;
+
+    staff2Email = `test-${suffix}-sale-staff2@vbread.local`;
+    const { data: staff2, error: staff2Error } = await admin.auth.admin.createUser({
+      email: staff2Email,
+      password: TEST_PASSWORD,
+      email_confirm: true,
+    });
+    if (staff2Error) throw staff2Error;
+    await admin.from("profiles").update({ role: "staff", full_name: "Test sale staff2" }).eq("id", staff2.user.id);
+
+    await admin.from("prices").insert({ product_id: productId, price: 20000, effective_date: "2026-01-01" });
+  });
+
+  afterAll(async () => {
+    if (saleId) {
+      await admin.from("stock_movements").delete().eq("sale_id", saleId);
+      await admin.from("payments").delete().eq("sale_id", saleId);
+      await admin.from("sale_items").delete().eq("sale_id", saleId);
+      await admin.from("sales").delete().eq("id", saleId);
+    }
+    if (shiftAId) {
+      await admin.from("shift_staff").delete().eq("shift_id", shiftAId);
+      await admin.from("shifts").delete().eq("id", shiftAId);
+    }
+    if (templateId) await admin.from("shift_templates").delete().eq("id", templateId);
+    if (locationId) await admin.from("locations").delete().eq("id", locationId);
+    const { data: list } = await admin.auth.admin.listUsers();
+    const staff2 = list.users.find((u) => u.email === staff2Email);
+    if (staff2) await admin.auth.admin.deleteUser(staff2.id);
+  });
+
+  it("nhân viên được gán vào ca tạo được đơn bán cho ca đó", async () => {
+    const client = await signIn("staff");
+    const { data, error } = await client
+      .from("sales")
+      .insert({ shift_id: shiftAId, cart_id: cartAId, subtotal: 20000, total_amount: 20000 })
+      .select()
+      .single();
+    expect(error).toBeNull();
+    saleId = data!.id;
+  });
+
+  it("nhân viên khác (không thuộc ca này) không tạo được đơn bán", async () => {
+    const client = anonClient();
+    const { error: signInError } = await client.auth.signInWithPassword({
+      email: staff2Email,
+      password: TEST_PASSWORD,
+    });
+    expect(signInError).toBeNull();
+    const { error } = await client
+      .from("sales")
+      .insert({ shift_id: shiftAId, cart_id: cartAId, subtotal: 10000, total_amount: 10000 });
+    expect(error).not.toBeNull();
+  });
+
+  it("partner B không thấy đơn bán thuộc xe A", async () => {
+    const client = await signIn("partnerB");
+    const { data, error } = await client.from("sales").select("id").eq("id", saleId);
+    expect(error).toBeNull();
+    expect(data ?? []).toEqual([]);
+  });
+
+  it("chưa đăng nhập không đọc được đơn bán", async () => {
+    const client = anonClient();
+    const { error } = await client.from("sales").select("id");
+    expect(error).not.toBeNull();
+  });
+});
