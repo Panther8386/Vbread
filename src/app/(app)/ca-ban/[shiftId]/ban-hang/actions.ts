@@ -1,47 +1,10 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
-import { getCurrentUser } from "@/lib/current-user";
 import { calcSaleTotal, calcSubtotal } from "@/lib/sales";
+import { authorizeShiftAction } from "../shift-auth";
 
 export type ActionState = { error?: string };
-
-async function authorizeShiftAction(shiftId: string) {
-  const caller = await getCurrentUser();
-  if (!caller) return { error: "Chưa đăng nhập." } as const;
-
-  const supabase = await createClient();
-  const { data: shift } = await supabase
-    .from("shifts")
-    .select("id, cart_id, status")
-    .eq("id", shiftId)
-    .maybeSingle();
-  if (!shift) return { error: "Không tìm thấy ca." } as const;
-  if (shift.status !== "open") return { error: "Ca chưa mở hoặc đã đóng, không bán được." } as const;
-
-  if (caller.role === "partner") {
-    const { data: owned } = await supabase
-      .from("carts")
-      .select("id")
-      .eq("id", shift.cart_id)
-      .eq("partner_id", caller.id)
-      .maybeSingle();
-    if (!owned) return { error: "Bạn không phụ trách xe của ca này." } as const;
-  } else if (caller.role === "staff") {
-    const { data: assigned } = await supabase
-      .from("shift_staff")
-      .select("shift_id")
-      .eq("shift_id", shiftId)
-      .eq("staff_id", caller.id)
-      .maybeSingle();
-    if (!assigned) return { error: "Bạn không được phân công vào ca này." } as const;
-  } else if (caller.role !== "owner") {
-    return { error: "Không có quyền bán hàng." } as const;
-  }
-
-  return { caller, supabase, shift } as const;
-}
 
 export async function createSale(_prevState: ActionState, formData: FormData): Promise<ActionState> {
   const shiftId = String(formData.get("shift_id") ?? "");
@@ -65,7 +28,7 @@ export async function createSale(_prevState: ActionState, formData: FormData): P
     return { error: "Chưa chọn món nào." };
   }
 
-  const authResult = await authorizeShiftAction(shiftId);
+  const authResult = await authorizeShiftAction(shiftId, "open");
   if ("error" in authResult) return { error: authResult.error };
   const { caller, supabase, shift } = authResult;
 
@@ -147,7 +110,7 @@ export async function cancelSale(_prevState: ActionState, formData: FormData): P
   if (!saleId || !shiftId) return { error: "Thiếu thông tin đơn." };
   if (!reason) return { error: "Nhập lý do hủy đơn." };
 
-  const authResult = await authorizeShiftAction(shiftId);
+  const authResult = await authorizeShiftAction(shiftId, "open");
   if ("error" in authResult) return { error: authResult.error };
   const { caller, supabase } = authResult;
 

@@ -146,11 +146,24 @@ export default async function ShiftDetailPage({
       )}
 
       {shift.status === "open" && (
-        <Link
-          href={`/ca-ban/${shiftId}/ban-hang`}
-          className="h-11 rounded-lg bg-primary text-center font-heading font-bold leading-[44px] text-primary-foreground"
-        >
-          Bán hàng
+        <div className="flex gap-3">
+          <Link
+            href={`/ca-ban/${shiftId}/ban-hang`}
+            className="h-11 flex-1 rounded-lg bg-primary text-center font-heading font-bold leading-[44px] text-primary-foreground"
+          >
+            Bán hàng
+          </Link>
+          <Link
+            href={`/ca-ban/${shiftId}/hang-hoa`}
+            className="h-11 flex-1 rounded-lg border border-border text-center font-heading font-bold leading-[44px] text-foreground"
+          >
+            Hàng hóa
+          </Link>
+        </div>
+      )}
+      {shift.status !== "open" && shift.status !== "scheduled" && (
+        <Link href={`/ca-ban/${shiftId}/hang-hoa`} className="text-sm text-primary underline">
+          Xem lịch sử hàng hóa trong ca →
         </Link>
       )}
 
