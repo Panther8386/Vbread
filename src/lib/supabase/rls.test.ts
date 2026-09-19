@@ -599,3 +599,126 @@ describe("RLS: đóng ca (shift_payment_counts)", () => {
     expect(error).not.toBeNull();
   });
 });
+
+describe("RLS: bàn giao ca (shift_handovers)", () => {
+  let locationId: string;
+  let templateId: string;
+  let shiftAId: string;
+  let handoverId: string;
+  let staff2Email: string;
+  let staff2Id: string;
+
+  beforeAll(async () => {
+    const { data: location, error: locationError } = await admin
+      .from("locations")
+      .insert({ name: `Điểm bàn giao ${suffix}` })
+      .select()
+      .single();
+    if (locationError) throw locationError;
+    locationId = location.id;
+
+    const { data: template, error: templateError } = await admin
+      .from("shift_templates")
+      .insert({ name: `Ca bàn giao ${suffix}`, start_time: "06:00", end_time: "14:00" })
+      .select()
+      .single();
+    if (templateError) throw templateError;
+    templateId = template.id;
+
+    const { data: shiftA, error: shiftAError } = await admin
+      .from("shifts")
+      .insert({
+        business_date: "2026-05-01",
+        cart_id: cartAId,
+        location_id: locationId,
+        shift_template_id: templateId,
+        status: "open",
+      })
+      .select()
+      .single();
+    if (shiftAError) throw shiftAError;
+    shiftAId = shiftA.id;
+
+    staff2Email = `test-${suffix}-handover-staff2@vbread.local`;
+    const { data: staff2, error: staff2Error } = await admin.auth.admin.createUser({
+      email: staff2Email,
+      password: TEST_PASSWORD,
+      email_confirm: true,
+    });
+    if (staff2Error) throw staff2Error;
+    staff2Id = staff2.user.id;
+    await admin.from("profiles").update({ role: "staff", full_name: "Test handover staff2" }).eq("id", staff2Id);
+
+    const { error: staffError } = await admin
+      .from("shift_staff")
+      .insert([
+        { shift_id: shiftAId, staff_id: users.staff.id },
+        { shift_id: shiftAId, staff_id: staff2Id },
+      ]);
+    if (staffError) throw staffError;
+  });
+
+  afterAll(async () => {
+    if (handoverId) await admin.from("shift_handovers").delete().eq("id", handoverId);
+    if (shiftAId) {
+      await admin.from("shift_staff").delete().eq("shift_id", shiftAId);
+      await admin.from("shifts").delete().eq("id", shiftAId);
+    }
+    if (templateId) await admin.from("shift_templates").delete().eq("id", templateId);
+    if (locationId) await admin.from("locations").delete().eq("id", locationId);
+    if (staff2Id) await admin.auth.admin.deleteUser(staff2Id);
+  });
+
+  it("nhân viên trong ca tạo được phiếu bàn giao cho đồng nghiệp cùng ca", async () => {
+    const client = await signIn("staff");
+    const { data, error } = await client
+      .from("shift_handovers")
+      .insert({ shift_id: shiftAId, from_staff_id: users.staff.id, to_staff_id: staff2Id, cash_handed_over: 200000 })
+      .select()
+      .single();
+    expect(error).toBeNull();
+    handoverId = data!.id;
+  });
+
+  it("partner B không thấy phiếu bàn giao của ca thuộc xe A", async () => {
+    const client = await signIn("partnerB");
+    const { data, error } = await client.from("shift_handovers").select("id").eq("shift_id", shiftAId);
+    expect(error).toBeNull();
+    expect(data ?? []).toEqual([]);
+  });
+
+  it("người giao (không phải người nhận) không tự xác nhận được phiếu của chính mình", async () => {
+    const client = await signIn("staff");
+    const { error } = await client
+      .from("shift_handovers")
+      .update({ confirmed_at: new Date().toISOString() })
+      .eq("id", handoverId);
+    // RLS chan (0 dong duoc sua) - Supabase khong tra loi la error, chi la khong doi gi ca,
+    // nen kiem tra lai bang cach doc du lieu sau khi thu sua.
+    expect(error).toBeNull();
+    const { data: check } = await admin.from("shift_handovers").select("confirmed_at").eq("id", handoverId).single();
+    expect(check?.confirmed_at).toBeNull();
+  });
+
+  it("đúng người nhận xác nhận được phiếu bàn giao", async () => {
+    const client = anonClient();
+    const { error: signInError } = await client.auth.signInWithPassword({
+      email: staff2Email,
+      password: TEST_PASSWORD,
+    });
+    expect(signInError).toBeNull();
+    const { error } = await client
+      .from("shift_handovers")
+      .update({ confirmed_at: new Date().toISOString() })
+      .eq("id", handoverId);
+    expect(error).toBeNull();
+    const { data: check } = await admin.from("shift_handovers").select("confirmed_at").eq("id", handoverId).single();
+    expect(check?.confirmed_at).not.toBeNull();
+  });
+
+  it("chưa đăng nhập không đọc được phiếu bàn giao", async () => {
+    const client = anonClient();
+    const { error } = await client.from("shift_handovers").select("id");
+    expect(error).not.toBeNull();
+  });
+});

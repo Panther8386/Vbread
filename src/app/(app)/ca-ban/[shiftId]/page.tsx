@@ -237,22 +237,30 @@ export default async function ShiftDetailPage({
       )}
 
       {shift.status === "open" && (
-        <div className="flex gap-3">
+        <div className="grid grid-cols-2 gap-3">
           <Link
             href={`/ca-ban/${shiftId}/ban-hang`}
-            className="h-11 flex-1 rounded-lg bg-primary text-center font-heading font-bold leading-[44px] text-primary-foreground"
+            className="h-11 rounded-lg bg-primary text-center font-heading font-bold leading-[44px] text-primary-foreground"
           >
             Bán hàng
           </Link>
           <Link
             href={`/ca-ban/${shiftId}/hang-hoa`}
-            className="h-11 flex-1 rounded-lg border border-border text-center font-heading font-bold leading-[44px] text-foreground"
+            className="h-11 rounded-lg border border-border text-center font-heading font-bold leading-[44px] text-foreground"
           >
             Hàng hóa
           </Link>
+          {staffNames.length >= 2 && (
+            <Link
+              href={`/ca-ban/${shiftId}/ban-giao`}
+              className="h-11 rounded-lg border border-border text-center font-heading font-bold leading-[44px] text-foreground"
+            >
+              Bàn giao
+            </Link>
+          )}
           <Link
             href={`/ca-ban/${shiftId}/dong-ca`}
-            className="h-11 flex-1 rounded-lg border border-border text-center font-heading font-bold leading-[44px] text-foreground"
+            className="h-11 rounded-lg border border-border text-center font-heading font-bold leading-[44px] text-foreground"
           >
             Đóng ca
           </Link>
