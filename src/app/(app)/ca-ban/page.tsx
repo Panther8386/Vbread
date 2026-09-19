@@ -7,6 +7,7 @@ import { ShiftForm } from "./shift-form";
 
 const STATUS_LABEL: Record<string, string> = {
   scheduled: "Đã lên lịch",
+  open: "Đang mở ca",
   cancelled: "Đã hủy",
 };
 
@@ -133,6 +134,10 @@ export default async function CaBanPage({
               <p className="text-sm text-muted">
                 Nhân viên: {staffNames.length > 0 ? staffNames.join(", ") : "Chưa gán"}
               </p>
+
+              <Link href={`/ca-ban/${s.id}`} className="mt-2 inline-block text-sm text-primary underline">
+                Xem chi tiết{s.status === "scheduled" ? " / Mở ca" : ""}
+              </Link>
 
               {canManage && s.status === "scheduled" && (
                 <form action={cancelShift} className="mt-2">

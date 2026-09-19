@@ -307,3 +307,107 @@ describe("RLS: ca bán (shifts)", () => {
     expect(error).not.toBeNull();
   });
 });
+
+describe("RLS: mở ca (stock_movements)", () => {
+  let locationId: string;
+  let templateId: string;
+  let shiftAId: string;
+  let movementId: string;
+  let staff2Email: string;
+
+  beforeAll(async () => {
+    const { data: location, error: locationError } = await admin
+      .from("locations")
+      .insert({ name: `Điểm mở ca ${suffix}` })
+      .select()
+      .single();
+    if (locationError) throw locationError;
+    locationId = location.id;
+
+    const { data: template, error: templateError } = await admin
+      .from("shift_templates")
+      .insert({ name: `Ca mở ca ${suffix}`, start_time: "06:00", end_time: "14:00" })
+      .select()
+      .single();
+    if (templateError) throw templateError;
+    templateId = template.id;
+
+    const { data: shiftA, error: shiftAError } = await admin
+      .from("shifts")
+      .insert({
+        business_date: "2026-02-01",
+        cart_id: cartAId,
+        location_id: locationId,
+        shift_template_id: templateId,
+      })
+      .select()
+      .single();
+    if (shiftAError) throw shiftAError;
+    shiftAId = shiftA.id;
+
+    const { error: staffError } = await admin
+      .from("shift_staff")
+      .insert({ shift_id: shiftAId, staff_id: users.staff.id });
+    if (staffError) throw staffError;
+
+    staff2Email = `test-${suffix}-staff2@vbread.local`;
+    const { data: staff2, error: staff2Error } = await admin.auth.admin.createUser({
+      email: staff2Email,
+      password: TEST_PASSWORD,
+      email_confirm: true,
+    });
+    if (staff2Error) throw staff2Error;
+    await admin.from("profiles").update({ role: "staff", full_name: "Test staff2" }).eq("id", staff2.user.id);
+  });
+
+  afterAll(async () => {
+    if (movementId) await admin.from("stock_movements").delete().eq("id", movementId);
+    if (shiftAId) {
+      await admin.from("shift_staff").delete().eq("shift_id", shiftAId);
+      await admin.from("shifts").delete().eq("id", shiftAId);
+    }
+    if (templateId) await admin.from("shift_templates").delete().eq("id", templateId);
+    if (locationId) await admin.from("locations").delete().eq("id", locationId);
+    const { data: list } = await admin.auth.admin.listUsers();
+    const staff2 = list.users.find((u) => u.email === staff2Email);
+    if (staff2) await admin.auth.admin.deleteUser(staff2.id);
+  });
+
+  it("nhân viên được gán vào ca ghi được phiếu nhận hàng đầu ca", async () => {
+    const client = await signIn("staff");
+    const { data, error } = await client
+      .from("stock_movements")
+      .insert({ shift_id: shiftAId, product_id: productId, movement_type: "nhan", quantity: 5 })
+      .select()
+      .single();
+    expect(error).toBeNull();
+    expect(data?.quantity).toBe(5);
+    movementId = data!.id;
+  });
+
+  it("nhân viên khác (không được gán vào ca này) không ghi được phiếu kho", async () => {
+    const client = anonClient();
+    const { error: signInError } = await client.auth.signInWithPassword({
+      email: staff2Email,
+      password: TEST_PASSWORD,
+    });
+    expect(signInError).toBeNull();
+    const { error } = await client
+      .from("stock_movements")
+      .insert({ shift_id: shiftAId, product_id: productId, movement_type: "nhan", quantity: 3 });
+    expect(error).not.toBeNull();
+  });
+
+  it("partner B không thấy phiếu kho của ca thuộc xe A", async () => {
+    const client = await signIn("partnerB");
+    const { data, error } = await client.from("stock_movements").select("id").eq("shift_id", shiftAId);
+    expect(error).toBeNull();
+    expect(data ?? []).toEqual([]);
+  });
+
+  it("chưa đăng nhập không đọc được phiếu kho", async () => {
+    const client = anonClient();
+    const { error } = await client.from("stock_movements").select("id");
+    expect(error).not.toBeNull();
+  });
+});
