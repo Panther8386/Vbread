@@ -87,6 +87,11 @@ export default async function CaBanPage({
   const prevDate = shiftDate(date, -1);
   const nextDate = shiftDate(date, 1);
 
+  const missingCarts = (formCarts ?? []).length === 0;
+  const missingLocations = (formLocations ?? []).length === 0;
+  const missingTemplates = (formTemplates ?? []).length === 0;
+  const canCreateShift = canManage && !missingCarts && !missingLocations && !missingTemplates;
+
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-6">
       <h1 className="font-heading text-2xl font-extrabold text-foreground">Ca bán</h1>
@@ -141,7 +146,40 @@ export default async function CaBanPage({
         {(shifts ?? []).length === 0 && <p className="text-sm text-muted">Chưa có ca nào ngày này.</p>}
       </ul>
 
-      {canManage && (
+      {canManage && !canCreateShift && (
+        <div className="flex flex-col gap-2 rounded-md border border-border bg-surface p-4 text-sm text-muted">
+          <p className="font-medium text-foreground">Cần chuẩn bị thêm trước khi phân công ca:</p>
+          {missingCarts && (
+            <p>
+              Chưa có xe nào đang hoạt động —{" "}
+              <Link href="/danh-muc/xe" className="text-primary underline">
+                vào Xe để gán đối tác
+              </Link>{" "}
+              (xe tự chuyển &quot;Đang hoạt động&quot; khi có đối tác).
+            </p>
+          )}
+          {missingLocations && (
+            <p>
+              Chưa có điểm bán nào —{" "}
+              <Link href="/danh-muc/diem-ban" className="text-primary underline">
+                vào Điểm bán để thêm
+              </Link>
+              .
+            </p>
+          )}
+          {missingTemplates && (
+            <p>
+              Chưa có ca mẫu nào —{" "}
+              <Link href="/cau-hinh/ca" className="text-primary underline">
+                vào Cấu hình ca để thêm
+              </Link>
+              .
+            </p>
+          )}
+        </div>
+      )}
+
+      {canCreateShift && (
         <ShiftForm
           defaultDate={date}
           carts={(formCarts ?? []).map((c) => ({ id: c.id, label: `${c.code} — ${c.name}` }))}

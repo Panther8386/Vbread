@@ -102,7 +102,9 @@ export async function createAccount(
   }
 
   if (role === "partner" && cartIds.length > 0) {
-    await admin.from("carts").update({ partner_id: created.user.id }).in("id", cartIds);
+    // Gan xong doi tac thi xe tu chuyen "Dang hoat dong" luon - do owner phai
+    // tu vao sua lai xe thuong bi quen, gay hieu lam la loi he thong.
+    await admin.from("carts").update({ partner_id: created.user.id, status: "active" }).in("id", cartIds);
   }
 
   revalidatePath("/danh-muc/tai-khoan");

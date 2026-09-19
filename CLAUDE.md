@@ -6,6 +6,7 @@
 - Chủ dự án không phải lập trình viên. Luôn giải thích bằng tiếng Việt, câu ngắn, dễ hiểu; nói rõ mình sắp làm gì trước khi sửa nhiều file.
 - Nghiệp vụ chi tiết: @docs/01-nghiep-vu-mvp.md
 - Câu hỏi còn mở: @docs/02-cau-hoi-can-chot.md
+- Thứ tự khởi tạo (xe → tài khoản → cấu hình ca → phân công ca): @docs/quy-trinh-khoi-tao.md
 - Khi gặp điều chưa rõ về nghiệp vụ: hỏi lại, không tự đoán. Nếu buộc phải giả định, ghi rõ "GIẢ ĐỊNH" trong câu trả lời và thêm vào docs/02-cau-hoi-can-chot.md.
 
 ## Người dùng và phân quyền

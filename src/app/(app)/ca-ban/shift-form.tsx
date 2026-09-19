@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState } from "react";
 import { createShift, type ActionState } from "./actions";
 
@@ -84,7 +85,15 @@ export function ShiftForm({
 
       <fieldset className="flex flex-col gap-2 rounded-md border border-border p-3">
         <legend className="px-1 text-xs uppercase text-muted">Nhân viên (tối đa 2)</legend>
-        {staffOptions.length === 0 && <p className="text-sm text-muted">Chưa có nhân viên nào.</p>}
+        {staffOptions.length === 0 && (
+          <p className="text-sm text-muted">
+            Chưa có nhân viên nào —{" "}
+            <Link href="/danh-muc/tai-khoan" className="text-primary underline">
+              vào Tài khoản để tạo
+            </Link>{" "}
+            (có thể phân công ca trước, gán nhân viên sau).
+          </p>
+        )}
         {staffOptions.map((s) => (
           <label key={s.id} className="flex items-center gap-2 text-sm text-foreground">
             <input type="checkbox" name="staff_id" value={s.id} className="size-4" />
