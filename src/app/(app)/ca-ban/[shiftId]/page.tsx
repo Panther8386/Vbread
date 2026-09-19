@@ -6,11 +6,13 @@ import { formatDateTimeVn } from "@/lib/date";
 import { formatVnd } from "@/lib/currency";
 import { calcCashDue, calcEndingStock, calcVariance } from "@/lib/inventory";
 import { OpenShiftForm } from "./open-shift-form";
+import { approveShift } from "./actions";
 
 const STATUS_LABEL: Record<string, string> = {
   scheduled: "Đã lên lịch",
   open: "Đang mở ca",
   pending_review: "Chờ duyệt",
+  approved: "Đã duyệt",
   cancelled: "Đã hủy",
 };
 
@@ -34,7 +36,7 @@ export default async function ShiftDetailPage({
   const { data: shift } = await supabase
     .from("shifts")
     .select(
-      "id, business_date, status, cart_id, location_id, shift_template_id, opening_cash, opened_at, opened_by, cash_counted, closing_reason, closed_at",
+      "id, business_date, status, cart_id, location_id, shift_template_id, opening_cash, opened_at, opened_by, cash_counted, closing_reason, closed_at, approved_by, approved_at",
     )
     .eq("id", shiftId)
     .maybeSingle();
@@ -97,7 +99,9 @@ export default async function ShiftDetailPage({
   let closingCash = { due: 0, counted: 0, variance: 0 };
   let closingOtherMethods: { label: string; due: number; counted: number; variance: number }[] = [];
 
-  if (shift.status === "pending_review") {
+  const isClosed = shift.status === "pending_review" || shift.status === "approved";
+
+  if (isClosed) {
     const { data: allMovements } = await supabase
       .from("stock_movements")
       .select("product_id, movement_type, quantity")
@@ -163,6 +167,12 @@ export default async function ShiftDetailPage({
       variance: calcVariance(pc.counted_amount, revenueByMethod.get(pc.method) ?? 0),
     }));
   }
+
+  const { data: approver } = shift.approved_by
+    ? await supabase.from("profiles").select("full_name").eq("id", shift.approved_by).maybeSingle()
+    : { data: null };
+
+  const canApprove = user?.role === "owner" || isPartnerOfCart;
 
   return (
     <div className="mx-auto flex max-w-xl flex-col gap-6">
@@ -249,9 +259,11 @@ export default async function ShiftDetailPage({
         </div>
       )}
 
-      {shift.status === "pending_review" && (
+      {isClosed && (
         <div className="rounded-md border border-border bg-surface p-4">
-          <h2 className="font-heading text-lg font-bold text-foreground">Đã đóng ca — chờ duyệt</h2>
+          <h2 className="font-heading text-lg font-bold text-foreground">
+            {shift.status === "approved" ? "Đã đóng ca — đã duyệt" : "Đã đóng ca — chờ duyệt"}
+          </h2>
           {shift.closed_at && <p className="text-sm text-muted">Đóng lúc: {formatDateTimeVn(shift.closed_at)}</p>}
 
           <p className="mt-3 text-sm font-medium text-foreground">Kiểm kê hàng hóa</p>
@@ -287,6 +299,28 @@ export default async function ShiftDetailPage({
 
           {shift.closing_reason && (
             <p className="mt-3 text-sm text-foreground">Lý do chênh lệch: {shift.closing_reason}</p>
+          )}
+
+          {shift.status === "approved" && (
+            <p className="mt-3 text-sm text-secondary">
+              Đã duyệt bởi {approver?.full_name ?? "?"}
+              {shift.approved_at && ` lúc ${formatDateTimeVn(shift.approved_at)}`}
+            </p>
+          )}
+
+          {shift.status === "pending_review" && canApprove && (
+            <form action={approveShift} className="mt-3">
+              <input type="hidden" name="shift_id" value={shiftId} />
+              <button
+                type="submit"
+                className="h-11 w-full rounded-lg bg-primary font-heading font-bold text-primary-foreground"
+              >
+                Duyệt ca
+              </button>
+            </form>
+          )}
+          {shift.status === "pending_review" && !canApprove && (
+            <p className="mt-3 text-sm text-muted">Chờ đối tác hoặc chủ đầu tư duyệt ca này.</p>
           )}
         </div>
       )}

@@ -1,6 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { createClient } from "@/lib/supabase/server";
+import { getCurrentUser } from "@/lib/current-user";
 import { authorizeShiftAction } from "./shift-auth";
 
 export type ActionState = { error?: string; success?: boolean };
@@ -52,4 +54,38 @@ export async function openShift(_prevState: ActionState, formData: FormData): Pr
   revalidatePath(`/ca-ban/${shiftId}`);
   revalidatePath("/ca-ban");
   return { success: true };
+}
+
+/** Duyệt ca sau khi đóng ca — chỉ đối tác của xe hoặc chủ đầu tư (không phải quản lý). */
+export async function approveShift(formData: FormData) {
+  const caller = await getCurrentUser();
+  if (!caller) return;
+
+  const shiftId = String(formData.get("shift_id") ?? "");
+  if (!shiftId) return;
+
+  const supabase = await createClient();
+  const { data: shift } = await supabase.from("shifts").select("cart_id, status").eq("id", shiftId).maybeSingle();
+  if (!shift || shift.status !== "pending_review") return;
+
+  if (caller.role === "partner") {
+    const { data: owned } = await supabase
+      .from("carts")
+      .select("id")
+      .eq("id", shift.cart_id)
+      .eq("partner_id", caller.id)
+      .maybeSingle();
+    if (!owned) return;
+  } else if (caller.role !== "owner") {
+    return;
+  }
+
+  await supabase
+    .from("shifts")
+    .update({ status: "approved", approved_by: caller.id, approved_at: new Date().toISOString() })
+    .eq("id", shiftId)
+    .eq("status", "pending_review");
+
+  revalidatePath(`/ca-ban/${shiftId}`);
+  revalidatePath("/ca-ban");
 }

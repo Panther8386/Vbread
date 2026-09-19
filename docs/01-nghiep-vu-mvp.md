@@ -37,7 +37,7 @@ Ký hiệu: **[XN]** = đã xác nhận (theo mô tả dự án) · **[GĐ]** = 
 4. **Phát sinh trong ca**: nhận thêm hàng, trả hàng, hủy/hao hụt (bắt buộc chọn lý do: hỏng, rơi, quá hạn, khác).
 5. **Kiểm kê cuối ca**: nhập số lượng thực tế còn lại.
 6. **Chốt ca**: đếm tiền mặt, xác nhận số tiền chuyển khoản; hệ thống tính chênh lệch; nhân viên ghi lý do nếu có chênh lệch.
-7. **Duyệt** (quản lý): xem và duyệt ca. Sau khi duyệt, mọi chỉnh sửa phải ghi lý do và lưu nhật ký.
+7. **Duyệt** (đối tác của xe hoặc chủ đầu tư — không phải quản lý, vì quản lý chỉ xem): xem và duyệt ca. Sau khi duyệt, mọi chỉnh sửa phải ghi lý do và lưu nhật ký.
 8. **Bàn giao** (nếu đổi người giữa ca): chốt số liệu tạm, người nhận xác nhận.
 
 ## 4. Công thức
