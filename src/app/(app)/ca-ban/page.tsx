@@ -66,9 +66,11 @@ export default async function CaBanPage({
     staffIdsByShift.set(row.shift_id, list);
   }
 
-  // Du lieu cho form tao ca moi.
+  // Du lieu cho form tao ca moi. Khong loc theo status: xe chi thuc su
+  // "Dang hoat dong" SAU KHI co nhan vien duoc phan cong vao ca dau tien,
+  // nen phai cho chon duoc ca xe dang "Chua hoat dong".
   const { data: formCarts } = canManage
-    ? await supabase.from("carts").select("id, code, name").eq("status", "active").order("code")
+    ? await supabase.from("carts").select("id, code, name").order("code")
     : { data: [] };
   const { data: formLocations } = canManage
     ? await supabase.from("locations").select("id, name").eq("status", "active").order("name")
@@ -151,11 +153,11 @@ export default async function CaBanPage({
           <p className="font-medium text-foreground">Cần chuẩn bị thêm trước khi phân công ca:</p>
           {missingCarts && (
             <p>
-              Chưa có xe nào đang hoạt động —{" "}
+              Chưa có xe nào —{" "}
               <Link href="/danh-muc/xe" className="text-primary underline">
-                vào Xe để gán đối tác
-              </Link>{" "}
-              (xe tự chuyển &quot;Đang hoạt động&quot; khi có đối tác).
+                vào Xe để tạo
+              </Link>
+              .
             </p>
           )}
           {missingLocations && (

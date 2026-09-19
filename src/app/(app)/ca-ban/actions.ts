@@ -70,6 +70,10 @@ export async function createShift(_prevState: ActionState, formData: FormData): 
     if (staffError) {
       return { error: "Tạo ca xong nhưng chưa gán được nhân viên — mở lại ca này để gán sau." };
     }
+
+    // Co nhan vien duoc phan cong vao ca cu the thi xe chinh thuc "Dang hoat dong".
+    await supabase.from("carts").update({ status: "active" }).eq("id", cartId).eq("status", "inactive");
+    revalidatePath("/danh-muc/xe");
   }
 
   revalidatePath("/ca-ban");

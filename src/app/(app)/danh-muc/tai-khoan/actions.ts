@@ -38,12 +38,12 @@ export async function createAccount(
 
   const supabase = await createClient();
 
-  // Doi tac (partner) chi duoc tao staff/manager cho dung xe cua minh - kiem
-  // ngay trong code, khong dua vao RLS (vi buoc tao user duoi day dung
-  // service_role, bo qua RLS hoan toan).
+  // Doi tac (partner) chi duoc tao nhan vien cho dung xe cua minh - kiem ngay
+  // trong code, khong dua vao RLS (vi buoc tao user duoi day dung service_role,
+  // bo qua RLS hoan toan). Quan ly do owner phan bo, doi tac khong tu tao duoc.
   if (caller.role === "partner") {
-    if (role !== "staff" && role !== "manager") {
-      return { error: "Đối tác chỉ tạo được tài khoản nhân viên hoặc quản lý." };
+    if (role !== "staff") {
+      return { error: "Đối tác chỉ tạo được tài khoản nhân viên." };
     }
     if (cartIds.length > 0) {
       const { data: ownedCarts } = await supabase
@@ -102,9 +102,7 @@ export async function createAccount(
   }
 
   if (role === "partner" && cartIds.length > 0) {
-    // Gan xong doi tac thi xe tu chuyen "Dang hoat dong" luon - do owner phai
-    // tu vao sua lai xe thuong bi quen, gay hieu lam la loi he thong.
-    await admin.from("carts").update({ partner_id: created.user.id, status: "active" }).in("id", cartIds);
+    await admin.from("carts").update({ partner_id: created.user.id }).in("id", cartIds);
   }
 
   revalidatePath("/danh-muc/tai-khoan");

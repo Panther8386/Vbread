@@ -16,14 +16,13 @@ export async function createCart(formData: FormData) {
   if (!code || !name) return;
 
   const supabase = await createClient();
-  // Xe moi tao: neu gan doi tac ngay luc tao thi "Dang hoat dong" luon, chua
-  // gan thi "Chua hoat dong" (owner gan doi tac sau se tu kich hoat - xem
-  // updateCartFull va createAccount).
+  // Xe moi tao luon "Chua hoat dong" - chi chuyen "Dang hoat dong" khi co
+  // nhan vien duoc phan cong vao 1 ca cu the (xem createShift).
   await supabase.from("carts").insert({
     code,
     name,
     partner_id: partnerId || null,
-    status: partnerId ? "active" : "inactive",
+    status: "inactive",
   });
   revalidatePath("/danh-muc/xe");
 }
@@ -40,19 +39,14 @@ export async function updateCartFull(
   const code = String(formData.get("code") ?? "").trim();
   const name = String(formData.get("name") ?? "").trim();
   const partnerId = String(formData.get("partner_id") ?? "").trim();
-  let status = String(formData.get("status") ?? "active");
+  const status = String(formData.get("status") ?? "active");
   if (!id || !code || !name) return { error: "Điền đủ mã xe và tên xe." };
 
   const supabase = await createClient();
 
-  // Vua gan doi tac (truoc do chua co) thi xe tu chuyen "Dang hoat dong" luon,
-  // khong bat owner phai bam sua them lan nua.
-  if (partnerId) {
-    const { data: current } = await supabase.from("carts").select("partner_id").eq("id", id).single();
-    if (current && !current.partner_id) status = "active";
-  }
-
   // Xe chua gan doi tac VA chua tung co ca nao thi khong duoc "Dang hoat dong".
+  // (Kich hoat that su xay ra tu dong khi co nhan vien duoc phan cong vao 1 ca
+  // cu the - xem createShift. O day chi la lop chan an toan khi owner tu sua tay.)
   if (status === "active" && !partnerId) {
     const { count } = await supabase
       .from("shifts")

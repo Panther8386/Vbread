@@ -49,7 +49,7 @@ export function AccountForm({
         className="h-11 rounded-md border border-border bg-background px-3 text-base text-foreground outline-none focus:border-primary"
       >
         <option value="staff">Nhân viên bán hàng</option>
-        <option value="manager">Quản lý</option>
+        {canCreateOwnerPartner && <option value="manager">Quản lý</option>}
         {canCreateOwnerPartner && <option value="partner">Đối tác</option>}
         {canCreateOwnerPartner && <option value="owner">Chủ đầu tư</option>}
       </select>

@@ -12,7 +12,7 @@
 ## Người dùng và phân quyền
 - `owner` (chủ đầu tư mô hình, Vbread): xem toàn bộ, cấu hình hệ thống, quản lý mọi đối tác.
 - `partner` (đối tác, chủ xe): sở hữu 1+ xe (`carts.partner_id`), tự phân công ca, tự quyết giảm giá và xử lý hàng cuối ca, xem báo cáo xe của mình.
-- `manager` (quản lý vận hành, do đối tác thuê — tùy chọn): chỉ thấy các xe được đối tác gán qua `manager_scopes`.
+- `manager` (quản lý vận hành, do **owner** phân bổ vào xe — phục vụ chăm sóc đối tác & cung ứng sản phẩm, không phải do đối tác thuê): chỉ thấy các xe được gán qua `manager_scopes`; xem được ca của xe mình phụ trách nhưng không tự phân công ca.
 - `staff` (nhân viên bán hàng): chỉ thấy ca của mình; nhận hàng, bán hàng, kiểm kê, chốt ca.
 - Phân quyền phải được kiểm tra ở cơ sở dữ liệu (Row Level Security của Supabase), không chỉ ẩn nút trên giao diện.
 - Đăng nhập bằng số điện thoại + mật khẩu (không dùng OTP/SMS). Tài khoản do `owner` tạo tay qua Supabase Dashboard, không tự đăng ký công khai.

@@ -10,7 +10,7 @@ Ký hiệu: **[XN]** = đã xác nhận (theo mô tả dự án) · **[GĐ]** = 
 - [XN] Tiền Việt Nam, múi giờ Việt Nam.
 - [XN] Global Malls (Vbread) là đơn vị cung ứng bánh mì nền và các sản phẩm do chính họ sản xuất, tự chịu trách nhiệm chất lượng & ATTP cho các sản phẩm đó. Các nhà cung cấp khác (pate, chả, rau...) tự chịu trách nhiệm chất lượng & ATTP cho nguyên liệu của họ — không có bên thứ ba nào đứng trên Vbread trong mô hình.
 - [XN] Số ca/ngày và khung giờ ca là **quy định chung cho toàn hệ thống**, không để mỗi đối tác tự đặt — nhưng **không cố định cứng trong code**: chủ đầu tư (owner) tự cấu hình "ca mẫu" (tên, giờ bắt đầu, giờ kết thúc) trong màn hình Cấu hình hệ thống, có thể thêm/sửa theo thời gian.
-- [XN] **Chỉ đối tác/chủ xe** tự phân công nhân viên vào ca cho xe của mình (không phải quản lý — quản lý do đối tác thuê chỉ xem, không phân công).
+- [XN] **Chỉ đối tác/chủ xe** tự phân công nhân viên vào ca cho xe của mình (không phải quản lý — quản lý do owner phân bổ vào xe, phục vụ chăm sóc đối tác & cung ứng sản phẩm, chỉ xem ca, không phân công). Ngay khi có nhân viên được phân công vào 1 ca cụ thể, xe mới chính thức chuyển "Đang hoạt động" (xem docs/quy-trinh-khoi-tao.md).
 - [XN] **Bàn giao giữa ca**: tùy chọn, chỉ áp dụng khi xe chạy nhiều hơn 1 ca/ngày, đối tác tự chọn có dùng hay không (làm ở giai đoạn "mở ca/đóng ca", chưa làm ở bước phân công ca).
 - [GĐ] Nhân viên dùng điện thoại riêng có mạng 4G; MVP chưa cần bán khi mất mạng.
 - [GĐ] Thanh toán: tiền mặt, chuyển khoản/QR ngân hàng. MVP chỉ ghi nhận phương thức, chưa kết nối ngân hàng.
