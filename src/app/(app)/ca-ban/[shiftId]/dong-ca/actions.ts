@@ -36,11 +36,13 @@ export async function closeShift(_prevState: ActionState, formData: FormData): P
     flowByProduct.set(m.product_id, flow);
   }
 
-  const { data: products } = await supabase
-    .from("products")
-    .select("id, code, name, unit")
-    .eq("status", "active")
-    .order("code");
+  // Chi kiem ke san pham thuc su co phat sinh trong ca nay - phai khop dung
+  // danh sach ma trang /dong-ca da hien cho nguoi dung nhap.
+  const touchedProductIds = [...flowByProduct.keys()];
+  const { data: products } =
+    touchedProductIds.length > 0
+      ? await supabase.from("products").select("id, code, name, unit").in("id", touchedProductIds).order("code")
+      : { data: [] };
 
   // Tinh doanh thu tung phuong thuc thanh toan (chi don chua huy).
   const { data: sales } = await supabase

@@ -58,12 +58,6 @@ export default async function DongCaPage({
     );
   }
 
-  const { data: products } = await supabase
-    .from("products")
-    .select("id, code, name, unit")
-    .eq("status", "active")
-    .order("code");
-
   const { data: movements } = await supabase
     .from("stock_movements")
     .select("product_id, movement_type, quantity")
@@ -78,6 +72,15 @@ export default async function DongCaPage({
     else if (m.movement_type === "huy" || m.movement_type === "hao_hut") flow.wasted += m.quantity;
     flowByProduct.set(m.product_id, flow);
   }
+
+  // Chi kiem ke san pham thuc su co phat sinh trong ca nay (khong phai moi
+  // san pham dang hoat dong toan he thong) - dung vua giam nham lan, vua
+  // tranh loi rang buoc "so luong > 0" khi mot san pham chua tung dong tay.
+  const touchedProductIds = [...flowByProduct.keys()];
+  const { data: products } =
+    touchedProductIds.length > 0
+      ? await supabase.from("products").select("id, code, name, unit").in("id", touchedProductIds).order("code")
+      : { data: [] };
 
   const { data: sales } = await supabase
     .from("sales")
