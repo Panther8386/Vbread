@@ -522,3 +522,80 @@ describe("RLS: bán hàng (sales)", () => {
     expect(error).not.toBeNull();
   });
 });
+
+describe("RLS: đóng ca (shift_payment_counts)", () => {
+  let locationId: string;
+  let templateId: string;
+  let shiftAId: string;
+
+  beforeAll(async () => {
+    const { data: location, error: locationError } = await admin
+      .from("locations")
+      .insert({ name: `Điểm đóng ca ${suffix}` })
+      .select()
+      .single();
+    if (locationError) throw locationError;
+    locationId = location.id;
+
+    const { data: template, error: templateError } = await admin
+      .from("shift_templates")
+      .insert({ name: `Ca đóng ca ${suffix}`, start_time: "06:00", end_time: "14:00" })
+      .select()
+      .single();
+    if (templateError) throw templateError;
+    templateId = template.id;
+
+    const { data: shiftA, error: shiftAError } = await admin
+      .from("shifts")
+      .insert({
+        business_date: "2026-04-01",
+        cart_id: cartAId,
+        location_id: locationId,
+        shift_template_id: templateId,
+        status: "open",
+      })
+      .select()
+      .single();
+    if (shiftAError) throw shiftAError;
+    shiftAId = shiftA.id;
+
+    const { error: staffError } = await admin
+      .from("shift_staff")
+      .insert({ shift_id: shiftAId, staff_id: users.staff.id });
+    if (staffError) throw staffError;
+  });
+
+  afterAll(async () => {
+    if (shiftAId) {
+      await admin.from("shift_payment_counts").delete().eq("shift_id", shiftAId);
+      await admin.from("shift_staff").delete().eq("shift_id", shiftAId);
+      await admin.from("shifts").delete().eq("id", shiftAId);
+    }
+    if (templateId) await admin.from("shift_templates").delete().eq("id", templateId);
+    if (locationId) await admin.from("locations").delete().eq("id", locationId);
+  });
+
+  it("nhân viên được gán vào ca ghi được đối soát tiền", async () => {
+    const client = await signIn("staff");
+    const { error } = await client
+      .from("shift_payment_counts")
+      .insert({ shift_id: shiftAId, method: "chuyen_khoan", counted_amount: 100000 });
+    expect(error).toBeNull();
+  });
+
+  it("partner B không thấy đối soát tiền của ca thuộc xe A", async () => {
+    const client = await signIn("partnerB");
+    const { data, error } = await client
+      .from("shift_payment_counts")
+      .select("id")
+      .eq("shift_id", shiftAId);
+    expect(error).toBeNull();
+    expect(data ?? []).toEqual([]);
+  });
+
+  it("chưa đăng nhập không đọc được đối soát tiền", async () => {
+    const client = anonClient();
+    const { error } = await client.from("shift_payment_counts").select("id");
+    expect(error).not.toBeNull();
+  });
+});
